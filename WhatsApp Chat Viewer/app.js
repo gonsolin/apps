@@ -66,9 +66,55 @@
   const chatEmptyState = $('chat-empty-state');
   const ipadFrame = $('ipad-frame');
 
-  // Update status bar time
-  const now = new Date();
-  $('status-time').textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  // Update status bar time — live clock
+  function updateStatusTime() {
+    const now = new Date();
+    $('status-time').textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  }
+  updateStatusTime();
+  setInterval(updateStatusTime, 10000); // update every 10 seconds
+
+  // Live WiFi icon — uses Network Information API when available
+  function updateWifiIcon() {
+    const wifiSvg = document.querySelector('.status-icons .status-icon:first-child');
+    if (!wifiSvg) return;
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const online = navigator.onLine;
+    if (!online) {
+      wifiSvg.style.opacity = '0.3';
+    } else {
+      wifiSvg.style.opacity = '1';
+    }
+  }
+  updateWifiIcon();
+  window.addEventListener('online', updateWifiIcon);
+  window.addEventListener('offline', updateWifiIcon);
+  if (navigator.connection) {
+    navigator.connection.addEventListener('change', updateWifiIcon);
+  }
+
+  // Live Battery icon — uses Battery API when available
+  function updateBatteryIcon(battery) {
+    const battSvg = document.querySelector('.status-icons .status-icon:last-child');
+    if (!battSvg) return;
+    const level = battery.level; // 0 to 1
+    const charging = battery.charging;
+    // Draw battery with fill level
+    const fillHeight = Math.round(level * 14); // max inner height ~14
+    const fillY = 6 + (14 - fillHeight);
+    const fillColor = level <= 0.2 ? '#ef5350' : (charging ? '#25d366' : 'currentColor');
+    battSvg.innerHTML = '<rect x="7" y="4" width="10" height="18" rx="1" ry="1" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+      '<rect x="10" y="2" width="4" height="2" rx="0.5" fill="currentColor"/>' +
+      '<rect x="8.5" y="' + fillY + '" width="7" height="' + fillHeight + '" rx="0.5" fill="' + fillColor + '"/>' +
+      (charging ? '<path d="M12 10l-2 4h2l-1 3 3-4h-2l1-3z" fill="#fff" opacity="0.9"/>' : '');
+  }
+  if (navigator.getBattery) {
+    navigator.getBattery().then(battery => {
+      updateBatteryIcon(battery);
+      battery.addEventListener('levelchange', () => updateBatteryIcon(battery));
+      battery.addEventListener('chargingchange', () => updateBatteryIcon(battery));
+    });
+  }
 
   // ===================== CHUNK RENDERING CONFIG =====================
   const CHUNK_SIZE = 100;
@@ -99,7 +145,7 @@
     e.preventDefault();
     dropZone.classList.remove('drag-over');
     const files = e.dataTransfer.files;
-    if (files.length > 0) handleFile(files[0]);
+    if (files.length > 0) handleMultipleFiles(files);
   });
 
   dropZone.addEventListener('click', (e) => {
@@ -108,7 +154,7 @@
   });
 
   fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    if (e.target.files.length > 0) handleMultipleFiles(e.target.files);
   });
 
   // Sidebar add button
@@ -120,6 +166,39 @@
     if (e.target.files.length > 0) handleFile(e.target.files[0]);
     sidebarFileInput.value = '';
   });
+
+  // ===================== MULTIPLE FILE HANDLER =====================
+  let fileQueue = [];
+  let processingQueue = false;
+
+  async function handleMultipleFiles(fileList) {
+    const zipFiles = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.zip'));
+    if (zipFiles.length === 0) {
+      alert('Veuillez s\u00e9lectionner des fichiers .zip');
+      return;
+    }
+    // Queue all files and process them one by one (each needs sender picker)
+    fileQueue.push(...zipFiles);
+    if (!processingQueue) {
+      processingQueue = true;
+      while (fileQueue.length > 0) {
+        const file = fileQueue.shift();
+        await handleFile(file);
+        // Wait for sender picker to complete before processing next file
+        if (pendingChat) {
+          await new Promise(resolve => {
+            const check = setInterval(() => {
+              if (!pendingChat) {
+                clearInterval(check);
+                resolve();
+              }
+            }, 200);
+          });
+        }
+      }
+      processingQueue = false;
+    }
+  }
 
   // ===================== MAIN FILE HANDLER =====================
   // pendingChat temporarily holds chat data while we wait for sender picker
@@ -187,22 +266,54 @@
 
       // Detect group name early (before sender picker) so we can exclude it
       let detectedGroupName = null;
+      // Search ALL messages (including system ones) for group name patterns
       for (const msg of messages) {
-        if (!msg.sender && msg.isSystem) {
-          const gm = msg.text.match(/created group "(.+?)"/i) ||
-                     msg.text.match(/a créé le groupe "(.+?)"/i) ||
-                     msg.text.match(/changed the subject.*to "(.+?)"/i) ||
-                     msg.text.match(/a modifié l'objet.*en "(.+?)"/i);
-          if (gm) {
-            detectedGroupName = gm[1];
-          }
+        const fullText = msg.text || '';
+        const gm = fullText.match(/created group \u201c(.+?)\u201d/i) ||
+                   fullText.match(/created group "(.+?)"/i) ||
+                   fullText.match(/a cr\u00e9\u00e9 le groupe \u201c(.+?)\u201d/i) ||
+                   fullText.match(/a créé le groupe "(.+?)"/i) ||
+                   fullText.match(/changed the subject.*to \u201c(.+?)\u201d/i) ||
+                   fullText.match(/changed the subject.*to "(.+?)"/i) ||
+                   fullText.match(/a modifié l'objet.*en \u201c(.+?)\u201d/i) ||
+                   fullText.match(/a modifié l'objet.*en "(.+?)"/i) ||
+                   fullText.match(/changed the group name to \u201c(.+?)\u201d/i) ||
+                   fullText.match(/changed the group name to "(.+?)"/i) ||
+                   fullText.match(/(?:named the group|group named) \u201c(.+?)\u201d/i) ||
+                   fullText.match(/(?:named the group|group named) "(.+?)"/i);
+        if (gm) {
+          detectedGroupName = gm[1];
         }
       }
 
-      // Filter out the group name from the senders list if it appears
-      const filteredSenders = detectedGroupName
-        ? senders.filter(s => s !== detectedGroupName)
-        : senders;
+      // Also try to detect group name from the txt file name
+      // WhatsApp exports often name the file "WhatsApp Chat with <Group Name>.txt"
+      if (!detectedGroupName && chatText.name) {
+        const fnm = chatText.name.match(/WhatsApp Chat (?:with|con|avec|mit) (.+)\.txt$/i);
+        if (fnm) {
+          detectedGroupName = fnm[1].trim();
+        }
+      }
+
+      // Filter out the group name from the senders list
+      // Also filter any "sender" whose name matches the group name case-insensitively
+      let filteredSenders = senders;
+      if (detectedGroupName) {
+        const gnLower = detectedGroupName.toLowerCase();
+        filteredSenders = senders.filter(s => s.toLowerCase() !== gnLower);
+      }
+      // Additional heuristic: if we have more than 2 senders, check if any sender
+      // has only system-like messages (no real text content) — likely a group name
+      if (filteredSenders.length > 2) {
+        const senderMsgCounts = {};
+        for (const msg of messages) {
+          if (msg.sender && !msg.isSystem) {
+            senderMsgCounts[msg.sender] = (senderMsgCounts[msg.sender] || 0) + 1;
+          }
+        }
+        // A sender with 0 real messages in the filtered list is likely a group name artifact
+        filteredSenders = filteredSenders.filter(s => (senderMsgCounts[s] || 0) > 0);
+      }
 
       // Store pending chat data
       pendingChat = {
@@ -379,6 +490,18 @@
 
       item.addEventListener('click', () => setActiveChat(chat.id));
       sidebarList.appendChild(item);
+
+      // Check if chat name overflows and needs marquee
+      requestAnimationFrame(() => {
+        const nameEl = item.querySelector('.sidebar-chat-name');
+        if (nameEl && nameEl.scrollWidth > nameEl.clientWidth + 2) {
+          nameEl.classList.add('sidebar-marquee');
+          const offset = -(nameEl.scrollWidth - nameEl.clientWidth);
+          nameEl.style.setProperty('--sidebar-marquee-offset', offset + 'px');
+          const duration = Math.max(4, nameEl.scrollWidth / 25);
+          nameEl.style.setProperty('--sidebar-marquee-duration', duration + 's');
+        }
+      });
     }
   }
 
@@ -398,8 +521,11 @@
 
     // Update header
     headerName.textContent = chat.chatName;
+    setupHeaderMarquee();
     const isGroup = chat.senders.length > 2;
     headerStatus.textContent = isGroup ? chat.senders.length + ' participants' : '';
+    headerStatus.classList.toggle('clickable-participants', isGroup);
+    headerStatus.onclick = isGroup ? () => showParticipantsPopup(chat) : null;
 
     // Show chat content, hide empty state
     chatArea.classList.remove('hidden');
@@ -1257,10 +1383,17 @@
   }
 
   function linkify(html) {
-    return html.replace(
+    // First linkify URLs
+    let result = html.replace(
       /(https?:\/\/[^\s<]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#53bdeb;text-decoration:underline;">$1</a>'
     );
+    // Then format @mentions in bold with WhatsApp-style color
+    result = result.replace(
+      /@(\+?[\w\u00C0-\u024F\u0400-\u04FF]+(?: [\w\u00C0-\u024F\u0400-\u04FF]+)*)/g,
+      '<span class="wa-mention">@$1</span>'
+    );
+    return result;
   }
 
   function debounce(fn, delay) {
@@ -1343,11 +1476,78 @@
     });
   }
 
+  // ===================== PARTICIPANTS POPUP =====================
+  function showParticipantsPopup(chat) {
+    // Remove any existing popup
+    const existing = document.querySelector('.participants-popup-overlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'participants-popup-overlay';
+
+    const popup = document.createElement('div');
+    popup.className = 'participants-popup';
+
+    const header = document.createElement('div');
+    header.className = 'participants-popup-header';
+    header.innerHTML = '<span class="participants-popup-title">Participants</span>';
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'participants-popup-close';
+    closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+    closeBtn.addEventListener('click', () => overlay.remove());
+    header.appendChild(closeBtn);
+    popup.appendChild(header);
+
+    const list = document.createElement('div');
+    list.className = 'participants-popup-list';
+    for (const sender of chat.senders) {
+      const item = document.createElement('div');
+      item.className = 'participants-popup-item';
+      const initials = sender.split(' ').map(w => w[0] || '').slice(0, 2).join('').toUpperCase();
+      const isMe = sender === chat.mySender;
+      item.innerHTML = '<span class="participants-popup-avatar">' + escapeHtml(initials) + '</span>' +
+        '<span class="participants-popup-name">' + escapeHtml(sender) + (isMe ? ' <span class="participants-you-tag">Vous</span>' : '') + '</span>';
+      list.appendChild(item);
+    }
+    popup.appendChild(list);
+    overlay.appendChild(popup);
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.remove();
+    });
+
+    document.body.appendChild(overlay);
+  }
+
+  // ===================== HEADER MARQUEE FOR LONG NAMES =====================
+  function setupHeaderMarquee() {
+    // Check if header name overflows and needs marquee
+    requestAnimationFrame(() => {
+      const el = headerName;
+      // Reset first to get true measurements
+      el.classList.remove('marquee-scroll');
+      el.style.removeProperty('--marquee-offset');
+      el.style.removeProperty('--marquee-duration');
+
+      if (el.scrollWidth > el.clientWidth + 2) {
+        const offset = -(el.scrollWidth - el.clientWidth + 10); // extra 10px padding
+        el.style.setProperty('--marquee-offset', offset + 'px');
+        const duration = Math.max(5, Math.abs(offset) / 25);
+        el.style.setProperty('--marquee-duration', duration + 's');
+        el.classList.add('marquee-scroll');
+      }
+    });
+  }
+
   // ===================== KEYBOARD SHORTCUTS =====================
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
-      lightbox.classList.add('hidden');
-      lightboxImg.src = '';
+    if (e.key === 'Escape') {
+      if (!lightbox.classList.contains('hidden')) {
+        lightbox.classList.add('hidden');
+        lightboxImg.src = '';
+      }
+      const popup = document.querySelector('.participants-popup-overlay');
+      if (popup) popup.remove();
     }
   });
 
