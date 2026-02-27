@@ -1,23 +1,22 @@
 /* ================================================
    WhatsApp Chat Viewer — Main Application
+   Multi-chat architecture with iPad sidebar
    ================================================ */
 
 (function () {
   'use strict';
 
-  // ===================== STATE =====================
-  const state = {
-    messages: [],         // Parsed messages
-    mediaFiles: {},       // filename -> { zipEntry, blobUrl (lazy) }
-    chatName: '',
-    senders: [],          // unique senders
-    mySender: null,       // "You" - first non-system sender
-    senderColors: {},     // sender -> color
-    renderedRange: { start: 0, end: 0 },
-    searchResults: [],
-    searchIndex: -1,
-    searchTerm: '',
-    isSearchOpen: false,
+  // ===================== MULTI-CHAT STATE =====================
+  // Each loaded ZIP becomes a "chat" object in this array
+  const chats = []; // { id, messages, mediaFiles, chatName, senders, mySender, senderColors, renderedRange, lastMessage, lastTime }
+  let activeChatId = null;
+
+  // Search state (per-session, reset on chat switch)
+  const searchState = {
+    results: [],
+    index: -1,
+    term: '',
+    isOpen: false,
   };
 
   // Sender name colors for group chats
@@ -58,12 +57,35 @@
   const lightbox = $('lightbox');
   const lightboxImg = $('lightbox-img');
   const lightboxClose = $('lightbox-close');
+  const senderPickerOverlay = $('sender-picker');
+  const senderPickerList = $('sender-picker-list');
+  const sidebar = $('sidebar');
+  const sidebarList = $('sidebar-list');
+  const sidebarAddBtn = $('sidebar-add-btn');
+  const sidebarFileInput = $('sidebar-file-input');
+  const chatEmptyState = $('chat-empty-state');
+  const ipadFrame = $('ipad-frame');
 
   // Update status bar time
   const now = new Date();
   $('status-time').textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
-  // ===================== FILE DROP / UPLOAD =====================
+  // ===================== CHUNK RENDERING CONFIG =====================
+  const CHUNK_SIZE = 100;
+  const INITIAL_RENDER = 150;
+  let allRenderedElements = [];
+  let topLoadingMore = false;
+
+  // ===================== HELPERS =====================
+  function getActiveChat() {
+    return chats.find(c => c.id === activeChatId) || null;
+  }
+
+  function generateId() {
+    return 'chat_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  }
+
+  // ===================== FILE DROP / UPLOAD (main drop zone) =====================
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropZone.classList.add('drag-over');
@@ -89,7 +111,20 @@
     if (e.target.files.length > 0) handleFile(e.target.files[0]);
   });
 
+  // Sidebar add button
+  sidebarAddBtn.addEventListener('click', () => {
+    sidebarFileInput.click();
+  });
+
+  sidebarFileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    sidebarFileInput.value = '';
+  });
+
   // ===================== MAIN FILE HANDLER =====================
+  // pendingChat temporarily holds chat data while we wait for sender picker
+  let pendingChat = null;
+
   async function handleFile(file) {
     if (!file.name.toLowerCase().endsWith('.zip')) {
       alert('Veuillez sélectionner un fichier .zip');
@@ -112,9 +147,7 @@
         if (nameLower === '_chat.txt' || nameLower === 'chat.txt' || nameLower.endsWith('_chat.txt') || nameLower === 'whatsapp chat.txt') {
           chatText = entry;
         } else {
-          // Store media by filename
           mediaEntries[name] = { zipEntry: entry, blobUrl: null };
-          // Also store by relative path in case references use paths
           if (relativePath !== name) {
             mediaEntries[relativePath] = { zipEntry: entry, blobUrl: null };
           }
@@ -137,25 +170,65 @@
       }
 
       const text = await chatText.async('string');
-      state.mediaFiles = mediaEntries;
+      const messages = parseWhatsAppChat(text);
 
-      // Parse messages
-      state.messages = parseWhatsAppChat(text);
-
-      if (state.messages.length === 0) {
+      if (messages.length === 0) {
         alert('Impossible de parser le chat. Vérifiez le format du fichier.');
         loadingOverlay.classList.add('hidden');
         return;
       }
 
-      // Detect senders
-      detectSenders();
+      // Collect senders
+      const senderSet = new Set();
+      for (const msg of messages) {
+        if (msg.sender && !msg.isSystem) senderSet.add(msg.sender);
+      }
+      const senders = Array.from(senderSet);
 
-      // Extract chat name
-      extractChatName();
+      // Detect group name early (before sender picker) so we can exclude it
+      let detectedGroupName = null;
+      for (const msg of messages) {
+        if (!msg.sender && msg.isSystem) {
+          const gm = msg.text.match(/created group "(.+?)"/i) ||
+                     msg.text.match(/a créé le groupe "(.+?)"/i) ||
+                     msg.text.match(/changed the subject.*to "(.+?)"/i) ||
+                     msg.text.match(/a modifié l'objet.*en "(.+?)"/i);
+          if (gm) {
+            detectedGroupName = gm[1];
+          }
+        }
+      }
 
-      // Show chat screen
-      showChatScreen();
+      // Filter out the group name from the senders list if it appears
+      const filteredSenders = detectedGroupName
+        ? senders.filter(s => s !== detectedGroupName)
+        : senders;
+
+      // Store pending chat data
+      pendingChat = {
+        id: generateId(),
+        messages: messages,
+        mediaFiles: mediaEntries,
+        chatName: '',
+        senders: filteredSenders,
+        allSenders: senders, // keep original for reference
+        detectedGroupName: detectedGroupName,
+        mySender: null,
+        senderColors: {},
+        renderedRange: { start: 0, end: 0 },
+        lastMessage: '',
+        lastTime: '',
+      };
+
+      // Extract last message preview
+      const lastMsg = messages.filter(m => !m.isSystem && m.sender).pop();
+      if (lastMsg) {
+        pendingChat.lastMessage = (lastMsg.text || '').slice(0, 60);
+        pendingChat.lastTime = lastMsg.timeStr;
+      }
+
+      // Show sender picker
+      showSenderPicker(pendingChat);
 
     } catch (err) {
       console.error('Error loading ZIP:', err);
@@ -165,363 +238,176 @@
     loadingOverlay.classList.add('hidden');
   }
 
-  // ===================== WHATSAPP CHAT PARSER =====================
-  function parseWhatsAppChat(text) {
-    const messages = [];
-    const lines = text.split('\n');
+  // ===================== SENDER PICKER =====================
+  function showSenderPicker(chat) {
+    senderPickerList.innerHTML = '';
 
-    // Try to detect format by checking first few lines
-    // iOS: [DD/MM/YYYY, HH:MM:SS] Sender: Message
-    // Android: DD/MM/YYYY, HH:MM - Sender: Message  or  M/D/YY, H:MM AM/PM - Sender: Message
-
-    // Comprehensive regex patterns
-    // Pattern 1: iOS format [DD/MM/YYYY, HH:MM:SS] or [DD/MM/YYYY HH:MM:SS]
-    const iosRegex = /^\[(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:\.]\d{2}(?:[:\.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\]\s*/;
-
-    // Pattern 2: Android format DD/MM/YYYY, HH:MM - or M/D/YY, H:MM AM/PM -
-    const androidRegex = /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:\.]\d{2}(?:[:\.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
-
-    // Pattern 3: Alternate with dots or dashes in date DD.MM.YYYY or DD-MM-YYYY
-    const altDateRegex = /^(\d{1,2}[\.\-]\d{1,2}[\.\-]\d{2,4}),?\s+(\d{1,2}[:\.]\d{2}(?:[:\.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
-
-    // Unicode LTR mark that WhatsApp sometimes inserts
-    const LTR = '\u200E';
-    const RTL = '\u200F';
-    const ZWSP = '\u200B';
-    const cleanLine = (l) => l.replace(/[\u200E\u200F\u200B\u200D\u2069\u2066\uFEFF]/g, '');
-
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
-      if (!line.trim()) continue;
-
-      const cleaned = cleanLine(line);
-      let match = null;
-      let dateStr, timeStr, rest;
-
-      // Try iOS format
-      match = cleaned.match(iosRegex);
-      if (match) {
-        dateStr = match[1];
-        timeStr = match[2];
-        rest = cleaned.slice(match[0].length);
-      }
-
-      // Try Android format
-      if (!match) {
-        match = cleaned.match(androidRegex);
-        if (match) {
-          dateStr = match[1];
-          timeStr = match[2];
-          rest = cleaned.slice(match[0].length);
-        }
-      }
-
-      // Try alternate date format
-      if (!match) {
-        match = cleaned.match(altDateRegex);
-        if (match) {
-          dateStr = match[1].replace(/[\.\-]/g, '/');
-          timeStr = match[2];
-          rest = cleaned.slice(match[0].length);
-        }
-      }
-
-      if (match) {
-        // Parse date
-        const parsedDate = parseDate(dateStr);
-        const parsedTime = parseTime(timeStr);
-
-        // Extract sender and message
-        // Sender ends at first ": " — but sender can't contain newlines
-        const colonIdx = rest.indexOf(': ');
-
-        let sender = null;
-        let text = '';
-
-        if (colonIdx > 0 && colonIdx < 80) {
-          sender = rest.slice(0, colonIdx).trim();
-          text = rest.slice(colonIdx + 2);
-        } else {
-          // System message (no sender)
-          text = rest;
-        }
-
-        // Detect if it's a system message pattern
-        if (sender && isSystemMessage(sender, text)) {
-          sender = null;
-          text = rest;
-        }
-
-        messages.push({
-          id: messages.length,
-          date: parsedDate,
-          time: parsedTime,
-          timeStr: formatTime(parsedTime),
-          dateStr: formatDateFr(parsedDate),
-          sender: sender,
-          text: text,
-          isSystem: sender === null,
-          media: null, // filled later
-        });
-      } else {
-        // Continuation of previous message
-        if (messages.length > 0 && cleaned.trim()) {
-          messages[messages.length - 1].text += '\n' + cleaned;
-        }
-      }
-    }
-
-    // Post-process: detect media attachments
-    for (const msg of messages) {
-      msg.media = detectMedia(msg.text);
-      // If message is purely a media attachment, clear the text
-      if (msg.media && msg.media.type !== 'omitted') {
-        // Check if the text is just the attachment reference
-        if (isMediaOnlyText(msg.text)) {
-          msg.text = '';
-        }
-      }
-    }
-
-    return messages;
-  }
-
-  function isSystemMessage(sender, text) {
-    // Common system message patterns
-    const systemPatterns = [
-      /^Messages and calls are end-to-end encrypted/i,
-      /^Les messages et les appels sont chiffrés/i,
-      /^Nachrichten und Anrufe sind/i,
-      /created group/i,
-      /a créé le groupe/i,
-      /added/i,
-      /a ajouté/i,
-      /removed/i,
-      /a retiré/i,
-      /left$/i,
-      /a quitté$/i,
-      /changed the subject/i,
-      /a modifié l'objet/i,
-      /changed this group/i,
-      /changed the group/i,
-      /now an admin/i,
-      /Your security code/i,
-      /Votre code de sécurité/i,
-      /disappeared/i,
-      /message timer/i,
-      /les messages éphémères/i,
-      /You're now an admin/i,
-    ];
-
-    const full = sender + ': ' + text;
-    // If "sender" contains system-like phrases
-    if (/^Messages and calls|^Les messages|^Nachrichten|^You changed|^Vous avez/.test(sender)) {
-      return true;
-    }
-    for (const p of systemPatterns) {
-      if (p.test(full) || p.test(sender)) return true;
-    }
-    return false;
-  }
-
-  function detectMedia(text) {
-    if (!text) return null;
-
-    // iOS: <attached: filename.ext>
-    let m = text.match(/<(?:attached|joint):\s*(.+?)>/i);
-    if (m) return buildMediaInfo(m[1].trim());
-
-    // Android: filename.ext (file attached)
-    m = text.match(/^(.+?\.\w{2,5})\s*\(file attached\)/i);
-    if (m) return buildMediaInfo(m[1].trim());
-
-    // French: filename.ext (fichier joint)
-    m = text.match(/^(.+?\.\w{2,5})\s*\(fichier joint\)/i);
-    if (m) return buildMediaInfo(m[1].trim());
-
-    // Omitted patterns
-    if (/image omitted|imagen omitida|image absente|Bild weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'image', filename: null };
-    }
-    if (/video omitted|vídeo omitido|vidéo absente|Video weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'video', filename: null };
-    }
-    if (/audio omitted|áudio omitido|audio absent|Audio weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'audio', filename: null };
-    }
-    if (/sticker omitted|autocollant omis|Sticker weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'sticker', filename: null };
-    }
-    if (/document omitted|documento omitido|document absent|Dokument weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'document', filename: null };
-    }
-    if (/GIF omitted|GIF omis|GIF weggelassen/i.test(text)) {
-      return { type: 'omitted', mediaType: 'gif', filename: null };
-    }
-    if (/Contact card omitted|carte de contact omise/i.test(text)) {
-      return { type: 'omitted', mediaType: 'contact', filename: null };
-    }
-    // Generic omitted
-    if (/\bomitted\b|\bomis\b|\babsent[e]?\b|\bweggelassen\b/i.test(text)) {
-      return { type: 'omitted', mediaType: 'unknown', filename: null };
-    }
-
-    return null;
-  }
-
-  function buildMediaInfo(filename) {
-    const ext = filename.split('.').pop().toLowerCase();
-    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'];
-    const videoExts = ['mp4', 'mov', 'avi', 'mkv', '3gp', 'webm'];
-    const audioExts = ['opus', 'mp3', 'wav', 'ogg', 'm4a', 'aac'];
-
-    let mediaType = 'document';
-    if (imageExts.includes(ext)) mediaType = 'image';
-    else if (videoExts.includes(ext)) mediaType = 'video';
-    else if (audioExts.includes(ext)) mediaType = 'audio';
-
-    return { type: 'file', mediaType, filename };
-  }
-
-  function isMediaOnlyText(text) {
-    if (!text) return true;
-    const cleaned = text.trim();
-    // Check if text is only the attachment pattern
-    if (/<(?:attached|joint):\s*.+?>/i.test(cleaned) && cleaned.match(/<(?:attached|joint):\s*.+?>/i)[0].length >= cleaned.length - 5) return true;
-    if (/^.+?\.\w{2,5}\s*\((?:file attached|fichier joint)\)$/i.test(cleaned)) return true;
-    if (/^.?\s*(?:image|video|audio|sticker|document|GIF|Contact card)\s*(?:omitted|omis|absent[e]?|weggelassen)/i.test(cleaned)) return true;
-    return false;
-  }
-
-  function parseDate(str) {
-    // Handle DD/MM/YYYY, DD/MM/YY, M/D/YY, M/D/YYYY
-    const parts = str.split('/');
-    if (parts.length !== 3) return new Date();
-
-    let a = parseInt(parts[0], 10);
-    let b = parseInt(parts[1], 10);
-    let c = parseInt(parts[2], 10);
-
-    // Fix 2-digit year
-    if (c < 100) c += 2000;
-
-    // Determine if DD/MM/YYYY or MM/DD/YYYY
-    // Heuristic: if first part > 12, it must be the day (DD/MM)
-    // If second part > 12, it must be the day (MM/DD)
-    // Otherwise, default to DD/MM (more common globally / WhatsApp default)
-    let day, month, year;
-
-    if (a > 12) {
-      // DD/MM/YYYY
-      day = a; month = b; year = c;
-    } else if (b > 12) {
-      // MM/DD/YYYY
-      month = a; day = b; year = c;
-    } else {
-      // Ambiguous — default to DD/MM/YYYY (WhatsApp default for most locales)
-      day = a; month = b; year = c;
-    }
-
-    return new Date(year, month - 1, day);
-  }
-
-  function parseTime(str) {
-    let cleaned = str.trim();
-    // Normalize a.m./p.m. to AM/PM
-    cleaned = cleaned.replace(/\ba\.?\s*m\.?/i, 'AM').replace(/\bp\.?\s*m\.?/i, 'PM');
-    const isPM = /PM/i.test(cleaned);
-    const isAM = /AM/i.test(cleaned);
-    const timePart = cleaned.replace(/\s*[AaPp][Mm]/i, '').replace(/\s*AM|PM/gi, '').trim();
-    // Split by : or .
-    const parts = timePart.split(/[:\.]/);
-
-    let hours = parseInt(parts[0], 10) || 0;
-    const minutes = parseInt(parts[1], 10) || 0;
-    const seconds = parts[2] ? parseInt(parts[2], 10) : 0;
-
-    if (isPM && hours < 12) hours += 12;
-    if (isAM && hours === 12) hours = 0;
-
-    return { hours, minutes, seconds };
-  }
-
-  function formatTime(t) {
-    return String(t.hours).padStart(2, '0') + ':' + String(t.minutes).padStart(2, '0');
-  }
-
-  function formatDateFr(date) {
-    if (!(date instanceof Date) || isNaN(date)) return '';
-    return date.getDate() + ' ' + MONTHS_FR[date.getMonth()] + ' ' + date.getFullYear();
-  }
-
-  // ===================== SENDERS & CHAT NAME =====================
-  function detectSenders() {
-    const senderSet = new Set();
-    let firstSender = null;
-
-    for (const msg of state.messages) {
+    // Count messages per sender
+    const counts = {};
+    for (const msg of chat.messages) {
       if (msg.sender && !msg.isSystem) {
-        if (!firstSender) firstSender = msg.sender;
-        senderSet.add(msg.sender);
+        counts[msg.sender] = (counts[msg.sender] || 0) + 1;
       }
     }
 
-    state.senders = Array.from(senderSet);
-    state.mySender = firstSender;
+    for (const sender of chat.senders) {
+      const btn = document.createElement('button');
+      btn.className = 'sender-picker-btn';
 
-    // Assign colors
+      const initials = sender.split(' ').map(w => w[0] || '').slice(0, 2).join('').toUpperCase();
+      const count = counts[sender] || 0;
+
+      btn.innerHTML =
+        '<span class="picker-avatar">' + escapeHtml(initials) + '</span>' +
+        '<span class="picker-name">' + escapeHtml(sender) + '</span>' +
+        '<span class="picker-count">' + count + ' msg</span>';
+
+      btn.addEventListener('click', () => selectSender(sender));
+      senderPickerList.appendChild(btn);
+    }
+
+    senderPickerOverlay.classList.remove('hidden');
+  }
+
+  function selectSender(sender) {
+    if (!pendingChat) return;
+
+    pendingChat.mySender = sender;
+    senderPickerOverlay.classList.add('hidden');
+
+    // Assign colors to other senders
+    pendingChat.senderColors = {};
     let colorIdx = 0;
-    for (const s of state.senders) {
-      if (s === state.mySender) continue;
-      state.senderColors[s] = SENDER_COLORS[colorIdx % SENDER_COLORS.length];
+    for (const s of pendingChat.senders) {
+      if (s === sender) continue;
+      pendingChat.senderColors[s] = SENDER_COLORS[colorIdx % SENDER_COLORS.length];
       colorIdx++;
     }
+
+    // Extract chat name
+    extractChatName(pendingChat);
+
+    // Add to chats array
+    chats.push(pendingChat);
+
+    // Switch to chat screen
+    if (!chatScreen.classList.contains('active')) {
+      dropZoneScreen.classList.remove('active');
+      chatScreen.classList.add('active');
+    }
+
+    // Update sidebar
+    refreshSidebar();
+
+    // Activate this chat
+    setActiveChat(pendingChat.id);
+
+    pendingChat = null;
   }
 
-  function extractChatName() {
-    // For 1-on-1 chats, the name is the other person
-    // For group chats, look for "created group X" pattern or use all non-self senders
-    const isGroup = state.senders.length > 2;
+  function extractChatName(chat) {
+    // If we already detected a group name during parsing, use it
+    if (chat.detectedGroupName) {
+      chat.chatName = chat.detectedGroupName;
+      return;
+    }
+
+    const isGroup = chat.senders.length > 2;
 
     // Try to find group name from system messages
-    for (const msg of state.messages) {
+    for (const msg of chat.messages) {
       if (msg.isSystem) {
         const m = msg.text.match(/created group "(.+?)"/i) ||
                   msg.text.match(/a créé le groupe "(.+?)"/i) ||
                   msg.text.match(/changed the subject.*to "(.+?)"/i) ||
                   msg.text.match(/a modifié l'objet.*en "(.+?)"/i);
         if (m) {
-          state.chatName = m[1];
+          chat.chatName = m[1];
           return;
         }
       }
     }
 
     if (isGroup) {
-      // Use list of non-self senders
-      const others = state.senders.filter(s => s !== state.mySender);
-      state.chatName = others.slice(0, 3).join(', ') + (others.length > 3 ? '...' : '');
+      const others = chat.senders.filter(s => s !== chat.mySender);
+      chat.chatName = others.slice(0, 3).join(', ') + (others.length > 3 ? '...' : '');
     } else {
-      // 1-on-1: the other person
-      const other = state.senders.find(s => s !== state.mySender);
-      state.chatName = other || state.mySender || 'Chat';
+      const other = chat.senders.find(s => s !== chat.mySender);
+      chat.chatName = other || chat.mySender || 'Chat';
     }
   }
 
-  // ===================== SHOW CHAT SCREEN =====================
-  function showChatScreen() {
-    dropZoneScreen.classList.remove('active');
-    chatScreen.classList.add('active');
+  // ===================== SIDEBAR =====================
+  function refreshSidebar() {
+    sidebarList.innerHTML = '';
 
-    headerName.textContent = state.chatName;
-    const isGroup = state.senders.length > 2;
-    if (isGroup) {
-      headerStatus.textContent = state.senders.length + ' participants';
-    } else {
-      headerStatus.textContent = '';
+    if (chats.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'sidebar-empty';
+      empty.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg><p>Ajoutez un export WhatsApp (.zip) avec le bouton +</p>';
+      sidebarList.appendChild(empty);
+      return;
     }
 
-    renderMessages();
+    for (const chat of chats) {
+      const item = document.createElement('div');
+      item.className = 'sidebar-chat-item' + (chat.id === activeChatId ? ' active' : '');
+      item.dataset.chatId = chat.id;
+
+      const initials = chat.chatName.split(' ').map(w => w[0] || '').slice(0, 2).join('').toUpperCase();
+
+      // Get the last non-system message for preview
+      let preview = chat.lastMessage || '';
+      let time = chat.lastTime || '';
+      if (!preview) {
+        const lastMsg = chat.messages.filter(m => !m.isSystem && m.sender).pop();
+        if (lastMsg) {
+          preview = lastMsg.text ? lastMsg.text.slice(0, 60) : (lastMsg.media ? '📎 Média' : '');
+          time = lastMsg.timeStr;
+        }
+      }
+
+      item.innerHTML =
+        '<div class="sidebar-chat-avatar">' + escapeHtml(initials) + '</div>' +
+        '<div class="sidebar-chat-info">' +
+          '<div class="sidebar-chat-top">' +
+            '<span class="sidebar-chat-name">' + escapeHtml(chat.chatName) + '</span>' +
+            '<span class="sidebar-chat-time">' + escapeHtml(time) + '</span>' +
+          '</div>' +
+          '<div class="sidebar-chat-preview">' + escapeHtml(preview) + '</div>' +
+        '</div>';
+
+      item.addEventListener('click', () => setActiveChat(chat.id));
+      sidebarList.appendChild(item);
+    }
+  }
+
+  // ===================== ACTIVATE A CHAT =====================
+  function setActiveChat(chatId) {
+    activeChatId = chatId;
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    // Close search if open
+    closeSearch();
+
+    // Update sidebar active state
+    sidebarList.querySelectorAll('.sidebar-chat-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.chatId === chatId);
+    });
+
+    // Update header
+    headerName.textContent = chat.chatName;
+    const isGroup = chat.senders.length > 2;
+    headerStatus.textContent = isGroup ? chat.senders.length + ' participants' : '';
+
+    // Show chat content, hide empty state
+    chatArea.classList.remove('hidden');
+    chatHeader.classList.remove('hidden');
+    chatEmptyState.classList.add('hidden');
+
+    // Render messages
+    renderMessages(chat);
 
     // Scroll to bottom
     requestAnimationFrame(() => {
@@ -529,45 +415,39 @@
     });
   }
 
+  // ===================== SHOW CHAT SCREEN (from drop zone) =====================
+  function showChatScreen() {
+    dropZoneScreen.classList.remove('active');
+    chatScreen.classList.add('active');
+  }
+
   // ===================== VIRTUAL / CHUNK RENDERING =====================
-  // Strategy: Render messages in chunks. Start by rendering the last N messages,
-  // then load more as user scrolls up. This keeps DOM light for large chats.
-
-  const CHUNK_SIZE = 100; // messages per chunk
-  const INITIAL_RENDER = 150; // initial messages from the end
-  let allRenderedElements = []; // Track rendered msg elements for search
-  let topLoadingMore = false;
-
-  function renderMessages() {
+  function renderMessages(chat) {
     messagesContainer.innerHTML = '';
     allRenderedElements = [];
 
-    const total = state.messages.length;
+    const total = chat.messages.length;
     const startIdx = Math.max(0, total - INITIAL_RENDER);
-    state.renderedRange.start = startIdx;
-    state.renderedRange.end = total;
+    chat.renderedRange = { start: startIdx, end: total };
 
-    renderChunk(startIdx, total);
+    renderChunk(chat, startIdx, total);
 
-    // Set up scroll listener for infinite scroll up
+    // Rebind scroll listener
+    chatArea.removeEventListener('scroll', handleScroll);
     chatArea.addEventListener('scroll', handleScroll, { passive: true });
   }
 
-  function renderChunk(start, end) {
+  function renderChunk(chat, start, end) {
     const fragment = document.createDocumentFragment();
     let prevDate = null;
     let prevSender = null;
 
-    // If prepending, we need to know the date context
-    if (start > 0 && state.renderedRange.start < state.messages.length) {
-      // Check if there's an existing date context
-    }
     if (start > 0) {
-      prevDate = start > 0 ? getDateKey(state.messages[start - 1].date) : null;
+      prevDate = getDateKey(chat.messages[start - 1].date);
     }
 
     for (let i = start; i < end; i++) {
-      const msg = state.messages[i];
+      const msg = chat.messages[i];
       const currentDateKey = getDateKey(msg.date);
 
       // Date separator
@@ -579,18 +459,16 @@
       }
 
       // Message element
-      const el = createMessageElement(msg, prevSender);
+      const el = createMessageElement(msg, prevSender, chat);
       el.dataset.msgId = i;
       fragment.appendChild(el);
       allRenderedElements.push({ idx: i, el });
       prevSender = msg.sender;
     }
 
-    if (start < state.renderedRange.start || messagesContainer.children.length === 0) {
-      // Prepend
+    if (start < chat.renderedRange.start || messagesContainer.children.length === 0) {
       const scrollHeightBefore = messagesContainer.scrollHeight;
       messagesContainer.prepend(fragment);
-      // Maintain scroll position
       const diff = messagesContainer.scrollHeight - scrollHeightBefore;
       chatArea.scrollTop += diff;
     } else {
@@ -599,17 +477,20 @@
   }
 
   function handleScroll() {
+    const chat = getActiveChat();
+    if (!chat) return;
+
     const scrollTop = chatArea.scrollTop;
     const scrollHeight = chatArea.scrollHeight;
     const clientHeight = chatArea.clientHeight;
 
     // Load more messages when scrolling near top
-    if (scrollTop < 200 && state.renderedRange.start > 0 && !topLoadingMore) {
+    if (scrollTop < 200 && chat.renderedRange.start > 0 && !topLoadingMore) {
       topLoadingMore = true;
-      const newStart = Math.max(0, state.renderedRange.start - CHUNK_SIZE);
-      const oldStart = state.renderedRange.start;
-      state.renderedRange.start = newStart;
-      renderChunk(newStart, oldStart);
+      const newStart = Math.max(0, chat.renderedRange.start - CHUNK_SIZE);
+      const oldStart = chat.renderedRange.start;
+      chat.renderedRange.start = newStart;
+      renderChunk(chat, newStart, oldStart);
       topLoadingMore = false;
     }
 
@@ -625,7 +506,6 @@
   }
 
   function updateStickyDate() {
-    // Find the first visible date separator
     const containers = messagesContainer.children;
     const areaRect = chatArea.getBoundingClientRect();
     let currentDate = null;
@@ -665,7 +545,7 @@
     return div;
   }
 
-  function createMessageElement(msg, prevSender) {
+  function createMessageElement(msg, prevSender, chat) {
     if (msg.isSystem) {
       const div = document.createElement('div');
       div.className = 'system-message';
@@ -673,8 +553,8 @@
       return div;
     }
 
-    const isOutgoing = msg.sender === state.mySender;
-    const isGroup = state.senders.length > 2;
+    const isOutgoing = msg.sender === chat.mySender;
+    const isGroup = chat.senders.length > 2;
     const showTail = msg.sender !== prevSender;
 
     const row = document.createElement('div');
@@ -688,13 +568,13 @@
       const sName = document.createElement('span');
       sName.className = 'sender-name';
       sName.textContent = msg.sender;
-      sName.style.color = state.senderColors[msg.sender] || SENDER_COLORS[0];
+      sName.style.color = chat.senderColors[msg.sender] || SENDER_COLORS[0];
       bubble.appendChild(sName);
     }
 
     // Media content
     if (msg.media) {
-      const mediaEl = createMediaElement(msg.media);
+      const mediaEl = createMediaElement(msg.media, chat);
       bubble.appendChild(mediaEl);
     }
 
@@ -714,7 +594,6 @@
     timeEl.textContent = msg.timeStr;
     meta.appendChild(timeEl);
 
-    // Add read receipt check for outgoing messages
     if (isOutgoing) {
       const check = document.createElement('span');
       check.className = 'message-check';
@@ -727,7 +606,7 @@
     return row;
   }
 
-  function createMediaElement(media) {
+  function createMediaElement(media, chat) {
     if (media.type === 'omitted') {
       const div = document.createElement('div');
       div.className = 'media-omitted';
@@ -745,8 +624,7 @@
       return div;
     }
 
-    // Try to find the file in our media files
-    const entry = findMediaFile(media.filename);
+    const entry = findMediaFile(media.filename, chat);
 
     if (media.mediaType === 'image') {
       const container = document.createElement('div');
@@ -756,7 +634,6 @@
       img.loading = 'lazy';
 
       if (entry) {
-        // Lazy load blob URL
         img.dataset.filename = media.filename;
         img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="260" height="180"><rect fill="#1a2a33" width="260" height="180"/><text fill="#5a6a73" x="130" y="95" text-anchor="middle" font-size="13">Chargement...</text></svg>');
         loadMediaBlob(media.filename, entry).then(url => {
@@ -791,7 +668,6 @@
       const container = document.createElement('div');
       container.className = 'voice-note';
 
-      // Create a simple audio-based voice note
       const audio = document.createElement('audio');
       audio.preload = 'metadata';
 
@@ -801,7 +677,6 @@
 
       const waveContainer = document.createElement('div');
       waveContainer.className = 'voice-note-wave';
-      // Generate fake waveform bars
       const barCount = 30;
       for (let i = 0; i < barCount; i++) {
         const bar = document.createElement('div');
@@ -844,11 +719,9 @@
       audio.addEventListener('ended', () => {
         isPlaying = false;
         playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-        // Reset waveform
         waveContainer.querySelectorAll('.voice-note-bar').forEach(b => b.classList.remove('played'));
       });
 
-      // Update waveform progress
       audio.addEventListener('timeupdate', () => {
         if (!audio.duration) return;
         const progress = audio.currentTime / audio.duration;
@@ -894,31 +767,27 @@
     return docDiv;
   }
 
-  function findMediaFile(filename) {
+  function findMediaFile(filename, chat) {
     if (!filename) return null;
+    const mf = chat.mediaFiles;
 
-    // Direct match
-    if (state.mediaFiles[filename]) return state.mediaFiles[filename];
+    if (mf[filename]) return mf[filename];
 
-    // Try without path
     const baseName = filename.split('/').pop();
-    if (state.mediaFiles[baseName]) return state.mediaFiles[baseName];
+    if (mf[baseName]) return mf[baseName];
 
-    // Try case-insensitive match
     const filenameLower = filename.toLowerCase();
-    for (const key in state.mediaFiles) {
+    for (const key in mf) {
       if (key.toLowerCase() === filenameLower || key.split('/').pop().toLowerCase() === filenameLower) {
-        return state.mediaFiles[key];
+        return mf[key];
       }
     }
 
-    // Try partial match (WhatsApp sometimes renames files)
-    // Match by base name without extension
     const nameWithoutExt = baseName.replace(/\.\w+$/, '').toLowerCase();
-    for (const key in state.mediaFiles) {
+    for (const key in mf) {
       const keyBase = key.split('/').pop().replace(/\.\w+$/, '').toLowerCase();
       if (keyBase === nameWithoutExt) {
-        return state.mediaFiles[key];
+        return mf[key];
       }
     }
 
@@ -960,7 +829,7 @@
 
   // ===================== SEARCH =====================
   searchBtn.addEventListener('click', () => {
-    state.isSearchOpen = true;
+    searchState.isOpen = true;
     chatHeader.classList.add('hidden');
     searchBar.classList.remove('hidden');
     searchInput.focus();
@@ -969,15 +838,14 @@
   searchCloseBtn.addEventListener('click', closeSearch);
 
   function closeSearch() {
-    state.isSearchOpen = false;
+    searchState.isOpen = false;
     searchBar.classList.add('hidden');
     chatHeader.classList.remove('hidden');
     searchInput.value = '';
     searchCount.textContent = '';
-    state.searchResults = [];
-    state.searchIndex = -1;
-    state.searchTerm = '';
-    // Remove highlights
+    searchState.results = [];
+    searchState.index = -1;
+    searchState.term = '';
     clearSearchHighlights();
   }
 
@@ -986,9 +854,9 @@
     if (term.length < 2) {
       clearSearchHighlights();
       searchCount.textContent = '';
-      state.searchResults = [];
-      state.searchIndex = -1;
-      state.searchTerm = '';
+      searchState.results = [];
+      searchState.index = -1;
+      searchState.term = '';
       return;
     }
     performSearch(term);
@@ -1007,36 +875,38 @@
   searchDownBtn.addEventListener('click', () => navigateSearch(1));
 
   function performSearch(term) {
-    state.searchTerm = term;
-    state.searchResults = [];
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    searchState.term = term;
+    searchState.results = [];
     const lower = term.toLowerCase();
 
-    for (let i = 0; i < state.messages.length; i++) {
-      const msg = state.messages[i];
+    for (let i = 0; i < chat.messages.length; i++) {
+      const msg = chat.messages[i];
       if (msg.text && msg.text.toLowerCase().includes(lower)) {
-        state.searchResults.push(i);
+        searchState.results.push(i);
       }
     }
 
-    searchCount.textContent = state.searchResults.length + ' résultat' + (state.searchResults.length !== 1 ? 's' : '');
+    searchCount.textContent = searchState.results.length + ' résultat' + (searchState.results.length !== 1 ? 's' : '');
 
-    // Highlight in currently rendered messages
     highlightSearchResults();
 
-    if (state.searchResults.length > 0) {
-      state.searchIndex = state.searchResults.length - 1; // start from most recent
-      scrollToSearchResult(state.searchIndex);
+    if (searchState.results.length > 0) {
+      searchState.index = searchState.results.length - 1;
+      scrollToSearchResult(searchState.index);
     } else {
-      state.searchIndex = -1;
+      searchState.index = -1;
     }
   }
 
   function highlightSearchResults() {
     clearSearchHighlights();
-    if (!state.searchTerm) return;
+    if (!searchState.term) return;
 
     const elements = messagesContainer.querySelectorAll('.message-text');
-    const term = state.searchTerm;
+    const term = searchState.term;
     const regex = new RegExp('(' + escapeRegex(term) + ')', 'gi');
 
     elements.forEach(el => {
@@ -1048,8 +918,6 @@
   }
 
   function clearSearchHighlights() {
-    const highlighted = messagesContainer.querySelectorAll('.search-highlight');
-    // Rebuild text without highlights
     const elements = messagesContainer.querySelectorAll('.message-text');
     elements.forEach(el => {
       if (el.querySelector('.search-highlight')) {
@@ -1060,34 +928,33 @@
   }
 
   function navigateSearch(direction) {
-    if (state.searchResults.length === 0) return;
+    if (searchState.results.length === 0) return;
 
-    state.searchIndex += direction;
-    if (state.searchIndex < 0) state.searchIndex = state.searchResults.length - 1;
-    if (state.searchIndex >= state.searchResults.length) state.searchIndex = 0;
+    searchState.index += direction;
+    if (searchState.index < 0) searchState.index = searchState.results.length - 1;
+    if (searchState.index >= searchState.results.length) searchState.index = 0;
 
-    searchCount.textContent = (state.searchIndex + 1) + '/' + state.searchResults.length;
-    scrollToSearchResult(state.searchIndex);
+    searchCount.textContent = (searchState.index + 1) + '/' + searchState.results.length;
+    scrollToSearchResult(searchState.index);
   }
 
   function scrollToSearchResult(searchIdx) {
-    const msgIdx = state.searchResults[searchIdx];
+    const chat = getActiveChat();
+    if (!chat) return;
 
-    // Ensure message is rendered
-    if (msgIdx < state.renderedRange.start) {
-      // Need to render earlier messages
+    const msgIdx = searchState.results[searchIdx];
+
+    if (msgIdx < chat.renderedRange.start) {
       const newStart = Math.max(0, msgIdx - 20);
-      const oldStart = state.renderedRange.start;
-      state.renderedRange.start = newStart;
-      renderChunk(newStart, oldStart);
+      const oldStart = chat.renderedRange.start;
+      chat.renderedRange.start = newStart;
+      renderChunk(chat, newStart, oldStart);
     }
 
-    // Find the element
     const msgEl = messagesContainer.querySelector('[data-msg-id="' + msgIdx + '"]');
     if (msgEl) {
       msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Highlight the active result
       highlightSearchResults();
       const marks = msgEl.querySelectorAll('.search-highlight');
       if (marks.length > 0) {
@@ -1103,25 +970,280 @@
 
   // ===================== BACK BUTTON =====================
   backBtn.addEventListener('click', () => {
-    // Reset and go back to upload screen
-    state.messages = [];
-    state.mediaFiles = {};
-    state.chatName = '';
-    state.senders = [];
-    state.mySender = null;
-    state.senderColors = {};
-    state.renderedRange = { start: 0, end: 0 };
-    state.searchResults = [];
-    state.searchIndex = -1;
-    state.searchTerm = '';
-    state.isSearchOpen = false;
-    allRenderedElements = [];
-    messagesContainer.innerHTML = '';
-    closeSearch();
-
-    chatScreen.classList.remove('active');
-    dropZoneScreen.classList.add('active');
+    if (currentView === 'ipad' || currentView === 'full') {
+      // In iPad/fullscreen mode, deselect chat (show empty state)
+      activeChatId = null;
+      messagesContainer.innerHTML = '';
+      chatArea.classList.add('hidden');
+      chatHeader.classList.add('hidden');
+      chatEmptyState.classList.remove('hidden');
+      closeSearch();
+      refreshSidebar();
+    } else {
+      // Phone mode — if only one chat, go back to drop zone
+      // If multiple chats, switch to iPad mode so they can pick
+      if (chats.length <= 1) {
+        // Reset everything
+        chats.length = 0;
+        activeChatId = null;
+        allRenderedElements = [];
+        messagesContainer.innerHTML = '';
+        closeSearch();
+        chatScreen.classList.remove('active');
+        chatScreen.classList.remove('fullscreen-mode');
+        chatScreen.classList.remove('ipad-mode');
+        dropZoneScreen.classList.add('active');
+      } else {
+        // Switch to iPad mode to show sidebar
+        switchView('ipad');
+      }
+    }
   });
+
+  // ===================== WHATSAPP CHAT PARSER =====================
+  function parseWhatsAppChat(text) {
+    const messages = [];
+    const lines = text.split('\n');
+
+    const iosRegex = /^\[(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\]\s*/;
+    const androidRegex = /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
+    const altDateRegex = /^(\d{1,2}[.\-]\d{1,2}[.\-]\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
+
+    const cleanLine = (l) => l.replace(/[\u200E\u200F\u200B\u200D\u2069\u2066\uFEFF]/g, '');
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+      if (!line.trim()) continue;
+
+      const cleaned = cleanLine(line);
+      let match = null;
+      let dateStr, timeStr, rest;
+
+      match = cleaned.match(iosRegex);
+      if (match) {
+        dateStr = match[1];
+        timeStr = match[2];
+        rest = cleaned.slice(match[0].length);
+      }
+
+      if (!match) {
+        match = cleaned.match(androidRegex);
+        if (match) {
+          dateStr = match[1];
+          timeStr = match[2];
+          rest = cleaned.slice(match[0].length);
+        }
+      }
+
+      if (!match) {
+        match = cleaned.match(altDateRegex);
+        if (match) {
+          dateStr = match[1].replace(/[.\-]/g, '/');
+          timeStr = match[2];
+          rest = cleaned.slice(match[0].length);
+        }
+      }
+
+      if (match) {
+        const parsedDate = parseDate(dateStr);
+        const parsedTime = parseTime(timeStr);
+
+        const colonIdx = rest.indexOf(': ');
+
+        let sender = null;
+        let text = '';
+
+        if (colonIdx > 0 && colonIdx < 80) {
+          sender = rest.slice(0, colonIdx).trim();
+          text = rest.slice(colonIdx + 2);
+        } else {
+          text = rest;
+        }
+
+        if (sender && isSystemMessage(sender, text)) {
+          sender = null;
+          text = rest;
+        }
+
+        messages.push({
+          id: messages.length,
+          date: parsedDate,
+          time: parsedTime,
+          timeStr: formatTime(parsedTime),
+          dateStr: formatDateFr(parsedDate),
+          sender: sender,
+          text: text,
+          isSystem: sender === null,
+          media: null,
+        });
+      } else {
+        if (messages.length > 0 && cleaned.trim()) {
+          messages[messages.length - 1].text += '\n' + cleaned;
+        }
+      }
+    }
+
+    // Post-process: detect media attachments
+    for (const msg of messages) {
+      msg.media = detectMedia(msg.text);
+      if (msg.media && msg.media.type !== 'omitted') {
+        if (isMediaOnlyText(msg.text)) {
+          msg.text = '';
+        }
+      }
+    }
+
+    return messages;
+  }
+
+  function isSystemMessage(sender, text) {
+    const systemPatterns = [
+      /^Messages and calls are end-to-end encrypted/i,
+      /^Les messages et les appels sont chiffrés/i,
+      /^Nachrichten und Anrufe sind/i,
+      /created group/i,
+      /a créé le groupe/i,
+      /added/i,
+      /a ajouté/i,
+      /removed/i,
+      /a retiré/i,
+      /left$/i,
+      /a quitté$/i,
+      /changed the subject/i,
+      /a modifié l'objet/i,
+      /changed this group/i,
+      /changed the group/i,
+      /now an admin/i,
+      /Your security code/i,
+      /Votre code de sécurité/i,
+      /disappeared/i,
+      /message timer/i,
+      /les messages éphémères/i,
+      /You're now an admin/i,
+    ];
+
+    const full = sender + ': ' + text;
+    if (/^Messages and calls|^Les messages|^Nachrichten|^You changed|^Vous avez/.test(sender)) {
+      return true;
+    }
+    for (const p of systemPatterns) {
+      if (p.test(full) || p.test(sender)) return true;
+    }
+    return false;
+  }
+
+  function detectMedia(text) {
+    if (!text) return null;
+
+    let m = text.match(/<(?:attached|joint):\s*(.+?)>/i);
+    if (m) return buildMediaInfo(m[1].trim());
+
+    m = text.match(/^(.+?\.\w{2,5})\s*\(file attached\)/i);
+    if (m) return buildMediaInfo(m[1].trim());
+
+    m = text.match(/^(.+?\.\w{2,5})\s*\(fichier joint\)/i);
+    if (m) return buildMediaInfo(m[1].trim());
+
+    if (/image omitted|imagen omitida|image absente|Bild weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'image', filename: null };
+    }
+    if (/video omitted|vídeo omitido|vidéo absente|Video weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'video', filename: null };
+    }
+    if (/audio omitted|áudio omitido|audio absent|Audio weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'audio', filename: null };
+    }
+    if (/sticker omitted|autocollant omis|Sticker weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'sticker', filename: null };
+    }
+    if (/document omitted|documento omitido|document absent|Dokument weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'document', filename: null };
+    }
+    if (/GIF omitted|GIF omis|GIF weggelassen/i.test(text)) {
+      return { type: 'omitted', mediaType: 'gif', filename: null };
+    }
+    if (/Contact card omitted|carte de contact omise/i.test(text)) {
+      return { type: 'omitted', mediaType: 'contact', filename: null };
+    }
+    if (/\bomitted\b|\bomis\b|\babsent[e]?\b|\bweggelassen\b/i.test(text)) {
+      return { type: 'omitted', mediaType: 'unknown', filename: null };
+    }
+
+    return null;
+  }
+
+  function buildMediaInfo(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'];
+    const videoExts = ['mp4', 'mov', 'avi', 'mkv', '3gp', 'webm'];
+    const audioExts = ['opus', 'mp3', 'wav', 'ogg', 'm4a', 'aac'];
+
+    let mediaType = 'document';
+    if (imageExts.includes(ext)) mediaType = 'image';
+    else if (videoExts.includes(ext)) mediaType = 'video';
+    else if (audioExts.includes(ext)) mediaType = 'audio';
+
+    return { type: 'file', mediaType, filename };
+  }
+
+  function isMediaOnlyText(text) {
+    if (!text) return true;
+    const cleaned = text.trim();
+    if (/<(?:attached|joint):\s*.+?>/i.test(cleaned) && cleaned.match(/<(?:attached|joint):\s*.+?>/i)[0].length >= cleaned.length - 5) return true;
+    if (/^.+?\.\w{2,5}\s*\((?:file attached|fichier joint)\)$/i.test(cleaned)) return true;
+    if (/^.?\s*(?:image|video|audio|sticker|document|GIF|Contact card)\s*(?:omitted|omis|absent[e]?|weggelassen)/i.test(cleaned)) return true;
+    return false;
+  }
+
+  function parseDate(str) {
+    const parts = str.split('/');
+    if (parts.length !== 3) return new Date();
+
+    let a = parseInt(parts[0], 10);
+    let b = parseInt(parts[1], 10);
+    let c = parseInt(parts[2], 10);
+
+    if (c < 100) c += 2000;
+
+    let day, month, year;
+
+    if (a > 12) {
+      day = a; month = b; year = c;
+    } else if (b > 12) {
+      month = a; day = b; year = c;
+    } else {
+      day = a; month = b; year = c;
+    }
+
+    return new Date(year, month - 1, day);
+  }
+
+  function parseTime(str) {
+    let cleaned = str.trim();
+    cleaned = cleaned.replace(/\ba\.?\s*m\.?/i, 'AM').replace(/\bp\.?\s*m\.?/i, 'PM');
+    const isPM = /PM/i.test(cleaned);
+    const isAM = /AM/i.test(cleaned);
+    const timePart = cleaned.replace(/\s*[AaPp][Mm]/i, '').replace(/\s*AM|PM/gi, '').trim();
+    const parts = timePart.split(/[:.]/);
+
+    let hours = parseInt(parts[0], 10) || 0;
+    const minutes = parseInt(parts[1], 10) || 0;
+    const seconds = parts[2] ? parseInt(parts[2], 10) : 0;
+
+    if (isPM && hours < 12) hours += 12;
+    if (isAM && hours === 12) hours = 0;
+
+    return { hours, minutes, seconds };
+  }
+
+  function formatTime(t) {
+    return String(t.hours).padStart(2, '0') + ':' + String(t.minutes).padStart(2, '0');
+  }
+
+  function formatDateFr(date) {
+    if (!(date instanceof Date) || isNaN(date)) return '';
+    return date.getDate() + ' ' + MONTHS_FR[date.getMonth()] + ' ' + date.getFullYear();
+  }
 
   // ===================== UTILITY FUNCTIONS =====================
   function escapeHtml(str) {
@@ -1135,7 +1257,6 @@
   }
 
   function linkify(html) {
-    // Convert URLs to clickable links
     return html.replace(
       /(https?:\/\/[^\s<]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#53bdeb;text-decoration:underline;">$1</a>'
@@ -1153,10 +1274,12 @@
   // ===================== VIEW TOGGLE =====================
   const viewToggle = $('view-toggle');
   const btnPhone = $('btn-phone');
+  const btnIpad = $('btn-ipad');
   const btnFull = $('btn-full');
-  let currentView = 'phone'; // 'phone' or 'full'
+  let currentView = 'phone'; // 'phone', 'ipad', or 'full'
 
   btnPhone.addEventListener('click', () => switchView('phone'));
+  btnIpad.addEventListener('click', () => switchView('ipad'));
   btnFull.addEventListener('click', () => switchView('full'));
 
   function switchView(mode) {
@@ -1169,12 +1292,48 @@
       : 1;
 
     btnPhone.classList.toggle('active', mode === 'phone');
+    btnIpad.classList.toggle('active', mode === 'ipad');
     btnFull.classList.toggle('active', mode === 'full');
+
+    chatScreen.classList.remove('fullscreen-mode', 'ipad-mode');
 
     if (mode === 'full') {
       chatScreen.classList.add('fullscreen-mode');
-    } else {
-      chatScreen.classList.remove('fullscreen-mode');
+      refreshSidebar();
+
+      // Same empty-state logic as iPad
+      if (!activeChatId && chats.length > 0) {
+        chatArea.classList.add('hidden');
+        chatHeader.classList.add('hidden');
+        chatEmptyState.classList.remove('hidden');
+      } else if (activeChatId) {
+        chatArea.classList.remove('hidden');
+        chatHeader.classList.remove('hidden');
+        chatEmptyState.classList.add('hidden');
+      }
+    } else if (mode === 'ipad') {
+      chatScreen.classList.add('ipad-mode');
+      refreshSidebar();
+
+      // If we have chats but no active one, show empty state
+      if (!activeChatId && chats.length > 0) {
+        chatArea.classList.add('hidden');
+        chatHeader.classList.add('hidden');
+        chatEmptyState.classList.remove('hidden');
+      } else if (activeChatId) {
+        chatArea.classList.remove('hidden');
+        chatHeader.classList.remove('hidden');
+        chatEmptyState.classList.add('hidden');
+      }
+    }
+
+    // In phone mode, hide sidebar/empty state and ensure chat is visible
+    if (mode === 'phone') {
+      chatEmptyState.classList.add('hidden');
+      if (activeChatId) {
+        chatArea.classList.remove('hidden');
+        chatHeader.classList.remove('hidden');
+      }
     }
 
     // Restore scroll position after layout reflow

@@ -47,93 +47,112 @@
       <button class="view-toggle-btn active" id="btn-phone" title="Vue téléphone">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z"/></svg>
       </button>
+      <button class="view-toggle-btn" id="btn-ipad" title="Vue iPad">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.5 0h-14C3.12 0 2 1.12 2 2.5v19C2 22.88 3.12 24 4.5 24h14c1.38 0 2.5-1.12 2.5-2.5v-19C21 1.12 19.88 0 18.5 0zm-7 23c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7.5-4H4V3h15v16z"/></svg>
+      </button>
       <button class="view-toggle-btn" id="btn-full" title="Vue plein écran">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
       </button>
     </div>
-    <div class="phone-frame" id="phone-frame">
-      <!-- Status bar -->
-      <div class="status-bar">
-        <span class="status-time" id="status-time">22:38</span>
-        <div class="status-icons">
-          <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-            <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
-          </svg>
-          <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-            <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
-          </svg>
+
+    <!-- iPad frame wrapper (holds sidebar + chat) -->
+    <div class="ipad-frame" id="ipad-frame">
+      <!-- Sidebar (only visible in iPad mode) -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-title">Discussions</span>
+          <button class="sidebar-add-btn" id="sidebar-add-btn" title="Ajouter un chat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          </button>
+          <input type="file" id="sidebar-file-input" accept=".zip" hidden>
+        </div>
+        <div class="sidebar-list" id="sidebar-list">
+          <!-- Chat items will be inserted here -->
         </div>
       </div>
 
-      <!-- Chat header -->
-      <div class="chat-header" id="chat-header">
-        <button class="header-btn back-btn" id="back-btn" title="Retour">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        </button>
-        <div class="header-avatar" id="header-avatar">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <!-- Main chat panel -->
+      <div class="phone-frame" id="phone-frame">
+        <!-- Status bar -->
+        <div class="status-bar">
+          <span class="status-time" id="status-time">22:38</span>
+          <div class="status-icons">
+            <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+              <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+            </svg>
+            <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
+            </svg>
+          </div>
         </div>
-        <div class="header-info">
-          <span class="header-name" id="header-name">Chat</span>
-          <span class="header-status" id="header-status"></span>
-        </div>
-        <div class="header-actions">
-          <button class="header-btn" id="search-btn" title="Rechercher">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-          </button>
-          <button class="header-btn" title="Appel vidéo">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          </button>
-          <button class="header-btn" title="Appel">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-          </button>
-          <button class="header-btn" title="Plus">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-          </button>
-        </div>
-      </div>
 
-      <!-- Search bar -->
-      <div class="search-bar hidden" id="search-bar">
-        <button class="header-btn" id="search-close-btn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        </button>
-        <input type="text" class="search-input" id="search-input" placeholder="Rechercher...">
-        <span class="search-count" id="search-count"></span>
-        <button class="header-btn" id="search-up-btn" title="Résultat précédent">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
-        </button>
-        <button class="header-btn" id="search-down-btn" title="Résultat suivant">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-        </button>
-      </div>
-
-      <!-- Chat messages area -->
-      <div class="chat-area" id="chat-area">
-        <div class="messages-container" id="messages-container"></div>
-        <!-- Sticky date header -->
-        <div class="sticky-date hidden" id="sticky-date"></div>
-        <!-- Scroll to bottom FAB -->
-        <button class="scroll-bottom-btn hidden" id="scroll-bottom-btn" title="Aller en bas">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-        </button>
-      </div>
-
-      <!-- Message input bar (decorative) -->
-      <div class="input-bar">
-        <button class="input-icon" title="Emoji">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
-        </button>
-        <div class="input-field">
-          <span class="input-placeholder">Message</span>
+        <!-- Chat header -->
+        <div class="chat-header" id="chat-header">
+          <button class="header-btn back-btn" id="back-btn" title="Retour">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          </button>
+          <div class="header-avatar" id="header-avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="header-info">
+            <span class="header-name" id="header-name">Chat</span>
+            <span class="header-status" id="header-status"></span>
+          </div>
+          <div class="header-actions">
+            <button class="header-btn" id="search-btn" title="Rechercher">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </button>
+            <button class="header-btn header-call-btn" title="Appel">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </button>
+            <button class="header-btn header-more-btn" title="Plus">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </button>
+          </div>
         </div>
-        <button class="input-icon" title="Joindre">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
-        </button>
-        <button class="input-icon mic-btn" title="Note vocale">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
-        </button>
+
+        <!-- Search bar -->
+        <div class="search-bar hidden" id="search-bar">
+          <button class="header-btn" id="search-close-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          </button>
+          <input type="text" class="search-input" id="search-input" placeholder="Rechercher...">
+          <span class="search-count" id="search-count"></span>
+          <button class="header-btn" id="search-up-btn" title="Résultat précédent">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+          </button>
+          <button class="header-btn" id="search-down-btn" title="Résultat suivant">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+        </div>
+
+        <!-- Chat messages area -->
+        <div class="chat-area" id="chat-area">
+          <div class="messages-container" id="messages-container"></div>
+          <!-- Sticky date header -->
+          <div class="sticky-date hidden" id="sticky-date"></div>
+          <!-- Scroll to bottom FAB -->
+          <button class="scroll-bottom-btn hidden" id="scroll-bottom-btn" title="Aller en bas">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+        </div>
+
+        <!-- Empty state for iPad when no chat selected -->
+        <div class="chat-empty-state hidden" id="chat-empty-state">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="64" height="64" style="opacity:0.2"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+          <p style="color:var(--wa-text-secondary);margin-top:16px;font-size:14px;">Sélectionnez une discussion</p>
+        </div>
+
       </div>
+    </div>
+  </div>
+
+  <!-- Sender picker overlay -->
+  <div class="sender-picker-overlay hidden" id="sender-picker">
+    <div class="sender-picker">
+      <h2 class="sender-picker-title">Qui êtes-vous ?</h2>
+      <p class="sender-picker-subtitle">Sélectionnez votre nom pour afficher vos messages à droite</p>
+      <div class="sender-picker-list" id="sender-picker-list"></div>
     </div>
   </div>
 
