@@ -1,6 +1,7 @@
 /* ================================================
-   WhatsApp Chat Viewer — Main Application v0.2
+   WhatsApp Chat Viewer — Main Application v0.4.5
    Multi-chat architecture with iPad sidebar
+   + Live animated playback view
    ================================================ */
 
 (function () {
@@ -49,17 +50,118 @@
       howStep3Title: 'Visualisez dans l\'application',
       howStep3Desc: 'Glissez le fichier .zip sur cette page (ou cliquez sur « Choisir des fichiers »). Sélectionnez votre nom dans la liste, et votre conversation s\'affiche exactement comme sur votre téléphone.',
       aboutTitle: 'À propos de l\'auteur',
+      bioIntro: 'Localization Program Manager chez Perplexity (depuis janvier 2026, San Francisco, hybride). Spécialiste de la localisation et de la gestion de programmes linguistiques, avec plus de 25 ans d\'expérience à l\'international.',
+      bioExpTitle: 'Expérience',
+      bioPresent: 'présent',
+      bioMinistryTitle: 'Ministère de l\'Éducation nationale',
+      bioMinistryRole: 'Professeur agrégé d\'anglais',
+      bioPrepenaRole: 'Stagiaire Prep\'ENA',
+      bioBramhallRole: 'Professeur assistant de langue étrangère',
+      bioEduTitle: 'Formation',
+      bioEduField: 'Langue et Littérature anglaises',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Publications académiques',
+      bioCertTitle: 'Certifications',
+      bioCertEna: 'Certificat de formation ENA (déc. 2013)',
+      bioCertLinkedin: 'Certifications LinkedIn Learning (Linux, Python, Data Science)',
+      bioLangTitle: 'Langues',
+      bioLangList: 'Corse, anglais, français, italien — niveau natif ou bilingue.',
+      bioMiscTitle: 'Divers',
+      bioMiscContent: 'Acteur dans le court-métrage « Mission insulaire » (2005)',
+      bioMiscRally: 'Co-pilote en rallye automobile.',
       releaseTitle: 'Notes de version',
+      releaseV023Date: 'Février 2026',
+      releaseV023_1: 'Biographie de l\'auteur entièrement réécrite d\'après le profil LinkedIn',
+      releaseV023_2: 'Drapeaux uniformes en SVG rectangulaire plat (plus de fichiers PNG externes)',
+      releaseV022Date: 'Février 2026',
+      releaseV022_1: 'Drapeau corse authentique (tête de Maure) en remplacement de l\'icône précédente',
+      releaseV022_2: 'Correction du lien LinkedIn de l\'auteur',
+      releaseV021Date: 'Février 2026',
+      releaseV021_1: 'Correction de la biographie de l\'auteur',
+      releaseV021_2: 'Drapeau corse animé en remplacement du texte « CO »',
+      releaseV021_3: 'Mise à jour du numéro de version',
       releaseV02Date: 'Février 2026',
       releaseCurrentLabel: 'Version actuelle',
+      releaseV03Date: 'Février 2026',
+      releaseV03_1: 'Vue « Live » avec lecture animée des conversations et sons de bulles',
+      releaseV03_2: 'Biographie de l\'auteur corrigée d\'après le profil LinkedIn vérifié',
+      releaseV03_3: 'Nouvelle section « À quoi ça sert ? » sur la page d\'accueil',
+      releaseV03_4: 'Sélecteur de vue déplacé à gauche, drapeaux à droite',
+      whatIsItForTitle: 'À quoi ça sert ?',
+      whatIsPoint1: 'WhatsApp envahit votre téléphone. Photos, vidéos et messages s\'accumulent sur des années — et la mémoire se remplit à toute vitesse.',
+      whatIsPoint2: 'Apple facture le prix fort pour chaque palier de stockage. 128 Go, 256 Go, 512 Go, 1 To\u2026 et le prix grimpe à chaque iPhone.',
+      whatIsPoint3: 'Pourtant, personne ne veut effacer ces souvenirs : les conversations précieuses, les photos de famille, les fous rires de groupe. Ces instants comptent.',
+      whatIsPoint4: 'Cette application augmente votre mémoire : exportez vos conversations WhatsApp, libérez de l\'espace sur votre téléphone et revivez chaque instant exactement comme il s\'est passé — bulles, médias, horodatages, le tout en plein écran cinéma.',
+      whatIsPoint5: 'Revivez le moment : le mode cinéma transforme vos conversations en expérience immersive plein écran. Les photos et vidéos défilent en fond, le texte flotte par-dessus — comme un film de vos souvenirs.',
+      whatIsPoint6: 'Vos données restent strictement privées : tout fonctionne localement dans votre navigateur. Rien n\'est envoyé sur un serveur.',
+      liveSpeedLabel: 'Vitesse',
+      homeButtonTitle: 'Accueil',
+      livePrevYear: '-1 an',
+      livePrevMonth: '-1 mois',
+      livePrevDay: '-1 jour',
+      liveNextDay: '+1 jour',
+      liveNextMonth: '+1 mois',
+      liveNextYear: '+1 an',
+      livePlayPause: 'Lecture / Pause',
+      liveTimelineLabel: 'Chronologie',
+      releaseV031Date: 'Février 2026',
+      releaseV031_1: 'Drapeaux UK, US et Corée du Sud améliorés',
+      releaseV031_2: 'Bouton Accueil séparé pour retourner à la page d\'accueil',
+      releaseV031_3: 'Fond d\'image en fondu pendant la lecture Live',
+      releaseV031_4: 'Effet machine à écrire pour les messages en vue Live',
+      releaseV031_5: 'Curseur de chronologie pour naviguer dans la conversation',
+      releaseV031_6: 'Tous les éléments d\'interface localisés',
+      releaseV032Date: 'Février 2026',
+      releaseV032_1: 'Fond d\'arrière-plan en live : supporte désormais les images ET les vidéos (plein écran)',
+      releaseV032_2: 'Biographie de l\'auteur structurée et localisée dans les 11 langues',
+      releaseV032_3: 'Mentions @ affichées en vert gras comme sur WhatsApp',
+      releaseV032_4: 'Effet de frappe naturelle avec intervalles variables',
+      releaseV032_5: 'Nom corrigé : Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Plein écran cinéma',
+      cinemaAutoScroll: 'Défilement automatique',
+      releaseV041Date: 'Février 2026',
+      releaseV041_1: 'Mode cinéma en vrai plein écran navigateur avec bouton de bascule',
+      releaseV041_2: 'Médias sans bandes noires, remplissage complet de l\'écran',
+      releaseV041_3: 'Liens YouTube automatiquement intégrés en fond avec fondu',
+      howStep4Title: 'Choisissez votre mode d\'affichage',
+      howStep4Desc: 'Cinq modes de vue : iPhone, iPad (barre latérale multi-conversations), plein écran web, lecture Live animée et mode Cinéma immersif avec médias en fond.',
+      howStep5Title: 'Mode Cinéma',
+      howStep5Desc: 'Plein écran navigateur, photos et vidéos en fondu d\'arrière-plan, liens YouTube intégrés automatiquement, son avec fondu progressif et texte à contours flottant par-dessus.',
+      howStep6Title: 'Traduction en direct',
+      howStep6Desc: 'La langue de la conversation est détectée automatiquement. Choisissez une langue cible et tous les messages sont traduits instantanément — sans quitter l\'application.',
+      translateBtnTitle: 'Traduire',
+      translateDetected: 'Détecté :',
+      translateOff: 'Traduction désactivée',
+      translateInProgress: 'Traduction...',
+      translateSameLang: 'Même langue',
+      releaseV042Date: 'Février 2026',
+      releaseV042_1: 'Traduction en direct : détection automatique de la langue et traduction instantanée',
+      releaseV042_2: 'Fondu audio progressif à l\'entrée et à la sortie des médias',
+      releaseV042_3: 'Son activé par défaut en mode cinéma',
+      releaseV042_4: 'Contenu marketing enrichi et nouvelles étapes dans « Comment ça marche »',
+      releaseV043Date: 'Février 2026',
+      releaseV043_1: 'Illustration de la page d\'accueil ajustée : le téléphone ne chevauche plus le contour',
+      releaseV043_2: 'Les liens YouTube en erreur ne s\'affichent plus en mode cinéma',
+      releaseV043_3: 'Miniatures des médias affichées dans le texte défilant du mode cinéma pour mieux repérer les photos et vidéos',
+      releaseV044Date: 'Février 2026',
+      releaseV044_1: 'Mode cinéma : fond noir au démarrage, miniatures de photos et vidéos corrigées et agrandies',
+      releaseV044_2: 'Lecture automatique YouTube désactivée, seules les miniatures sont affichées',
+      releaseV044_3: 'Traduction : le texte source est remplacé par la traduction au lieu d\'afficher les deux',
+      releaseV044_4: 'Mode cinéma : traduction en direct avec menu de sélection de langue intégré',
+      releaseV044_5: 'Illustration de la page d\'accueil ajustée pour éviter tout débordement',
+      releaseV04Date: 'Février 2026',
+      releaseV04_1: 'Fond d\'arrière-plan en live sans flou, images et vidéos nettes',
+      releaseV04_2: 'Téléphone et son contenu toujours au premier plan',
+      releaseV04_3: 'Nouveau mode « Plein écran » : texte large avec contours, médias en pleine page',
       releaseV012Date: 'Février 2026',
       releaseV011Date: 'Février 2026',
       releaseV010Date: 'Février 2026',
       releaseInitialLabel: 'Version initiale',
-      releaseV02_1: 'Support multilingue (anglais, français, espagnol, italien, allemand, corse)',
+      releaseV02_1: 'Support multilingue (anglais, français, espagnol, italien, allemand, corse, russe, chinois, japonais, coréen)',
       releaseV02_2: 'Page d\'accueil avec sections « Comment ça marche », « À propos » et « Notes de version »',
       releaseV02_3: 'Défilement ticker pour les noms de groupes longs et les noms dans la barre latérale',
       releaseV02_4: 'Numéro de version affiché sur la page d\'accueil',
+      releaseV03_5: 'Prise en charge de 4 nouvelles langues : russe, chinois, japonais, coréen',
       releaseV012_1: 'Nom du groupe exclu du sélecteur d\'expéditeur',
       releaseV012_2: 'Horloge en temps réel dans la barre d\'état',
       releaseV012_3: 'Icônes Wi-Fi et batterie en direct reflétant l\'état de l\'appareil',
@@ -122,17 +224,118 @@
       howStep3Title: 'View in the app',
       howStep3Desc: 'Drag the .zip file onto this page (or click "Choose files"). Select your name from the list, and your chat appears exactly as it looked on your phone.',
       aboutTitle: 'About the author',
+      bioIntro: 'Localisation Program Manager at Perplexity (since January 2026, San Francisco, hybrid). Specialist in localisation and linguistic programme management, with over 25 years of international experience.',
+      bioExpTitle: 'Experience',
+      bioPresent: 'present',
+      bioMinistryTitle: 'French Ministry of Education',
+      bioMinistryRole: 'Certified English Teacher (Agrégé)',
+      bioPrepenaRole: 'Prep\'ENA Trainee',
+      bioBramhallRole: 'Foreign Language Assistant Teacher',
+      bioEduTitle: 'Education',
+      bioEduField: 'English Language and Literature',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Academic Publications',
+      bioCertTitle: 'Certifications',
+      bioCertEna: 'ENA Training Certificate (Dec. 2013)',
+      bioCertLinkedin: 'LinkedIn Learning Certifications (Linux, Python, Data Science)',
+      bioLangTitle: 'Languages',
+      bioLangList: 'Corsican, English, French, Italian — native or bilingual proficiency.',
+      bioMiscTitle: 'Miscellaneous',
+      bioMiscContent: 'Actor in the short film "Mission insulaire" (2005)',
+      bioMiscRally: 'Rally co-driver.',
       releaseTitle: 'Release notes',
+      releaseV023Date: 'February 2026',
+      releaseV023_1: 'Author biography fully rewritten from LinkedIn profile',
+      releaseV023_2: 'All flags replaced with uniform flat rectangular SVGs (no external PNG files)',
+      releaseV022Date: 'February 2026',
+      releaseV022_1: 'Authentic Corsican flag (Moor\'s head) replacing previous icon',
+      releaseV022_2: 'Fixed author LinkedIn link',
+      releaseV021Date: 'February 2026',
+      releaseV021_1: 'Fixed author biography',
+      releaseV021_2: 'Animated Corsican flag replacing "CO" text',
+      releaseV021_3: 'Version number update',
       releaseV02Date: 'February 2026',
       releaseCurrentLabel: 'Current version',
+      releaseV03Date: 'February 2026',
+      releaseV03_1: 'Live view with animated conversation playback and bubble sounds',
+      releaseV03_2: 'Author biography corrected from verified LinkedIn profile',
+      releaseV03_3: 'New \'What is it for?\' section on the landing page',
+      releaseV03_4: 'View selector moved to the left, flags on the right',
+      whatIsItForTitle: 'What is it for?',
+      whatIsPoint1: 'WhatsApp takes over your phone. Photos, videos and messages pile up over years — and storage fills up fast.',
+      whatIsPoint2: 'Apple charges a premium for every storage tier. 128GB, 256GB, 512GB, 1TB\u2026 and the price climbs with every new iPhone.',
+      whatIsPoint3: 'Yet nobody wants to delete those memories: precious conversations, family photos, group moments. Those instants matter.',
+      whatIsPoint4: 'This app augments your memory: export your WhatsApp conversations, free up phone storage and relive every moment exactly as it happened — bubbles, media, timestamps, all in cinema fullscreen.',
+      whatIsPoint5: 'Relive the moment: cinema mode transforms your conversations into an immersive fullscreen experience. Photos and videos fade in the background while text floats above — like a film of your memories.',
+      whatIsPoint6: 'Your data stays strictly private: everything runs locally in your browser. Nothing is uploaded to any server.',
+      liveSpeedLabel: 'Speed',
+      homeButtonTitle: 'Home',
+      livePrevYear: '-1 year',
+      livePrevMonth: '-1 month',
+      livePrevDay: '-1 day',
+      liveNextDay: '+1 day',
+      liveNextMonth: '+1 month',
+      liveNextYear: '+1 year',
+      livePlayPause: 'Play / Pause',
+      liveTimelineLabel: 'Timeline',
+      releaseV031Date: 'February 2026',
+      releaseV031_1: 'Improved UK, US and South Korea flags',
+      releaseV031_2: 'Separate Home button to return to the landing page',
+      releaseV031_3: 'Image background fade during Live playback',
+      releaseV031_4: 'Typewriter effect for messages in Live view',
+      releaseV031_5: 'Timeline scrubber for navigating the conversation',
+      releaseV031_6: 'All UI elements localised',
+      releaseV032Date: 'February 2026',
+      releaseV032_1: 'Live background now supports both images AND videos (full window)',
+      releaseV032_2: 'Author biography restructured and localised in all 11 languages',
+      releaseV032_3: '@Mentions displayed in bold green as on WhatsApp',
+      releaseV032_4: 'Natural typing effect with variable intervals',
+      releaseV032_5: 'Name corrected: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Full Screen cinema',
+      cinemaAutoScroll: 'Auto-scroll',
+      releaseV041Date: 'February 2026',
+      releaseV041_1: 'Cinema mode now uses true browser fullscreen with toggle button',
+      releaseV041_2: 'Media fills the entire screen without black bars',
+      releaseV041_3: 'YouTube links automatically embedded as background videos with fade',
+      howStep4Title: 'Choose your viewing mode',
+      howStep4Desc: 'Five view modes: iPhone, iPad (multi-chat sidebar), fullscreen web, animated Live playback and immersive Cinema mode with background media.',
+      howStep5Title: 'Cinema Mode',
+      howStep5Desc: 'Browser fullscreen, photos and videos fading in the background, YouTube links auto-embedded, sound with smooth fade and outlined text floating above.',
+      howStep6Title: 'Live translation',
+      howStep6Desc: 'The chat language is detected automatically. Choose a target language and all messages are translated instantly — without leaving the app.',
+      translateBtnTitle: 'Translate',
+      translateDetected: 'Detected:',
+      translateOff: 'Translation off',
+      translateInProgress: 'Translating...',
+      translateSameLang: 'Same language',
+      releaseV042Date: 'February 2026',
+      releaseV042_1: 'Live translation: automatic language detection and instant translation',
+      releaseV042_2: 'Smooth audio fade in/out on media transitions',
+      releaseV042_3: 'Sound on by default in cinema mode',
+      releaseV042_4: 'Enhanced marketing content and new steps in \u201cHow it works\u201d',
+      releaseV043Date: 'February 2026',
+      releaseV043_1: 'Landing page illustration adjusted: the phone no longer overlaps the outline',
+      releaseV043_2: 'YouTube links that return errors no longer display in cinema mode',
+      releaseV043_3: 'Media thumbnails shown in cinema scrolling text to better track when photos and videos were sent',
+      releaseV044Date: 'February 2026',
+      releaseV044_1: 'Cinema mode: black background on start, photo and video thumbnails fixed and enlarged',
+      releaseV044_2: 'YouTube autoplay disabled, only thumbnails are shown',
+      releaseV044_3: 'Translation: source text is replaced by the translation instead of showing both',
+      releaseV044_4: 'Cinema mode: live translation with integrated language selection menu',
+      releaseV044_5: 'Landing page illustration adjusted to prevent overflow',
+      releaseV04Date: 'February 2026',
+      releaseV04_1: 'Live background without blur, sharp images and videos',
+      releaseV04_2: 'Phone and its contents always in the foreground',
+      releaseV04_3: 'New "Full Screen" mode: large text with outlines, full-page media',
       releaseV012Date: 'February 2026',
       releaseV011Date: 'February 2026',
       releaseV010Date: 'February 2026',
       releaseInitialLabel: 'Initial release',
-      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican)',
+      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican, Russian, Chinese, Japanese, Korean)',
       releaseV02_2: 'Landing page with "How it works", "About", and "Release notes" sections',
       releaseV02_3: 'News ticker scrolling for long group names and sidebar chat names',
       releaseV02_4: 'Version number displayed on landing page',
+      releaseV03_5: 'Added 4 new languages: Russian, Chinese, Japanese, Korean',
       releaseV012_1: 'Group name excluded from sender picker',
       releaseV012_2: 'Real-time clock in status bar',
       releaseV012_3: 'Live WiFi and battery status icons reflecting device state',
@@ -195,17 +398,118 @@
       howStep3Title: 'View in the app',
       howStep3Desc: 'Drag the .zip file onto this page (or click "Choose files"). Select your name from the list, and your chat appears exactly as it looked on your phone.',
       aboutTitle: 'About the author',
+      bioIntro: 'Localization Program Manager at Perplexity (since January 2026, San Francisco, hybrid). Specialist in localization and linguistic program management, with over 25 years of international experience.',
+      bioExpTitle: 'Experience',
+      bioPresent: 'present',
+      bioMinistryTitle: 'French Ministry of Education',
+      bioMinistryRole: 'Certified English Teacher (Agrégé)',
+      bioPrepenaRole: 'Prep\'ENA Trainee',
+      bioBramhallRole: 'Foreign Language Assistant Teacher',
+      bioEduTitle: 'Education',
+      bioEduField: 'English Language and Literature',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Academic Publications',
+      bioCertTitle: 'Certifications',
+      bioCertEna: 'ENA Training Certificate (Dec. 2013)',
+      bioCertLinkedin: 'LinkedIn Learning Certifications (Linux, Python, Data Science)',
+      bioLangTitle: 'Languages',
+      bioLangList: 'Corsican, English, French, Italian — native or bilingual proficiency.',
+      bioMiscTitle: 'Miscellaneous',
+      bioMiscContent: 'Actor in the short film "Mission insulaire" (2005)',
+      bioMiscRally: 'Rally co-driver.',
       releaseTitle: 'Release notes',
+      releaseV023Date: 'February 2026',
+      releaseV023_1: 'Author biography fully rewritten from LinkedIn profile',
+      releaseV023_2: 'All flags replaced with uniform flat rectangular SVGs (no external PNG files)',
+      releaseV022Date: 'February 2026',
+      releaseV022_1: 'Authentic Corsican flag (Moor\'s head) replacing previous icon',
+      releaseV022_2: 'Fixed author LinkedIn link',
+      releaseV021Date: 'February 2026',
+      releaseV021_1: 'Fixed author biography',
+      releaseV021_2: 'Animated Corsican flag replacing "CO" text',
+      releaseV021_3: 'Version number update',
       releaseV02Date: 'February 2026',
       releaseCurrentLabel: 'Current version',
+      releaseV03Date: 'February 2026',
+      releaseV03_1: 'Live view with animated conversation playback and bubble sounds',
+      releaseV03_2: 'Author biography corrected from verified LinkedIn profile',
+      releaseV03_3: 'New \'What is it for?\' section on the landing page',
+      releaseV03_4: 'View selector moved to the left, flags on the right',
+      whatIsItForTitle: 'What is it for?',
+      whatIsPoint1: 'WhatsApp takes over your phone. Photos, videos and messages pile up over years — and storage fills up fast.',
+      whatIsPoint2: 'Apple charges a premium for every storage tier. 128GB, 256GB, 512GB, 1TB\u2026 and the price climbs with every new iPhone.',
+      whatIsPoint3: 'Yet nobody wants to delete those memories: precious conversations, family photos, group moments. Those instants matter.',
+      whatIsPoint4: 'This app augments your memory: export your WhatsApp conversations, free up phone storage and relive every moment exactly as it happened — bubbles, media, timestamps, all in cinema fullscreen.',
+      whatIsPoint5: 'Relive the moment: cinema mode transforms your conversations into an immersive fullscreen experience. Photos and videos fade in the background while text floats above — like a film of your memories.',
+      whatIsPoint6: 'Your data stays strictly private: everything runs locally in your browser. Nothing is uploaded to any server.',
+      liveSpeedLabel: 'Speed',
+      homeButtonTitle: 'Home',
+      livePrevYear: '-1 year',
+      livePrevMonth: '-1 month',
+      livePrevDay: '-1 day',
+      liveNextDay: '+1 day',
+      liveNextMonth: '+1 month',
+      liveNextYear: '+1 year',
+      livePlayPause: 'Play / Pause',
+      liveTimelineLabel: 'Timeline',
+      releaseV031Date: 'February 2026',
+      releaseV031_1: 'Improved UK, US and South Korea flags',
+      releaseV031_2: 'Separate Home button to return to the landing page',
+      releaseV031_3: 'Image background fade during Live playback',
+      releaseV031_4: 'Typewriter effect for messages in Live view',
+      releaseV031_5: 'Timeline scrubber for navigating the conversation',
+      releaseV031_6: 'All UI elements localized',
+      releaseV032Date: 'February 2026',
+      releaseV032_1: 'Live background now supports both images AND videos (full window)',
+      releaseV032_2: 'Author biography restructured and localized in all 11 languages',
+      releaseV032_3: '@Mentions displayed in bold green as on WhatsApp',
+      releaseV032_4: 'Natural typing effect with variable intervals',
+      releaseV032_5: 'Name corrected: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Full Screen cinema',
+      cinemaAutoScroll: 'Auto-scroll',
+      releaseV041Date: 'February 2026',
+      releaseV041_1: 'Cinema mode now uses true browser fullscreen with toggle button',
+      releaseV041_2: 'Media fills the entire screen without black bars',
+      releaseV041_3: 'YouTube links automatically embedded as background videos with fade',
+      howStep4Title: 'Choose your viewing mode',
+      howStep4Desc: 'Five view modes: iPhone, iPad (multi-chat sidebar), fullscreen web, animated Live playback and immersive Cinema mode with background media.',
+      howStep5Title: 'Cinema Mode',
+      howStep5Desc: 'Browser fullscreen, photos and videos fading in the background, YouTube links auto-embedded, sound with smooth fade and outlined text floating above.',
+      howStep6Title: 'Live translation',
+      howStep6Desc: 'The chat language is detected automatically. Choose a target language and all messages are translated instantly — without leaving the app.',
+      translateBtnTitle: 'Translate',
+      translateDetected: 'Detected:',
+      translateOff: 'Translation off',
+      translateInProgress: 'Translating...',
+      translateSameLang: 'Same language',
+      releaseV042Date: 'February 2026',
+      releaseV042_1: 'Live translation: automatic language detection and instant translation',
+      releaseV042_2: 'Smooth audio fade in/out on media transitions',
+      releaseV042_3: 'Sound on by default in cinema mode',
+      releaseV042_4: 'Enhanced marketing content and new steps in \u201cHow it works\u201d',
+      releaseV043Date: 'February 2026',
+      releaseV043_1: 'Landing page illustration adjusted: the phone no longer overlaps the outline',
+      releaseV043_2: 'YouTube links that return errors no longer display in cinema mode',
+      releaseV043_3: 'Media thumbnails shown in cinema scrolling text to better track when photos and videos were sent',
+      releaseV044Date: 'February 2026',
+      releaseV044_1: 'Cinema mode: black background on start, photo and video thumbnails fixed and enlarged',
+      releaseV044_2: 'YouTube autoplay disabled, only thumbnails are shown',
+      releaseV044_3: 'Translation: source text is replaced by the translation instead of showing both',
+      releaseV044_4: 'Cinema mode: live translation with integrated language selection menu',
+      releaseV044_5: 'Landing page illustration adjusted to prevent overflow',
+      releaseV04Date: 'February 2026',
+      releaseV04_1: 'Live background without blur, sharp images and videos',
+      releaseV04_2: 'Phone and its contents always in the foreground',
+      releaseV04_3: 'New "Full Screen" mode: large text with outlines, full-page media',
       releaseV012Date: 'February 2026',
       releaseV011Date: 'February 2026',
       releaseV010Date: 'February 2026',
       releaseInitialLabel: 'Initial release',
-      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican)',
+      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican, Russian, Chinese, Japanese, Korean)',
       releaseV02_2: 'Landing page with "How it works", "About", and "Release notes" sections',
       releaseV02_3: 'News ticker scrolling for long group names and sidebar chat names',
       releaseV02_4: 'Version number displayed on landing page',
+      releaseV03_5: 'Added 4 new languages: Russian, Chinese, Japanese, Korean',
       releaseV012_1: 'Group name excluded from sender picker',
       releaseV012_2: 'Real-time clock in status bar',
       releaseV012_3: 'Live WiFi and battery status icons reflecting device state',
@@ -268,17 +572,118 @@
       howStep3Title: 'Visualiza en la aplicación',
       howStep3Desc: 'Arrastra el archivo .zip a esta página (o haz clic en "Elegir archivos"). Selecciona tu nombre en la lista y tu chat aparece exactamente como en tu teléfono.',
       aboutTitle: 'Acerca del autor',
+      bioIntro: 'Localization Program Manager en Perplexity (desde enero de 2026, San Francisco, híbrido). Especialista en localización y gestión de programas lingüísticos, con más de 25 años de experiencia internacional.',
+      bioExpTitle: 'Experiencia',
+      bioPresent: 'presente',
+      bioMinistryTitle: 'Ministerio de Educación Nacional (Francia)',
+      bioMinistryRole: 'Profesor titular de inglés (Agrégé)',
+      bioPrepenaRole: 'Becario Prep\'ENA',
+      bioBramhallRole: 'Profesor asistente de idiomas extranjeros',
+      bioEduTitle: 'Formación',
+      bioEduField: 'Lengua y Literatura inglesas',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Publicaciones académicas',
+      bioCertTitle: 'Certificaciones',
+      bioCertEna: 'Certificado de formación ENA (dic. 2013)',
+      bioCertLinkedin: 'Certificaciones LinkedIn Learning (Linux, Python, Data Science)',
+      bioLangTitle: 'Idiomas',
+      bioLangList: 'Corso, inglés, francés, italiano — competencia nativa o bilingüe.',
+      bioMiscTitle: 'Varios',
+      bioMiscContent: 'Actor en el cortometraje « Mission insulaire » (2005)',
+      bioMiscRally: 'Copiloto de rally.',
       releaseTitle: 'Notas de versión',
+      releaseV023Date: 'Febrero 2026',
+      releaseV023_1: 'Biografía del autor completamente reescrita a partir del perfil de LinkedIn',
+      releaseV023_2: 'Todas las banderas reemplazadas por SVG rectangulares planos uniformes (sin archivos PNG externos)',
+      releaseV022Date: 'Febrero 2026',
+      releaseV022_1: 'Bandera corsa auténtica (cabeza de moro) en reemplazo del icono anterior',
+      releaseV022_2: 'Corrección del enlace LinkedIn del autor',
+      releaseV021Date: 'Febrero 2026',
+      releaseV021_1: 'Corrección de la biografía del autor',
+      releaseV021_2: 'Bandera corsa animada en reemplazo del texto "CO"',
+      releaseV021_3: 'Actualización del número de versión',
       releaseV02Date: 'Febrero 2026',
       releaseCurrentLabel: 'Versión actual',
+      releaseV03Date: 'Febrero 2026',
+      releaseV03_1: 'Vista en vivo con reproducción animada de conversaciones y sonidos de burbujas',
+      releaseV03_2: 'Biografía del autor corregida según el perfil verificado de LinkedIn',
+      releaseV03_3: 'Nueva sección «¿Para qué sirve?» en la página de inicio',
+      releaseV03_4: 'Selector de vista movido a la izquierda, banderas a la derecha',
+      whatIsItForTitle: '¿Para qué sirve?',
+      whatIsPoint1: 'WhatsApp invade tu teléfono. Fotos, vídeos y mensajes se acumulan durante años — y la memoria se llena rápidamente.',
+      whatIsPoint2: 'Apple cobra una fortuna por cada nivel de almacenamiento. 128 GB, 256 GB, 512 GB, 1 TB\u2026 y el precio sube con cada nuevo iPhone.',
+      whatIsPoint3: 'Sin embargo, nadie quiere borrar esos recuerdos: conversaciones preciosas, fotos familiares, momentos de grupo. Esos instantes importan.',
+      whatIsPoint4: 'Esta aplicación amplía tu memoria: exporta tus conversaciones de WhatsApp, libera espacio en el teléfono y revive cada momento exactamente como ocurrió — burbujas, medios, marcas de tiempo, todo en pantalla completa cinematográfica.',
+      whatIsPoint5: 'Revive el momento: el modo cine transforma tus conversaciones en una experiencia inmersiva a pantalla completa. Las fotos y vídeos aparecen de fondo mientras el texto flota por encima — como una película de tus recuerdos.',
+      whatIsPoint6: 'Tus datos permanecen estrictamente privados: todo funciona localmente en tu navegador. Nada se sube a ningún servidor.',
+      liveSpeedLabel: 'Velocidad',
+      homeButtonTitle: 'Inicio',
+      livePrevYear: '-1 año',
+      livePrevMonth: '-1 mes',
+      livePrevDay: '-1 día',
+      liveNextDay: '+1 día',
+      liveNextMonth: '+1 mes',
+      liveNextYear: '+1 año',
+      livePlayPause: 'Reproducir / Pausa',
+      liveTimelineLabel: 'Cronología',
+      releaseV031Date: 'Febrero 2026',
+      releaseV031_1: 'Banderas de UK, EE.UU. y Corea del Sur mejoradas',
+      releaseV031_2: 'Botón Inicio separado para volver a la página de inicio',
+      releaseV031_3: 'Fondo de imagen en fundido durante la reproducción Live',
+      releaseV031_4: 'Efecto máquina de escribir para los mensajes en vista Live',
+      releaseV031_5: 'Deslizador de cronología para navegar por la conversación',
+      releaseV031_6: 'Todos los elementos de la interfaz localizados',
+      releaseV032Date: 'Febrero 2026',
+      releaseV032_1: 'Fondo en vivo: ahora soporta imágenes Y vídeos (pantalla completa)',
+      releaseV032_2: 'Biografía del autor reestructurada y localizada en los 11 idiomas',
+      releaseV032_3: 'Menciones @ en verde negrita como en WhatsApp',
+      releaseV032_4: 'Efecto de escritura natural con intervalos variables',
+      releaseV032_5: 'Nombre corregido: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Pantalla completa cine',
+      cinemaAutoScroll: 'Desplazamiento automático',
+      releaseV041Date: 'Febrero 2026',
+      releaseV041_1: 'Modo cine con pantalla completa real del navegador y botón de alternar',
+      releaseV041_2: 'Medios sin barras negras, relleno completo de la pantalla',
+      releaseV041_3: 'Enlaces de YouTube integrados automáticamente como fondo con transición',
+      howStep4Title: 'Elige tu modo de visualización',
+      howStep4Desc: 'Cinco modos de vista: iPhone, iPad (barra lateral multi-conversación), pantalla completa web, reproducción Live animada y modo Cine inmersivo con medios de fondo.',
+      howStep5Title: 'Modo Cine',
+      howStep5Desc: 'Pantalla completa del navegador, fotos y vídeos en fundido de fondo, enlaces YouTube integrados automáticamente, sonido con fundido suave y texto con contornos flotando encima.',
+      howStep6Title: 'Traducción en directo',
+      howStep6Desc: 'El idioma de la conversación se detecta automáticamente. Elige un idioma de destino y todos los mensajes se traducen instantáneamente — sin salir de la aplicación.',
+      translateBtnTitle: 'Traducir',
+      translateDetected: 'Detectado:',
+      translateOff: 'Traducción desactivada',
+      translateInProgress: 'Traduciendo...',
+      translateSameLang: 'Mismo idioma',
+      releaseV042Date: 'Febrero 2026',
+      releaseV042_1: 'Traducción en directo: detección automática del idioma y traducción instantánea',
+      releaseV042_2: 'Fundido de audio suave en las transiciones de medios',
+      releaseV042_3: 'Sonido activado por defecto en modo cine',
+      releaseV042_4: 'Contenido de marketing mejorado y nuevos pasos en « Cómo funciona »',
+      releaseV043Date: 'Febrero 2026',
+      releaseV043_1: 'Ilustración de la página de inicio ajustada: el teléfono ya no se superpone al contorno',
+      releaseV043_2: 'Los enlaces de YouTube con error ya no se muestran en modo cine',
+      releaseV043_3: 'Miniaturas de medios visibles en el texto desplazable del modo cine para seguir mejor las fotos y vídeos enviados',
+      releaseV044Date: 'Febrero 2026',
+      releaseV044_1: 'Modo cine: fondo negro al inicio, miniaturas de fotos y vídeos corregidas y ampliadas',
+      releaseV044_2: 'Reproducción automática de YouTube desactivada, solo se muestran miniaturas',
+      releaseV044_3: 'Traducción: el texto original se reemplaza por la traducción en lugar de mostrar ambos',
+      releaseV044_4: 'Modo cine: traducción en directo con menú de selección de idioma integrado',
+      releaseV044_5: 'Ilustración de la página de inicio ajustada para evitar desbordamiento',
+      releaseV04Date: 'Febrero 2026',
+      releaseV04_1: 'Fondo en vivo sin desenfoque, imágenes y vídeos nítidos',
+      releaseV04_2: 'Teléfono y su contenido siempre en primer plano',
+      releaseV04_3: 'Nuevo modo « Pantalla completa »: texto grande con contornos, medios a pantalla completa',
       releaseV012Date: 'Febrero 2026',
       releaseV011Date: 'Febrero 2026',
       releaseV010Date: 'Febrero 2026',
       releaseInitialLabel: 'Versión inicial',
-      releaseV02_1: 'Soporte multilingüe (inglés, francés, español, italiano, alemán, corso)',
+      releaseV02_1: 'Soporte multilingüe (inglés, francés, español, italiano, alemán, corso, ruso, chino, japonés, coreano)',
       releaseV02_2: 'Página de inicio con secciones "Cómo funciona", "Sobre" y "Notas de versión"',
       releaseV02_3: 'Desplazamiento ticker para nombres de grupos largos y nombres en la barra lateral',
       releaseV02_4: 'Número de versión mostrado en la página de inicio',
+      releaseV03_5: 'Añadidos 4 nuevos idiomas: ruso, chino, japonés, coreano',
       releaseV012_1: 'Nombre del grupo excluido del selector de remitente',
       releaseV012_2: 'Reloj en tiempo real en la barra de estado',
       releaseV012_3: 'Iconos de WiFi y batería en vivo reflejando el estado del dispositivo',
@@ -341,17 +746,116 @@
       howStep3Title: 'Visualizza nell\'app',
       howStep3Desc: 'Trascina il file .zip su questa pagina (o clicca su "Scegli file"). Seleziona il tuo nome dall\'elenco e la tua chat appare esattamente come sul telefono.',
       aboutTitle: 'Informazioni sull\'autore',
+      bioIntro: 'Localization Program Manager presso Perplexity (da gennaio 2026, San Francisco, ibrido). Specialista in localizzazione e gestione di programmi linguistici, con oltre 25 anni di esperienza internazionale.',
+      bioExpTitle: 'Esperienza',
+      bioPresent: 'presente',
+      bioMinistryTitle: 'Ministero dell\'Istruzione (Francia)',
+      bioMinistryRole: 'Professore di inglese abilitato (Agrégé)',
+      bioPrepenaRole: 'Stagista Prep\'ENA',
+      bioBramhallRole: 'Assistente di lingua straniera',
+      bioEduTitle: 'Formazione',
+      bioEduField: 'Lingua e Letteratura inglese',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Pubblicazioni accademiche',
+      bioCertTitle: 'Certificazioni',
+      bioCertEna: 'Certificato di formazione ENA (dic. 2013)',
+      bioCertLinkedin: 'Certificazioni LinkedIn Learning (Linux, Python, Data Science)',
+      bioLangTitle: 'Lingue',
+      bioLangList: 'Corso, inglese, francese, italiano — competenza nativa o bilingue.',
+      bioMiscTitle: 'Varie',
+      bioMiscContent: 'Attore nel cortometraggio « Mission insulaire » (2005)',
+      bioMiscRally: 'Copilota di rally.',
       releaseTitle: 'Note di rilascio',
+      releaseV023Date: 'Febbraio 2026',
+      releaseV023_1: 'Biografia dell\'autore completamente riscritta dal profilo LinkedIn',
+      releaseV023_2: 'Tutte le bandiere sostituite con SVG rettangolari piatti uniformi (nessun file PNG esterno)',
+      releaseV022Date: 'Febbraio 2026',
+      releaseV022_1: 'Bandiera corsa autentica (testa di Moro) al posto dell\'icona precedente',
+      releaseV022_2: 'Correzione del link LinkedIn dell\'autore',
+      releaseV021Date: 'Febbraio 2026',
+      releaseV021_1: 'Correzione della biografia dell\'autore',
+      releaseV021_2: 'Bandiera corsa animata al posto del testo "CO"',
+      releaseV021_3: 'Aggiornamento del numero di versione',
       releaseV02Date: 'Febbraio 2026',
       releaseCurrentLabel: 'Versione corrente',
+      releaseV03Date: 'Febbraio 2026',
+      releaseV03_1: 'Vista Live con riproduzione animata delle conversazioni e suoni di bolle',
+      releaseV03_2: 'Biografia dell\'autore corretta dal profilo LinkedIn verificato',
+      releaseV03_3: 'Nuova sezione \'A cosa serve?\' nella pagina iniziale',
+      releaseV03_4: 'Selettore di vista spostato a sinistra, bandiere a destra',
+      whatIsItForTitle: 'A cosa serve?',
+      whatIsPoint1: 'WhatsApp invade il tuo telefono. Foto, video e messaggi si accumulano per anni — e la memoria si riempie velocemente.',
+      whatIsPoint2: 'Apple fa pagare una fortuna per ogni livello di archiviazione. 128 GB, 256 GB, 512 GB, 1 TB\u2026 e il prezzo sale con ogni nuovo iPhone.',
+      whatIsPoint3: 'Eppure nessuno vuole cancellare quei ricordi: conversazioni preziose, foto di famiglia, momenti di gruppo. Quegli attimi contano.',
+      whatIsPoint4: 'Questa app potenzia la tua memoria: esporta le conversazioni WhatsApp, libera spazio sul telefono e rivivi ogni momento esattamente come è successo — bolle, media, timestamp, il tutto in schermo intero cinematografico.',
+      whatIsPoint5: 'Rivivi il momento: la modalità cinema trasforma le tue conversazioni in un\'esperienza immersiva a schermo intero. Foto e video sfumano sullo sfondo mentre il testo fluttua sopra — come un film dei tuoi ricordi.',
+      whatIsPoint6: 'I tuoi dati restano strettamente privati: tutto funziona localmente nel tuo browser. Nulla viene caricato su alcun server.',
+      liveSpeedLabel: 'Velocità',
+      homeButtonTitle: 'Home',
+      livePrevYear: '-1 anno',
+      livePrevMonth: '-1 mese',
+      livePrevDay: '-1 giorno',
+      liveNextDay: '+1 giorno',
+      liveNextMonth: '+1 mese',
+      liveNextYear: '+1 anno',
+      livePlayPause: 'Riproduzione / Pausa',
+      liveTimelineLabel: 'Cronologia',
+      releaseV031Date: 'Febbraio 2026',
+      releaseV031_1: 'Bandiere UK, USA e Corea del Sud migliorate',
+      releaseV031_2: 'Pulsante Home separato per tornare alla pagina iniziale',
+      releaseV031_3: 'Sfondo immagine in dissolvenza durante la riproduzione Live',
+      releaseV031_4: 'Effetto macchina da scrivere per i messaggi nella vista Live',
+      releaseV031_5: 'Cursore cronologia per navigare nella conversazione',
+      releaseV031_6: 'Tutti gli elementi dell\'interfaccia localizzati',
+      releaseV032Date: 'Febbraio 2026',
+      releaseV032_1: 'Sfondo live: ora supporta sia immagini CHE video (a schermo intero)',
+      releaseV032_2: 'Biografia dell\'autore ristrutturata e localizzata in tutte le 11 lingue',
+      releaseV032_3: 'Menzioni @ in verde grassetto come su WhatsApp',
+      releaseV032_4: 'Effetto di digitazione naturale con intervalli variabili',
+      releaseV032_5: 'Nome corretto: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Schermo intero cinema',
+      cinemaAutoScroll: 'Scorrimento automatico',
+      releaseV041Date: 'Febbraio 2026',
+      releaseV041_1: 'Modalità cinema con schermo intero reale del browser e pulsante di commutazione',
+      releaseV041_2: 'Media senza barre nere, riempimento completo dello schermo',
+      releaseV041_3: 'Link YouTube incorporati automaticamente come sfondo con dissolvenza',
+      howStep4Title: 'Scegli la tua modalità di visualizzazione',
+      howStep4Desc: 'Cinque modalità di vista: iPhone, iPad (barra laterale multi-conversazione), schermo intero web, riproduzione Live animata e modalità Cinema immersiva con media di sfondo.',
+      howStep5Title: 'Modalità Cinema',
+      howStep5Desc: 'Schermo intero del browser, foto e video in dissolvenza sullo sfondo, link YouTube integrati automaticamente, audio con dissolvenza progressiva e testo con contorni che fluttua sopra.',
+      howStep6Title: 'Traduzione in diretta',
+      howStep6Desc: 'La lingua della conversazione viene rilevata automaticamente. Scegli una lingua di destinazione e tutti i messaggi vengono tradotti istantaneamente — senza uscire dall\'app.',
+      translateBtnTitle: 'Traduci',
+      translateDetected: 'Rilevato:',
+      translateOff: 'Traduzione disattivata',
+      translateInProgress: 'Traduzione...',
+      translateSameLang: 'Stessa lingua',
+      releaseV042Date: 'Febbraio 2026',
+      releaseV042_1: 'Traduzione in diretta: rilevamento automatico della lingua e traduzione istantanea',
+      releaseV042_2: 'Dissolvenza audio progressiva nelle transizioni dei media',
+      releaseV042_3: 'Audio attivo di default in modalità cinema',
+      releaseV042_4: 'Contenuti marketing arricchiti e nuovi passaggi in « Come funziona »',
+      releaseV043Date: 'Febbraio 2026',
+      releaseV043_1: 'Illustrazione della pagina iniziale corretta: il telefono non si sovrappone più al contorno',
+      releaseV043_2: 'I link YouTube con errore non vengono più visualizzati in modalità cinema',
+      releaseV043_3: 'Miniature dei media visibili nel testo scorrevole della modalità cinema per identificare meglio foto e video inviati',
+      releaseV044Date: 'Febbraio 2026',
+      releaseV044_1: 'Modalità cinema: sfondo nero all\'avvio, miniature di foto e video corrette e ingrandite',
+      releaseV044_2: 'Riproduzione automatica YouTube disattivata, vengono mostrate solo le miniature',
+      releaseV044_3: 'Traduzione: il testo originale viene sostituito dalla traduzione invece di mostrare entrambi',
+      releaseV044_4: 'Modalità cinema: traduzione in diretta con menu di selezione lingua integrato',
+      releaseV044_5: 'Illustrazione della pagina iniziale corretta per evitare overflow',
+      releaseV04Date: 'Febbraio 2026',
+      releaseV04_1: 'Sfondo live senza sfocatura, immagini e video nitidi',
+      releaseV04_2: 'Telefono e il suo contenuto sempre in primo piano',
+      releaseV04_3: 'Nuova modalità « Schermo intero »: testo grande con contorni, media a pagina intera',
       releaseV012Date: 'Febbraio 2026',
-      releaseV011Date: 'Febbraio 2026',
-      releaseV010Date: 'Febbraio 2026',
       releaseInitialLabel: 'Versione iniziale',
-      releaseV02_1: 'Supporto multilingue (inglese, francese, spagnolo, italiano, tedesco, corso)',
+      releaseV02_1: 'Supporto multilingue (inglese, francese, spagnolo, italiano, tedesco, corso, russo, cinese, giapponese, coreano)',
       releaseV02_2: 'Pagina iniziale con sezioni "Come funziona", "Info" e "Note di rilascio"',
       releaseV02_3: 'Scorrimento ticker per nomi di gruppo lunghi e nomi nella barra laterale',
       releaseV02_4: 'Numero di versione visualizzato nella pagina iniziale',
+      releaseV03_5: 'Aggiunta del supporto per 4 nuove lingue: russo, cinese, giapponese, coreano',
       releaseV012_1: 'Nome del gruppo escluso dal selettore mittente',
       releaseV012_2: 'Orologio in tempo reale nella barra di stato',
       releaseV012_3: 'Icone WiFi e batteria in tempo reale che riflettono lo stato del dispositivo',
@@ -414,17 +918,118 @@
       howStep3Title: 'In der App anzeigen',
       howStep3Desc: 'Ziehe die .zip-Datei auf diese Seite (oder klicke auf „Dateien auswählen"). Wähle deinen Namen aus der Liste – dein Chat erscheint genau so, wie er auf deinem Telefon aussah.',
       aboutTitle: 'Über den Autor',
+      bioIntro: 'Localization Program Manager bei Perplexity (seit Januar 2026, San Francisco, Hybrid). Spezialist für Lokalisierung und sprachliche Programmverwaltung mit über 25 Jahren internationaler Erfahrung.',
+      bioExpTitle: 'Berufserfahrung',
+      bioPresent: 'heute',
+      bioMinistryTitle: 'Französisches Bildungsministerium',
+      bioMinistryRole: 'Beamteter Englischlehrer (Agrégé)',
+      bioPrepenaRole: 'Prep\'ENA-Praktikant',
+      bioBramhallRole: 'Fremdsprachenassistent',
+      bioEduTitle: 'Ausbildung',
+      bioEduField: 'Englische Sprache und Literatur',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Akademische Veröffentlichungen',
+      bioCertTitle: 'Zertifizierungen',
+      bioCertEna: 'ENA-Ausbildungszertifikat (Dez. 2013)',
+      bioCertLinkedin: 'LinkedIn Learning-Zertifizierungen (Linux, Python, Data Science)',
+      bioLangTitle: 'Sprachen',
+      bioLangList: 'Korsisch, Englisch, Französisch, Italienisch — muttersprachlich oder zweisprachig.',
+      bioMiscTitle: 'Sonstiges',
+      bioMiscContent: 'Schauspieler im Kurzfilm « Mission insulaire » (2005)',
+      bioMiscRally: 'Rallye-Copilot.',
       releaseTitle: 'Versionshinweise',
+      releaseV023Date: 'Februar 2026',
+      releaseV023_1: 'Autorenbiografie vollständig anhand des LinkedIn-Profils neu geschrieben',
+      releaseV023_2: 'Alle Flaggen durch einheitliche flache rechteckige SVGs ersetzt (keine externen PNG-Dateien)',
+      releaseV022Date: 'Februar 2026',
+      releaseV022_1: 'Authentische korsische Flagge (Mohrenkopf) anstelle des vorherigen Symbols',
+      releaseV022_2: 'Korrektur des LinkedIn-Links des Autors',
+      releaseV021Date: 'Februar 2026',
+      releaseV021_1: 'Korrektur der Autorenbiografie',
+      releaseV021_2: 'Animierte korsische Flagge anstelle des Textes "CO"',
+      releaseV021_3: 'Aktualisierung der Versionsnummer',
       releaseV02Date: 'Februar 2026',
       releaseCurrentLabel: 'Aktuelle Version',
+      releaseV03Date: 'Februar 2026',
+      releaseV03_1: 'Live-Ansicht mit animierter Gesprächswiedergabe und Blasengeräuschen',
+      releaseV03_2: 'Autorenbiografie anhand des verifizierten LinkedIn-Profils korrigiert',
+      releaseV03_3: 'Neuer Abschnitt „Wofür ist das?“ auf der Startseite',
+      releaseV03_4: 'Ansichtsauswahl nach links verschoben, Flaggen rechts',
+      whatIsItForTitle: 'Wofür ist das?',
+      whatIsPoint1: 'WhatsApp überschwemmt dein Telefon. Fotos, Videos und Nachrichten häufen sich über Jahre an — und der Speicher füllt sich rasend schnell.',
+      whatIsPoint2: 'Apple verlangt einen hohen Preis für jede Speicherstufe. 128 GB, 256 GB, 512 GB, 1 TB\u2026 und der Preis steigt mit jedem neuen iPhone.',
+      whatIsPoint3: 'Dennoch will niemand diese Erinnerungen löschen: wertvolle Gespräche, Familienfotos, Gruppenmomente. Diese Augenblicke zählen.',
+      whatIsPoint4: 'Diese App erweitert Ihr Gedächtnis: Exportieren Sie Ihre WhatsApp-Unterhaltungen, geben Sie Telefonspeicher frei und erleben Sie jeden Moment genau so wieder, wie er passiert ist — Blasen, Medien, Zeitstempel, alles im Kino-Vollbild.',
+      whatIsPoint5: 'Erleben Sie den Moment neu: Der Kino-Modus verwandelt Ihre Unterhaltungen in ein immersives Vollbild-Erlebnis. Fotos und Videos blenden im Hintergrund ein, während der Text darüber schwebt — wie ein Film Ihrer Erinnerungen.',
+      whatIsPoint6: 'Ihre Daten bleiben streng privat: Alles läuft lokal in Ihrem Browser. Nichts wird auf einen Server hochgeladen.',
+      liveSpeedLabel: 'Geschwindigkeit',
+      homeButtonTitle: 'Startseite',
+      livePrevYear: '-1 Jahr',
+      livePrevMonth: '-1 Monat',
+      livePrevDay: '-1 Tag',
+      liveNextDay: '+1 Tag',
+      liveNextMonth: '+1 Monat',
+      liveNextYear: '+1 Jahr',
+      livePlayPause: 'Abspielen / Pause',
+      liveTimelineLabel: 'Zeitachse',
+      releaseV031Date: 'Februar 2026',
+      releaseV031_1: 'Verbesserte Flaggen für UK, USA und Südkorea',
+      releaseV031_2: 'Separater Startseite-Button zum Zurückgehen',
+      releaseV031_3: 'Bildhintergrund-Einblendung während der Live-Wiedergabe',
+      releaseV031_4: 'Schreibmaschineneffekt für Nachrichten in der Live-Ansicht',
+      releaseV031_5: 'Zeitachsen-Regler zur Navigation im Gespräch',
+      releaseV031_6: 'Alle UI-Elemente lokalisiert',
+      releaseV032Date: 'Februar 2026',
+      releaseV032_1: 'Live-Hintergrund: unterstützt jetzt Bilder UND Videos (Vollbild)',
+      releaseV032_2: 'Autorenbiografie umstrukturiert und in allen 11 Sprachen lokalisiert',
+      releaseV032_3: '@Erwähnungen in fettem Grün wie bei WhatsApp',
+      releaseV032_4: 'Natürlicher Tippeffekt mit variablen Intervallen',
+      releaseV032_5: 'Name korrigiert: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Kino-Vollbild',
+      cinemaAutoScroll: 'Automatisches Scrollen',
+      releaseV041Date: 'Februar 2026',
+      releaseV041_1: 'Kino-Modus nutzt echten Browser-Vollbild mit Umschaltknopf',
+      releaseV041_2: 'Medien füllen den gesamten Bildschirm ohne schwarze Balken',
+      releaseV041_3: 'YouTube-Links automatisch als Hintergrundvideos mit Überblendung eingebettet',
+      howStep4Title: 'Wählen Sie Ihren Anzeigemodus',
+      howStep4Desc: 'Fünf Ansichtsmodi: iPhone, iPad (Multi-Chat-Seitenleiste), Web-Vollbild, animierte Live-Wiedergabe und immersiver Kino-Modus mit Hintergrundmedien.',
+      howStep5Title: 'Kino-Modus',
+      howStep5Desc: 'Browser-Vollbild, Fotos und Videos mit Überblendung im Hintergrund, YouTube-Links automatisch eingebettet, Ton mit sanfter Überblendung und umrandeter Text schwebt darüber.',
+      howStep6Title: 'Live-Übersetzung',
+      howStep6Desc: 'Die Chat-Sprache wird automatisch erkannt. Wählen Sie eine Zielsprache und alle Nachrichten werden sofort übersetzt — ohne die App zu verlassen.',
+      translateBtnTitle: 'Übersetzen',
+      translateDetected: 'Erkannt:',
+      translateOff: 'Übersetzung aus',
+      translateInProgress: 'Übersetze...',
+      translateSameLang: 'Gleiche Sprache',
+      releaseV042Date: 'Februar 2026',
+      releaseV042_1: 'Live-Übersetzung: automatische Spracherkennung und sofortige Übersetzung',
+      releaseV042_2: 'Sanfte Audio-Überblendung bei Medien-Übergängen',
+      releaseV042_3: 'Ton standardmäßig aktiviert im Kino-Modus',
+      releaseV042_4: 'Verbesserte Marketing-Inhalte und neue Schritte in « So funktioniert es »',
+      releaseV043Date: 'Februar 2026',
+      releaseV043_1: 'Startseiten-Illustration angepasst: Das Telefon überlappt nicht mehr den Rahmen',
+      releaseV043_2: 'YouTube-Links mit Fehlern werden im Kino-Modus nicht mehr angezeigt',
+      releaseV043_3: 'Medien-Miniaturbilder im scrollenden Text des Kino-Modus für bessere Übersicht über gesendete Fotos und Videos',
+      releaseV044Date: 'Februar 2026',
+      releaseV044_1: 'Kino-Modus: schwarzer Hintergrund beim Start, Foto- und Video-Miniaturbilder korrigiert und vergrößert',
+      releaseV044_2: 'YouTube-Autoplay deaktiviert, nur Miniaturbilder werden angezeigt',
+      releaseV044_3: 'Übersetzung: Quelltext wird durch die Übersetzung ersetzt statt beides anzuzeigen',
+      releaseV044_4: 'Kino-Modus: Live-Übersetzung mit integriertem Sprachauswahlmenü',
+      releaseV044_5: 'Startseiten-Illustration angepasst um Überlauf zu vermeiden',
+      releaseV04Date: 'Februar 2026',
+      releaseV04_1: 'Live-Hintergrund ohne Unschärfe, scharfe Bilder und Videos',
+      releaseV04_2: 'Telefon und sein Inhalt immer im Vordergrund',
+      releaseV04_3: 'Neuer Modus « Vollbild »: großer Text mit Umrissen, Medien ganzseitig',
       releaseV012Date: 'Februar 2026',
       releaseV011Date: 'Februar 2026',
       releaseV010Date: 'Februar 2026',
       releaseInitialLabel: 'Erstveröffentlichung',
-      releaseV02_1: 'Mehrsprachige Unterstützung (Englisch, Französisch, Spanisch, Italienisch, Deutsch, Korsisch)',
+      releaseV02_1: 'Mehrsprachige Unterstützung (Englisch, Französisch, Spanisch, Italienisch, Deutsch, Korsisch, Russisch, Chinesisch, Japanisch, Koreanisch)',
       releaseV02_2: 'Startseite mit Abschnitten „Wie es funktioniert", „Über" und „Versionshinweise"',
       releaseV02_3: 'Ticker-Scrolling für lange Gruppennamen und Namen in der Seitenleiste',
       releaseV02_4: 'Versionsnummer auf der Startseite angezeigt',
+      releaseV03_5: 'Unterstützung für 4 neue Sprachen hinzugefügt: Russisch, Chinesisch, Japanisch, Koreanisch',
       releaseV012_1: 'Gruppenname aus der Absenderauswahl ausgeschlossen',
       releaseV012_2: 'Echtzeituhr in der Statusleiste',
       releaseV012_3: 'Live-WLAN- und Batteriesymbole, die den Gerätestatus widerspiegeln',
@@ -445,6 +1050,702 @@
       releaseV010_7: 'Vollbildmodus',
       releaseV010_8: 'WhatsApp-Dunkelthema',
       releaseV010_9: 'Französische Benutzeroberfläche',
+    },
+    ru_RU: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Перетащите экспорт WhatsApp (.zip) сюда',
+      dropHint: 'или',
+      dropButton: 'Выбрать файлы',
+      dropFormats: 'Поддерживаемые форматы: iOS и Android',
+      loadingText: 'Загрузка переписки...',
+      sidebarTitle: 'Чаты',
+      sidebarEmpty: 'Добавьте экспорт WhatsApp (.zip) с помощью кнопки +',
+      senderPickerTitle: 'Кто вы?',
+      senderPickerSubtitle: 'Выберите своё имя, чтобы ваши сообщения отображались справа',
+      msgSuffix: 'сообщ.',
+      participantsSuffix: 'участники',
+      participantsPopupTitle: 'Участники',
+      youTag: 'Вы',
+      searchPlaceholder: 'Поиск...',
+      searchResult: 'результат',
+      searchResults: 'результатов',
+      chatEmptyState: 'Выберите чат',
+      alertZipOnly: 'Пожалуйста, выберите файлы .zip',
+      alertZipOnlySingle: 'Пожалуйста, выберите файл .zip',
+      alertNoChatFile: 'В ZIP-архиве не найден файл чата. Убедитесь, что файл содержит _chat.txt.',
+      alertParseError: 'Не удалось разобрать чат. Проверьте формат файла.',
+      alertLoadError: 'Ошибка загрузки файла: ',
+      mediaImage: '📷 Изображение не включено',
+      mediaVideo: '🎥 Видео не включено',
+      mediaAudio: '🎵 Аудио не включено',
+      mediaSticker: '🏷️ Стикер не включён',
+      mediaDocument: '📄 Документ не включён',
+      mediaGif: '🎬 GIF не включён',
+      mediaContact: '👤 Карточка контакта не включена',
+      mediaUnknown: '📎 Медиафайл не включён',
+      months: ['ЯНВАРЬ','ФЕВРАЛЬ','МАРТ','АПРЕЛЬ','МАЙ','ИЮНЬ','ИЮЛЬ','АВГУСТ','СЕНТЯБРЬ','ОКТЯБРЬ','НОЯБРЬ','ДЕКАБРЬ'],
+      howItWorksTitle: 'Как это работает',
+      howStep1Title: 'Подготовьте архив',
+      howStep1Desc: 'На телефоне откройте WhatsApp → откройте чат → нажмите ⋮ (меню) → «Экспортировать чат» → выберите «Прикрепить медиафайлы» (или без медиафайлов для меньшего размера). Это создаст файл .zip.',
+      howStep2Title: 'Перенесите на компьютер',
+      howStep2Desc: 'Отправьте файл .zip себе по электронной почте, через AirDrop, Google Drive, USB-кабель или любым другим способом.',
+      howStep3Title: 'Просмотрите в приложении',
+      howStep3Desc: 'Перетащите файл .zip на эту страницу (или нажмите «Выбрать файлы»). Выберите своё имя из списка — и ваша переписка отобразится точно так же, как на телефоне.',
+      aboutTitle: 'Об авторе',
+      bioIntro: 'Localization Program Manager в Perplexity (с января 2026, Сан-Франциско, гибрид). Специалист по локализации и управлению лингвистическими программами с более чем 25-летним международным опытом.',
+      bioExpTitle: 'Опыт работы',
+      bioPresent: 'настоящее время',
+      bioMinistryTitle: 'Министерство образования Франции',
+      bioMinistryRole: 'Дипломированный преподаватель английского языка (Agrégé)',
+      bioPrepenaRole: 'Стажёр Prep\'ENA',
+      bioBramhallRole: 'Ассистент преподавателя иностранного языка',
+      bioEduTitle: 'Образование',
+      bioEduField: 'Английский язык и литература',
+      bioEduSchool: 'Université Côte d\'Azur',
+      bioPubTitle: 'Научные публикации',
+      bioCertTitle: 'Сертификаты',
+      bioCertEna: 'Сертификат обучения ENA (дек. 2013)',
+      bioCertLinkedin: 'Сертификаты LinkedIn Learning (Linux, Python, Data Science)',
+      bioLangTitle: 'Языки',
+      bioLangList: 'Корсиканский, английский, французский, итальянский — уровень носителя или двуязычный.',
+      bioMiscTitle: 'Разное',
+      bioMiscContent: 'Актёр в короткометражном фильме « Mission insulaire » (2005)',
+      bioMiscRally: 'Штурман в автомобильном ралли.',
+      releaseTitle: 'История версий',
+      releaseV023Date: 'Февраль 2026',
+      releaseV023_1: 'Биография автора полностью переписана на основе профиля LinkedIn',
+      releaseV023_2: 'Все флаги заменены единообразными плоскими прямоугольными SVG (без внешних PNG-файлов)',
+      releaseV022Date: 'Февраль 2026',
+      releaseV022_1: 'Аутентичный корсиканский флаг (голова мавра) вместо предыдущей иконки',
+      releaseV022_2: 'Исправлена ссылка LinkedIn автора',
+      releaseV021Date: 'Февраль 2026',
+      releaseV021_1: 'Исправлена биография автора',
+      releaseV021_2: 'Анимированный корсиканский флаг вместо текста «CO»',
+      releaseV021_3: 'Обновление номера версии',
+      releaseV02Date: 'Февраль 2026',
+      releaseCurrentLabel: 'Текущая версия',
+      releaseV03Date: 'Февраль 2026',
+      releaseV03_1: 'Режим «Live» с анимированным воспроизведением переписки и звуками пузырьков',
+      releaseV03_2: 'Биография автора исправлена по верифицированному профилю LinkedIn',
+      releaseV03_3: 'Новый раздел «Для чего это нужно?» на главной странице',
+      releaseV03_4: 'Переключатель вида перемещён влево, флаги — вправо',
+      whatIsItForTitle: 'Для чего это нужно?',
+      whatIsPoint1: 'WhatsApp захватывает ваш телефон. Фото, видео и сообщения накапливаются годами — и память заполняется очень быстро.',
+      whatIsPoint2: 'Apple берёт огромные деньги за каждый уровень хранилища. 128 ГБ, 256 ГБ, 512 ГБ, 1 ТБ\u2026 и цена растёт с каждым новым iPhone.',
+      whatIsPoint3: 'Но никто не хочет удалять эти воспоминания: дорогие переписки, семейные фото, групповые моменты. Эти мгновения важны.',
+      whatIsPoint4: 'Это приложение расширяет вашу память: экспортируйте разговоры WhatsApp, освободите место на телефоне и переживите каждый момент заново — пузыри, медиа, временные метки, всё в кинорежиме на весь экран.',
+      whatIsPoint5: 'Переживите момент заново: кинорежим превращает ваши разговоры в захватывающий полноэкранный опыт. Фото и видео плавно появляются на фоне, а текст парит сверху — как фильм о ваших воспоминаниях.',
+      whatIsPoint6: 'Ваши данные остаются строго конфиденциальными: всё работает локально в вашем браузере. Ничего не отправляется на сервер.',
+      liveSpeedLabel: 'Скорость',
+      homeButtonTitle: 'Главная',
+      livePrevYear: '-1 год',
+      livePrevMonth: '-1 месяц',
+      livePrevDay: '-1 день',
+      liveNextDay: '+1 день',
+      liveNextMonth: '+1 месяц',
+      liveNextYear: '+1 год',
+      livePlayPause: 'Воспроизведение / Пауза',
+      liveTimelineLabel: 'Хронология',
+      releaseV031Date: 'Февраль 2026',
+      releaseV031_1: 'Улучшенные флаги Великобритании, США и Южной Кореи',
+      releaseV031_2: 'Отдельная кнопка домой для возврата на главную страницу',
+      releaseV031_3: 'Фоновое изображение с плавным переходом во время Live-воспроизведения',
+      releaseV031_4: 'Эффект печатной машинки для сообщений в Live-режиме',
+      releaseV031_5: 'Бегунок хронологии для навигации по переписке',
+      releaseV031_6: 'Все элементы интерфейса локализованы',
+      releaseV032Date: 'Февраль 2026',
+      releaseV032_1: 'Фон в режиме Live: теперь поддерживает изображения И видео (во весь экран)',
+      releaseV032_2: 'Биография автора реструктурирована и локализована на все 11 языков',
+      releaseV032_3: 'Упоминания @ отображаются жирным зелёным как в WhatsApp',
+      releaseV032_4: 'Натуральный эффект набора текста с переменными интервалами',
+      releaseV032_5: 'Имя исправлено: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Полноэкранный кинорежим',
+      cinemaAutoScroll: 'Автопрокрутка',
+      releaseV041Date: 'Февраль 2026',
+      releaseV041_1: 'Режим кино теперь использует полноэкранный режим браузера с кнопкой переключения',
+      releaseV041_2: 'Медиа заполняют весь экран без чёрных полос',
+      releaseV041_3: 'Ссылки YouTube автоматически встраиваются как фоновые видео с плавным появлением',
+      howStep4Title: 'Выберите режим отображения',
+      howStep4Desc: 'Пять режимов просмотра: iPhone, iPad (боковая панель мульти-чата), полноэкранный веб, анимированное Live-воспроизведение и иммерсивный кинорежим с фоновыми медиа.',
+      howStep5Title: 'Кинорежим',
+      howStep5Desc: 'Полноэкранный режим браузера, фото и видео с плавным появлением на фоне, ссылки YouTube встраиваются автоматически, звук с плавным нарастанием и текст с контурами парит сверху.',
+      howStep6Title: 'Живой перевод',
+      howStep6Desc: 'Язык чата определяется автоматически. Выберите целевой язык, и все сообщения переводятся мгновенно — не покидая приложение.',
+      translateBtnTitle: 'Перевести',
+      translateDetected: 'Обнаружен:',
+      translateOff: 'Перевод выключен',
+      translateInProgress: 'Перевод...',
+      translateSameLang: 'Тот же язык',
+      releaseV042Date: 'Февраль 2026',
+      releaseV042_1: 'Живой перевод: автоматическое определение языка и мгновенный перевод',
+      releaseV042_2: 'Плавное нарастание/затухание звука при переходах между медиа',
+      releaseV042_3: 'Звук включён по умолчанию в кинорежиме',
+      releaseV042_4: 'Обогащённый маркетинговый контент и новые шаги в « Как это работает »',
+      releaseV043Date: 'Февраль 2026',
+      releaseV043_1: 'Иллюстрация на главной странице скорректирована: телефон больше не перекрывает контур',
+      releaseV043_2: 'Ссылки YouTube с ошибками больше не отображаются в кинорежиме',
+      releaseV043_3: 'Миниатюры медиа отображаются в прокручиваемом тексте кинорежима для лучшего отслеживания отправленных фото и видео',
+      releaseV044Date: 'Февраль 2026',
+      releaseV044_1: 'Кинорежим: чёрный фон при запуске, миниатюры фото и видео исправлены и увеличены',
+      releaseV044_2: 'Автовоспроизведение YouTube отключено, показываются только миниатюры',
+      releaseV044_3: 'Перевод: исходный текст заменяется переводом вместо отображения обоих',
+      releaseV044_4: 'Кинорежим: живой перевод с интегрированным меню выбора языка',
+      releaseV044_5: 'Иллюстрация главной страницы скорректирована для предотвращения выхода за границы',
+      releaseV04Date: 'Февраль 2026',
+      releaseV04_1: 'Фон в режиме Live без размытия, чёткие изображения и видео',
+      releaseV04_2: 'Телефон и его содержимое всегда на переднем плане',
+      releaseV04_3: 'Новый режим « Полный экран »: крупный текст с контурами, медиа на всю страницу',
+      releaseV012Date: 'Февраль 2026',
+      releaseV011Date: 'Февраль 2026',
+      releaseV010Date: 'Февраль 2026',
+      releaseInitialLabel: 'Первый выпуск',
+      releaseV02_1: 'Многоязычная поддержка (английский, французский, испанский, итальянский, немецкий, корсиканский, русский, китайский, японский, корейский)',
+      releaseV02_2: 'Главная страница с разделами «Как это работает», «Об авторе» и «История версий»',
+      releaseV02_3: 'Бегущая строка для длинных названий групп и имён в боковой панели',
+      releaseV02_4: 'Номер версии отображается на главной странице',
+      releaseV03_5: 'Поддержка 4 новых языков: русский, китайский, японский, корейский',
+      releaseV012_1: 'Название группы исключено из выбора отправителя',
+      releaseV012_2: 'Часы реального времени в строке состояния',
+      releaseV012_3: 'Живые иконки Wi-Fi и батареи, отражающие состояние устройства',
+      releaseV012_4: 'Упоминания @ выделены жирным в стиле WhatsApp',
+      releaseV012_5: 'Кликабельное количество участников с полным списком',
+      releaseV012_6: 'Поддержка загрузки нескольких файлов на главной странице',
+      releaseV012_7: 'Бегущая строка для слишком длинных названий чатов (заголовок и боковая панель)',
+      releaseV011_1: 'Горизонтальный вид iPad с боковой панелью чатов',
+      releaseV011_2: 'Поддержка боковой панели в полноэкранном режиме',
+      releaseV011_3: 'Удалены нерабочие кнопки звонка и настроек в режиме iPad/полного экрана',
+      releaseV011_4: 'Определение названия группы и исключение его из выбора отправителя',
+      releaseV010_1: 'Просмотрщик экспорта чата WhatsApp (.zip) с отображением в стиле телефона',
+      releaseV010_2: 'Поддержка форматов экспорта iOS и Android',
+      releaseV010_3: 'Пузырьки сообщений с правильным выравниванием по левому/правому краю',
+      releaseV010_4: 'Поддержка медиа: изображения (с лайтбоксом), видео, аудио/голосовые сообщения, документы',
+      releaseV010_5: 'Поддержка групповых чатов с цветными именами отправителей',
+      releaseV010_6: 'Функция поиска с подсветкой и навигацией',
+      releaseV010_7: 'Полноэкранный режим',
+      releaseV010_8: 'Тёмная тема WhatsApp',
+      releaseV010_9: 'Интерфейс на французском языке',
+    },
+    zh_CN: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: '将 WhatsApp 导出文件（.zip）拖放到此处',
+      dropHint: '或',
+      dropButton: '选择文件',
+      dropFormats: '支持格式：iOS 和 Android',
+      loadingText: '正在加载对话...',
+      sidebarTitle: '聊天',
+      sidebarEmpty: '点击 + 按钮添加 WhatsApp 导出文件（.zip）',
+      senderPickerTitle: '你是谁？',
+      senderPickerSubtitle: '选择你的名字，让你的消息显示在右侧',
+      msgSuffix: '条消息',
+      participantsSuffix: '位参与者',
+      participantsPopupTitle: '参与者',
+      youTag: '你',
+      searchPlaceholder: '搜索...',
+      searchResult: '个结果',
+      searchResults: '个结果',
+      chatEmptyState: '选择一个聊天',
+      alertZipOnly: '请选择 .zip 文件',
+      alertZipOnlySingle: '请选择一个 .zip 文件',
+      alertNoChatFile: 'ZIP 中未找到聊天文件。请确保文件中包含 _chat.txt。',
+      alertParseError: '无法解析聊天记录。请检查文件格式。',
+      alertLoadError: '加载文件时出错：',
+      mediaImage: '📷 图片未包含',
+      mediaVideo: '🎥 视频未包含',
+      mediaAudio: '🎵 音频未包含',
+      mediaSticker: '🏷️ 贴纸未包含',
+      mediaDocument: '📄 文档未包含',
+      mediaGif: '🎬 GIF 未包含',
+      mediaContact: '👤 联系人名片未包含',
+      mediaUnknown: '📎 媒体文件未包含',
+      months: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+      howItWorksTitle: '如何使用',
+      howStep1Title: '准备存档文件',
+      howStep1Desc: '在手机上打开 WhatsApp → 打开聊天 → 点击 ⋮（菜单）→「导出聊天记录」→ 选择「附加媒体」（或不含媒体以获得更小的文件）。这将创建一个 .zip 文件。',
+      howStep2Title: '传输到电脑',
+      howStep2Desc: '通过电子邮件、AirDrop、Google Drive、USB 数据线或任何文件传输方式将 .zip 文件发送给自己。',
+      howStep3Title: '在应用中查看',
+      howStep3Desc: '将 .zip 文件拖放到此页面（或点击「选择文件」）。从列表中选择你的名字，聊天记录将以手机上的样式呈现。',
+      aboutTitle: '关于作者',
+      bioIntro: 'Perplexity 本地化项目经理（2026年1月至今，旧金山，混合办公）。本地化和语言项目管理专家，拥有超过25年的国际经验。',
+      bioExpTitle: '工作经历',
+      bioPresent: '至今',
+      bioMinistryTitle: '法国国民教育部',
+      bioMinistryRole: '英语高级教师（Agrégé）',
+      bioPrepenaRole: 'Prep\'ENA 实习生',
+      bioBramhallRole: '外语助理教师',
+      bioEduTitle: '教育背景',
+      bioEduField: '英语语言与文学',
+      bioEduSchool: '蔚蓝海岸大学',
+      bioPubTitle: '学术出版物',
+      bioCertTitle: '认证',
+      bioCertEna: 'ENA 培训证书（2013年12月）',
+      bioCertLinkedin: 'LinkedIn Learning 认证（Linux、Python、数据科学）',
+      bioLangTitle: '语言',
+      bioLangList: '科西嘉语、英语、法语、意大利语 — 母语或双语水平。',
+      bioMiscTitle: '其他',
+      bioMiscContent: '短片《 Mission insulaire 》演员（2005年）',
+      bioMiscRally: '汽车拉力赛副驾。',
+      releaseTitle: '版本说明',
+      releaseV023Date: '2026年2月',
+      releaseV023_1: '根据 LinkedIn 个人资料完整重写了作者简介',
+      releaseV023_2: '所有旗帜替换为统一的扁平矩形 SVG（不再使用外部 PNG 文件）',
+      releaseV022Date: '2026年2月',
+      releaseV022_1: '使用科西嘉真实旗帜（摩尔人头像）替换旧图标',
+      releaseV022_2: '修复了作者的 LinkedIn 链接',
+      releaseV021Date: '2026年2月',
+      releaseV021_1: '修复了作者简介',
+      releaseV021_2: '用动画科西嘉旗帜替换了「CO」文字',
+      releaseV021_3: '更新版本号',
+      releaseV02Date: '2026年2月',
+      releaseCurrentLabel: '当前版本',
+      releaseV03Date: '2026年2月',
+      releaseV03_1: '「实时」模式，支持对话动画回放和气泡音效',
+      releaseV03_2: '根据经验证的 LinkedIn 资料更正了作者简介',
+      releaseV03_3: '主页新增「这有什么用？」板块',
+      releaseV03_4: '视图选择器移至左侧，旗帜移至右侧',
+      whatIsItForTitle: '这有什么用？',
+      whatIsPoint1: 'WhatsApp 占据了你的手机。照片、视频和消息多年来不断积累——存储空间很快就会耗尽。',
+      whatIsPoint2: 'Apple 对每个存储级别收取高价。128GB、256GB、512GB、1TB\u2026 每款新 iPhone 价格都在攀升。',
+      whatIsPoint3: '然而没有人想删除那些回忆：珍贵的聊天记录、家庭照片、群聊的欢乐时光。那些瞬间很重要。',
+      whatIsPoint4: '这款应用增强您的记忆：导出 WhatsApp 对话，释放手机存储空间，完整重温每个瞬间——气泡、媒体、时间戳，全屏影院模式呈现。',
+      whatIsPoint5: '重温那一刻：影院模式将您的对话变成沉浸式全屏体验。照片和视频在背景中淡入淡出，文字浮于其上——像一部关于您回忆的电影。',
+      whatIsPoint6: '您的数据严格保密：一切在浏览器本地运行。不会上传到任何服务器。',
+      liveSpeedLabel: '速度',
+      homeButtonTitle: '首页',
+      livePrevYear: '-1 年',
+      livePrevMonth: '-1 月',
+      livePrevDay: '-1 天',
+      liveNextDay: '+1 天',
+      liveNextMonth: '+1 月',
+      liveNextYear: '+1 年',
+      livePlayPause: '播放 / 暂停',
+      liveTimelineLabel: '时间轴',
+      releaseV031Date: '2026年2月',
+      releaseV031_1: '改善了英国、美国和韩国国旗',
+      releaseV031_2: '独立的首页按鈕用于返回主页',
+      releaseV031_3: 'Live 播放期间图片背景淡入淡出',
+      releaseV031_4: 'Live 视图中消息的打字机效果',
+      releaseV031_5: '用于浏览对话的时间轴拖动条',
+      releaseV031_6: '所有界面元素已本地化',
+      releaseV032Date: '2026年2月',
+      releaseV032_1: 'Live 背景现在支持图片和视频（全窗口显示）',
+      releaseV032_2: '作者简介已重新构建并在所有11种语言中本地化',
+      releaseV032_3: '@提及以WhatsApp风格的粗体绿色显示',
+      releaseV032_4: '自然打字效果，采用可变时间间隔',
+      releaseV032_5: '姓名更正：Pierre Régis Gonsolin',
+      cinemaButtonTitle: '影院全屏',
+      cinemaAutoScroll: '自动滚动',
+      releaseV041Date: '2026年2月',
+      releaseV041_1: '影院模式现使用浏览器真正全屏，带切换按钮',
+      releaseV041_2: '媒体填满整个屏幕，无黑边',
+      releaseV041_3: 'YouTube 链接自动嵌入为背景视频并带渐变效果',
+      howStep4Title: '选择显示模式',
+      howStep4Desc: '五种查看模式：iPhone、iPad（多对话侧边栏）、网页全屏、动画 Live 回放和沉浸式影院模式（带背景媒体）。',
+      howStep5Title: '影院模式',
+      howStep5Desc: '浏览器全屏，照片和视频背景渐变，YouTube 链接自动嵌入，声音平滑渐变，带轮廓的文字浮于画面之上。',
+      howStep6Title: '实时翻译',
+      howStep6Desc: '自动检测聊天语言。选择目标语言，所有消息即时翻译——无需离开应用。',
+      translateBtnTitle: '翻译',
+      translateDetected: '检测到：',
+      translateOff: '翻译关闭',
+      translateInProgress: '翻译中...',
+      translateSameLang: '相同语言',
+      releaseV042Date: '2026年2月',
+      releaseV042_1: '实时翻译：自动语言检测和即时翻译',
+      releaseV042_2: '媒体切换时音频平滑渐入渐出',
+      releaseV042_3: '影院模式默认开启声音',
+      releaseV042_4: '丰富的营销内容和「使用方法」中的新步骤',
+      releaseV043Date: '2026年2月',
+      releaseV043_1: '首页插图已调整：手机不再与轮廓重叠',
+      releaseV043_2: '返回错误的YouTube链接不再在影院模式中显示',
+      releaseV043_3: '影院模式滚动文字中显示媒体缩略图，便于追踪发送的照片和视频',
+      releaseV044Date: '2026年2月',
+      releaseV044_1: '影院模式：启动时黑色背景，照片和视频缩略图已修复并放大',
+      releaseV044_2: 'YouTube自动播放已禁用，仅显示缩略图',
+      releaseV044_3: '翻译：源文本被翻译替换，不再同时显示两者',
+      releaseV044_4: '影院模式：实时翻译，集成语言选择菜单',
+      releaseV044_5: '首页插图已调整以防止溢出',
+      releaseV04Date: '2026年2月',
+      releaseV04_1: 'Live 背景无模糊效果，图片和视频清晰显示',
+      releaseV04_2: '手机及其内容始终在前景显示',
+      releaseV04_3: '新「全屏」模式：大字带轮廓，媒体全页显示',
+      releaseV012Date: '2026年2月',
+      releaseV011Date: '2026年2月',
+      releaseV010Date: '2026年2月',
+      releaseInitialLabel: '首次发布',
+      releaseV02_1: '多语言支持（英语、法语、西班牙语、意大利语、德语、科西嘉语、俄语、中文、日语、韩语）',
+      releaseV02_2: '主页包含「如何使用」、「关于」和「版本说明」板块',
+      releaseV02_3: '长群组名称和侧边栏聊天名称的滚动字幕',
+      releaseV02_4: '主页显示版本号',
+      releaseV03_5: '新增 4 种语言支持：俄语、中文、日语、韩语',
+      releaseV012_1: '群组名称从发送者选择器中排除',
+      releaseV012_2: '状态栏实时时钟',
+      releaseV012_3: '实时 Wi-Fi 和电池图标反映设备状态',
+      releaseV012_4: '@提及以粗体显示，采用 WhatsApp 风格配色',
+      releaseV012_5: '可点击的参与者数量，显示完整列表',
+      releaseV012_6: '主页支持多文件上传',
+      releaseV012_7: '超长聊天名称的滚动字幕（标题栏和侧边栏）',
+      releaseV011_1: 'iPad 横向视图，带左侧聊天面板',
+      releaseV011_2: '全屏模式下支持侧边栏',
+      releaseV011_3: '移除了 iPad/全屏模式下不可用的通话和设置图标',
+      releaseV011_4: '检测群组名称并将其排除在发送者选择器之外',
+      releaseV010_1: 'WhatsApp 聊天导出（.zip）查看器，手机风格显示',
+      releaseV010_2: '支持 iOS 和 Android 导出格式',
+      releaseV010_3: '消息气泡根据发送者选择正确左右对齐',
+      releaseV010_4: '媒体支持：图片（带灯箱）、视频、音频/语音消息、文档',
+      releaseV010_5: '群聊支持，发送者名称以不同颜色显示',
+      releaseV010_6: '搜索功能，支持高亮和导航',
+      releaseV010_7: '全屏模式',
+      releaseV010_8: 'WhatsApp 暗色主题',
+      releaseV010_9: '法语界面',
+    },
+    ja_JP: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'WhatsApp のエクスポートファイル（.zip）をここにドロップ',
+      dropHint: 'または',
+      dropButton: 'ファイルを選択',
+      dropFormats: '対応形式：iOS・Android',
+      loadingText: 'トークを読み込み中...',
+      sidebarTitle: 'トーク',
+      sidebarEmpty: '+ ボタンで WhatsApp エクスポート（.zip）を追加',
+      senderPickerTitle: 'あなたはどなたですか？',
+      senderPickerSubtitle: '自分の名前を選択すると、自分のメッセージが右側に表示されます',
+      msgSuffix: '件',
+      participantsSuffix: '人の参加者',
+      participantsPopupTitle: '参加者',
+      youTag: 'あなた',
+      searchPlaceholder: '検索...',
+      searchResult: '件の結果',
+      searchResults: '件の結果',
+      chatEmptyState: 'トークを選択',
+      alertZipOnly: '.zip ファイルを選択してください',
+      alertZipOnlySingle: '.zip ファイルを選択してください',
+      alertNoChatFile: 'ZIP 内にチャットファイルが見つかりません。_chat.txt が含まれているか確認してください。',
+      alertParseError: 'チャットを解析できませんでした。ファイル形式を確認してください。',
+      alertLoadError: 'ファイルの読み込みエラー：',
+      mediaImage: '📷 画像は含まれていません',
+      mediaVideo: '🎥 動画は含まれていません',
+      mediaAudio: '🎵 音声は含まれていません',
+      mediaSticker: '🏷️ スタンプは含まれていません',
+      mediaDocument: '📄 ドキュメントは含まれていません',
+      mediaGif: '🎬 GIF は含まれていません',
+      mediaContact: '👤 連絡先カードは含まれていません',
+      mediaUnknown: '📎 メディアは含まれていません',
+      months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+      howItWorksTitle: '使い方',
+      howStep1Title: 'アーカイブを準備する',
+      howStep1Desc: 'スマートフォンで WhatsApp を開く → トークを開く → ⋮（メニュー）をタップ → 「トーク履歴を送信」→「メディアを含める」を選択（ファイルサイズを小さくする場合はメディアなし）。.zip ファイルが作成されます。',
+      howStep2Title: 'パソコンに転送する',
+      howStep2Desc: '.zip ファイルをメール、AirDrop、Google ドライブ、USB ケーブルなどで自分に送信します。',
+      howStep3Title: 'アプリで表示する',
+      howStep3Desc: '.zip ファイルをこのページにドラッグ（または「ファイルを選択」をクリック）。リストから自分の名前を選ぶと、スマートフォンで見たままのトーク画面が表示されます。',
+      aboutTitle: '作者について',
+      bioIntro: 'Perplexity ローカリゼーション プログラム マネージャー（2026年1月より、サンフランシスコ、ハイブリッド勤務）。25年以上の国際経験を持つローカリゼーションおよび言語プログラム管理の専門家。',
+      bioExpTitle: '職歴',
+      bioPresent: '現在',
+      bioMinistryTitle: 'フランス国民教育省',
+      bioMinistryRole: '英語教員（Agrégé 資格）',
+      bioPrepenaRole: 'Prep\'ENA 研修生',
+      bioBramhallRole: '外国語アシスタント教員',
+      bioEduTitle: '学歴',
+      bioEduField: '英語言語学・英文学',
+      bioEduSchool: 'コートダジュール大学',
+      bioPubTitle: '学術論文',
+      bioCertTitle: '資格・認定',
+      bioCertEna: 'ENA 研修修了証（2013年12月）',
+      bioCertLinkedin: 'LinkedIn Learning 認定（Linux、Python、データサイエンス）',
+      bioLangTitle: '言語',
+      bioLangList: 'コルシカ語、英語、フランス語、イタリア語 — ネイティブまたはバイリンガル。',
+      bioMiscTitle: 'その他',
+      bioMiscContent: '短編映画「Mission insulaire」に出演（2005年）',
+      bioMiscRally: 'ラリーのコドライバー。',
+      releaseTitle: 'リリースノート',
+      releaseV023Date: '2026年2月',
+      releaseV023_1: '作者プロフィールを LinkedIn プロフィールをもとに全面改訂',
+      releaseV023_2: 'すべての旗を統一されたフラットな矩形 SVG に置き換え（外部 PNG ファイルを廃止）',
+      releaseV022Date: '2026年2月',
+      releaseV022_1: '本物のコルシカ旗（ムーアの頭）を以前のアイコンと置き換え',
+      releaseV022_2: '作者の LinkedIn リンクを修正',
+      releaseV021Date: '2026年2月',
+      releaseV021_1: '作者プロフィールを修正',
+      releaseV021_2: '「CO」テキストをアニメーションのコルシカ旗に置き換え',
+      releaseV021_3: 'バージョン番号を更新',
+      releaseV02Date: '2026年2月',
+      releaseCurrentLabel: '現在のバージョン',
+      releaseV03Date: '2026年2月',
+      releaseV03_1: '会話のアニメーション再生とバブル音付きの「ライブ」ビュー',
+      releaseV03_2: '検証済み LinkedIn プロフィールをもとに作者プロフィールを修正',
+      releaseV03_3: 'ホーム画面に「何のためのアプリ？」セクションを新設',
+      releaseV03_4: 'ビュー切替を左側に移動、旗を右側に配置',
+      whatIsItForTitle: '何のためのアプリ？',
+      whatIsPoint1: 'WhatsApp がスマートフォンを占拠しています。写真・動画・メッセージが何年もかけて蓄積され、ストレージはあっという間にいっぱいになります。',
+      whatIsPoint2: 'Apple はストレージの各段階に高額を課しています。128GB、256GB、512GB、1TB\u2026 新しい iPhone のたびに価格が上がります。',
+      whatIsPoint3: 'それでも誰もあの思い出を消したくはありません：大切な会話、家族の写真、グループのひとときが詰まっています。',
+      whatIsPoint4: 'このアプリはあなたの記憶を拡張します：WhatsApp の会話をエクスポートし、スマホの容量を解放し、すべての瞬間をそのまま再体験 — 吹き出し、メディア、タイムスタンプ、シネマフルスクリーンで。',
+      whatIsPoint5: 'あの瞬間をもう一度：シネマモードは会話を没入型フルスクリーン体験に変えます。写真やビデオが背景でフェードし、テキストがその上に浮かびます — あなたの思い出の映画のように。',
+      whatIsPoint6: 'データは厳重にプライベート：すべてブラウザ内でローカルに動作します。サーバーには何もアップロードされません。',
+      liveSpeedLabel: 'スピード',
+      homeButtonTitle: 'ホーム',
+      livePrevYear: '-1 年',
+      livePrevMonth: '-1 か月',
+      livePrevDay: '-1 日',
+      liveNextDay: '+1 日',
+      liveNextMonth: '+1 か月',
+      liveNextYear: '+1 年',
+      livePlayPause: '再生 / 一時停止',
+      liveTimelineLabel: 'タイムライン',
+      releaseV031Date: '2026年2月',
+      releaseV031_1: '英国、米国、韓国の国旗を改善',
+      releaseV031_2: 'ホームページに戻るための専用ホームボタン',
+      releaseV031_3: 'Live再生中の画像背景のフェード',
+      releaseV031_4: 'Liveビューのメッセージにタイプライターエフェクト',
+      releaseV031_5: '会話をナビゲートするタイムラインスクラバー',
+      releaseV031_6: 'すべてのUI要素をローカライズ',
+      releaseV032Date: '2026年2月',
+      releaseV032_1: 'Live 背景に画像と動画の両方を対応（フルウィンドウ表示）',
+      releaseV032_2: '作者プロフィールを再構成し、全11言語でローカライズ',
+      releaseV032_3: '@メンションを WhatsApp のように太字緑色で表示',
+      releaseV032_4: '可変間隔による自然なタイピングエフェクト',
+      releaseV032_5: '氏名を修正：Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'シネマフルスクリーン',
+      cinemaAutoScroll: '自動スクロール',
+      releaseV041Date: '2026年2月',
+      releaseV041_1: 'シネマモードがブラウザの真のフルスクリーンを使用、切替ボタン付き',
+      releaseV041_2: 'メディアが黒帯なしで画面全体を埋める',
+      releaseV041_3: 'YouTubeリンクがフェード付きで背景動画として自動埋め込み',
+      howStep4Title: '表示モードを選択',
+      howStep4Desc: '5つの表示モード：iPhone、iPad（マルチチャットサイドバー）、ウェブフルスクリーン、アニメーションLive再生、背景メディア付きの没入型シネマモード。',
+      howStep5Title: 'シネマモード',
+      howStep5Desc: 'ブラウザフルスクリーン、写真とビデオが背景でフェード、YouTubeリンク自動埋め込み、スムーズなフェード音声、輪郭付きテキストが上に浮遊。',
+      howStep6Title: 'リアルタイム翻訳',
+      howStep6Desc: 'チャットの言語が自動的に検出されます。ターゲット言語を選択すると、すべてのメッセージが即座に翻訳されます — アプリを離れることなく。',
+      translateBtnTitle: '翻訳',
+      translateDetected: '検出：',
+      translateOff: '翻訳オフ',
+      translateInProgress: '翻訳中...',
+      translateSameLang: '同じ言語',
+      releaseV042Date: '2026年2月',
+      releaseV042_1: 'リアルタイム翻訳：自動言語検出と即時翻訳',
+      releaseV042_2: 'メディア切り替え時のスムーズな音声フェード',
+      releaseV042_3: 'シネマモードでデフォルトで音声オン',
+      releaseV042_4: 'マーケティングコンテンツの充実と「使い方」の新ステップ',
+      releaseV043Date: '2026年2月',
+      releaseV043_1: 'ランディングページのイラストを調整：電話がアウトラインと重ならなくなりました',
+      releaseV043_2: 'エラーを返すYouTubeリンクはシネマモードで表示されなくなりました',
+      releaseV043_3: 'シネマモードのスクロールテキストにメディアサムネイルを表示し、写真や動画の送信タイミングを把握しやすくしました',
+      releaseV044Date: '2026年2月',
+      releaseV044_1: 'シネマモード：起動時に黒背景、写真・動画サムネイルの修正と拡大',
+      releaseV044_2: 'YouTube自動再生を無効化、サムネイルのみ表示',
+      releaseV044_3: '翻訳：両方を表示する代わりに、元のテキストを翻訳に置き換え',
+      releaseV044_4: 'シネマモード：統合された言語選択メニュー付きリアルタイム翻訳',
+      releaseV044_5: 'ランディングページのイラストをオーバーフロー防止のために調整',
+      releaseV04Date: '2026年2月',
+      releaseV04_1: 'ライブ背景のぼかし除去、鮮明な画像と動画',
+      releaseV04_2: '電話とその内容が常に前面に表示',
+      releaseV04_3: '新しい「フルスクリーン」モード：輪郭付き大きなテキスト、全画面メディア',
+      releaseV012Date: '2026年2月',
+      releaseV011Date: '2026年2月',
+      releaseV010Date: '2026年2月',
+      releaseInitialLabel: '初回リリース',
+      releaseV02_1: '多言語対応（英語、フランス語、スペイン語、イタリア語、ドイツ語、コルシカ語、ロシア語、中国語、日本語、韓国語）',
+      releaseV02_2: '「使い方」「作者について」「リリースノート」セクション付きのホーム画面',
+      releaseV02_3: '長いグループ名やサイドバーのチャット名のティッカースクロール',
+      releaseV02_4: 'ホーム画面にバージョン番号を表示',
+      releaseV03_5: '新規 4 言語対応追加：ロシア語、中国語、日本語、韓国語',
+      releaseV012_1: 'グループ名を送信者選択から除外',
+      releaseV012_2: 'ステータスバーにリアルタイム時計',
+      releaseV012_3: 'デバイスの状態を反映するライブ Wi-Fi・バッテリーアイコン',
+      releaseV012_4: '@メンション を WhatsApp スタイルの色で太字表示',
+      releaseV012_5: 'クリック可能な参加者数で全リストを表示',
+      releaseV012_6: 'ホーム画面で複数ファイルのアップロードに対応',
+      releaseV012_7: '長すぎるチャット名のニュースティッカー（ヘッダーとサイドバー）',
+      releaseV011_1: '左サイドバー付きの iPad 横向きビュー',
+      releaseV011_2: 'フルスクリーンモードでのサイドバー対応',
+      releaseV011_3: 'iPad/フルスクリーンモードで機能しない通話・設定アイコンを削除',
+      releaseV011_4: 'グループ名の検出と送信者選択からの除外',
+      releaseV010_1: 'WhatsApp チャットエクスポート（.zip）ビューア、スマートフォン風表示',
+      releaseV010_2: 'iOS・Android エクスポート形式に対応',
+      releaseV010_3: '送信者の選択に応じた左右のメッセージバブル',
+      releaseV010_4: 'メディア対応：画像（ライトボックス付き）、動画、音声/ボイスメモ、ドキュメント',
+      releaseV010_5: '送信者名をカラー表示するグループチャット対応',
+      releaseV010_6: 'ハイライトとナビゲーション付きの検索機能',
+      releaseV010_7: 'フルスクリーンモード',
+      releaseV010_8: 'WhatsApp ダークテーマ',
+      releaseV010_9: 'フランス語 UI',
+    },
+    ko_KR: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'WhatsApp 내보내기 파일(.zip)을 여기에 드래그하세요',
+      dropHint: '또는',
+      dropButton: '파일 선택',
+      dropFormats: '지원 형식: iOS 및 Android',
+      loadingText: '대화를 불러오는 중...',
+      sidebarTitle: '채팅',
+      sidebarEmpty: '+ 버튼으로 WhatsApp 내보내기(.zip)를 추가하세요',
+      senderPickerTitle: '당신은 누구인가요?',
+      senderPickerSubtitle: '내 이름을 선택하면 내 메시지가 오른쪽에 표시됩니다',
+      msgSuffix: '개 메시지',
+      participantsSuffix: '명의 참가자',
+      participantsPopupTitle: '참가자',
+      youTag: '나',
+      searchPlaceholder: '검색...',
+      searchResult: '개 결과',
+      searchResults: '개 결과',
+      chatEmptyState: '채팅을 선택하세요',
+      alertZipOnly: '.zip 파일을 선택해 주세요',
+      alertZipOnlySingle: '.zip 파일을 선택해 주세요',
+      alertNoChatFile: 'ZIP에서 채팅 파일을 찾을 수 없습니다. 파일에 _chat.txt가 포함되어 있는지 확인해 주세요.',
+      alertParseError: '채팅을 파싱할 수 없습니다. 파일 형식을 확인해 주세요.',
+      alertLoadError: '파일 로딩 오류: ',
+      mediaImage: '📷 이미지가 포함되지 않음',
+      mediaVideo: '🎥 동영상이 포함되지 않음',
+      mediaAudio: '🎵 오디오가 포함되지 않음',
+      mediaSticker: '🏷️ 스티커가 포함되지 않음',
+      mediaDocument: '📄 문서가 포함되지 않음',
+      mediaGif: '🎬 GIF가 포함되지 않음',
+      mediaContact: '👤 연락처 카드가 포함되지 않음',
+      mediaUnknown: '📎 미디어가 포함되지 않음',
+      months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+      howItWorksTitle: '사용 방법',
+      howStep1Title: '아카이브 준비하기',
+      howStep1Desc: '휴대폰에서 WhatsApp 열기 → 채팅 열기 → ⋮(메뉴) 탭 → 「채팅 내보내기」→ 「미디어 포함」선택（파일 크기를 줄이려면 미디어 없이）。.zip 파일이 생성됩니다.',
+      howStep2Title: '컴퓨터로 전송하기',
+      howStep2Desc: '.zip 파일을 이메일, AirDrop, Google 드라이브, USB 케이블 또는 다른 전송 방법으로 나에게 보내세요.',
+      howStep3Title: '앱에서 보기',
+      howStep3Desc: '.zip 파일을 이 페이지에 드래그하거나（또는 「파일 선택」클릭）목록에서 내 이름을 선택하면 휴대폰에서 보던 것과 똑같은 채팅 화면이 나타납니다.',
+      aboutTitle: '작성자 소개',
+      bioIntro: 'Perplexity 현지화 프로그램 매니저 (2026년 1월부터, 샌프란시스코, 하이브리드). 25년 이상의 국제 경험을 가진 현지화 및 언어 프로그램 관리 전문가.',
+      bioExpTitle: '경력',
+      bioPresent: '현재',
+      bioMinistryTitle: '프랑스 교육부',
+      bioMinistryRole: '영어 정교사 (Agrégé)',
+      bioPrepenaRole: 'Prep\'ENA 연수생',
+      bioBramhallRole: '외국어 보조 교사',
+      bioEduTitle: '학력',
+      bioEduField: '영어학 및 영문학',
+      bioEduSchool: '코트다쥐르 대학교',
+      bioPubTitle: '학술 논문',
+      bioCertTitle: '자격증',
+      bioCertEna: 'ENA 교육 수료증 (2013년 12월)',
+      bioCertLinkedin: 'LinkedIn Learning 인증 (Linux, Python, 데이터 사이언스)',
+      bioLangTitle: '언어',
+      bioLangList: '코르시카어, 영어, 프랑스어, 이탈리아어 — 원어민 또는 이중언어 수준.',
+      bioMiscTitle: '기타',
+      bioMiscContent: '단편 영화 « Mission insulaire » 출연 (2005)',
+      bioMiscRally: '랠리 코드라이버.',
+      releaseTitle: '릴리스 노트',
+      releaseV023Date: '2026년 2월',
+      releaseV023_1: 'LinkedIn 프로필을 기반으로 작성자 소개를 전면 재작성',
+      releaseV023_2: '모든 국기를 통일된 평면 직사각형 SVG로 교체（외부 PNG 파일 없음）',
+      releaseV022Date: '2026년 2월',
+      releaseV022_1: '이전 아이콘 대신 정통 코르시카 국기（무어인 머리）로 교체',
+      releaseV022_2: '작성자 LinkedIn 링크 수정',
+      releaseV021Date: '2026년 2월',
+      releaseV021_1: '작성자 소개 수정',
+      releaseV021_2: '「CO」텍스트를 애니메이션 코르시카 국기로 교체',
+      releaseV021_3: '버전 번호 업데이트',
+      releaseV02Date: '2026년 2월',
+      releaseCurrentLabel: '현재 버전',
+      releaseV03Date: '2026년 2월',
+      releaseV03_1: '애니메이션 대화 재생 및 말풍선 소리가 포함된 「라이브」뷰',
+      releaseV03_2: '검증된 LinkedIn 프로필을 기반으로 작성자 소개 수정',
+      releaseV03_3: '홈 화면에 「이 앱은 무엇에 쓰나요?」섹션 추가',
+      releaseV03_4: '뷰 선택기를 왼쪽으로 이동, 국기를 오른쪽으로 이동',
+      whatIsItForTitle: '이 앱은 무엇에 쓰나요?',
+      whatIsPoint1: 'WhatsApp이 휴대폰을 점령하고 있습니다. 사진, 동영상, 메시지가 수년간 쌓이면서 저장 공간이 빠르게 채워집니다.',
+      whatIsPoint2: 'Apple은 저장 용량 단계마다 높은 가격을 책정합니다. 128GB, 256GB, 512GB, 1TB\u2026 새 iPhone마다 가격이 오릅니다.',
+      whatIsPoint3: '그래도 아무도 그 추억을 삭제하고 싶지 않습니다: 소중한 대화, 가족 사진, 단체 채팅의 즐거운 순간들. 그 순간들은 소중합니다.',
+      whatIsPoint4: '이 앱은 당신의 기억을 확장합니다: WhatsApp 대화를 내보내고, 휴대폰 저장 공간을 확보하고, 모든 순간을 그대로 다시 체험하세요 — 말풍선, 미디어, 타임스탬프, 시네마 전체 화면으로.',
+      whatIsPoint5: '그 순간을 다시 살아보세요: 시네마 모드는 대화를 몰입형 전체 화면 경험으로 변환합니다. 사진과 동영상이 배경에서 페이드되고 텍스트가 위에 떠다닙니다 — 추억의 영화처럼.',
+      whatIsPoint6: '데이터는 철저히 비공개: 모든 것이 브라우저에서 로컬로 실행됩니다. 서버에 아무것도 업로드되지 않습니다.',
+      liveSpeedLabel: '속도',
+      homeButtonTitle: '홈',
+      livePrevYear: '-1 년',
+      livePrevMonth: '-1 개월',
+      livePrevDay: '-1 일',
+      liveNextDay: '+1 일',
+      liveNextMonth: '+1 개월',
+      liveNextYear: '+1 년',
+      livePlayPause: '재생 / 일시정지',
+      liveTimelineLabel: '타임라인',
+      releaseV031Date: '2026년 2월',
+      releaseV031_1: '영국, 미국, 한국 국기 개선',
+      releaseV031_2: '홈 화면으로 돌아가는 전용 홈 버튼',
+      releaseV031_3: 'Live 재생 중 이미지 배경 페이드',
+      releaseV031_4: 'Live 보기에서 메시지의 타자기 효과',
+      releaseV031_5: '대화를 탐색하는 타임라인 스크러버',
+      releaseV031_6: '모든 UI 요소 로켈라이즈됨',
+      releaseV032Date: '2026년 2월',
+      releaseV032_1: 'Live 배경에 이미지와 동영상 모두 지원 (전체 창)',
+      releaseV032_2: '작성자 소개를 재구성하고 11개 언어 모두 현지화',
+      releaseV032_3: '@멘션을 WhatsApp처럼 굵은 녹색으로 표시',
+      releaseV032_4: '가변 간격의 자연스러운 타이핑 효과',
+      releaseV032_5: '이름 수정: Pierre Régis Gonsolin',
+      cinemaButtonTitle: '시네마 전체 화면',
+      cinemaAutoScroll: '자동 스크롤',
+      releaseV041Date: '2026년 2월',
+      releaseV041_1: '시네마 모드에서 브라우저 전체 화면 사용, 전환 버튼 포함',
+      releaseV041_2: '미디어가 검은 막대 없이 전체 화면을 채움',
+      releaseV041_3: 'YouTube 링크가 페이드 효과로 배경 동영상으로 자동 삽입',
+      howStep4Title: '보기 모드 선택',
+      howStep4Desc: '5가지 보기 모드: iPhone, iPad(멀티 채팅 사이드바), 웹 전체 화면, 애니메이션 Live 재생, 배경 미디어가 있는 몰입형 시네마 모드.',
+      howStep5Title: '시네마 모드',
+      howStep5Desc: '브라우저 전체 화면, 배경에서 페이드되는 사진과 동영상, YouTube 링크 자동 임베드, 부드러운 페이드 사운드, 윤곽선 텍스트가 위에 부유.',
+      howStep6Title: '실시간 번역',
+      howStep6Desc: '채팅 언어가 자동으로 감지됩니다. 대상 언어를 선택하면 모든 메시지가 즉시 번역됩니다 — 앱을 떠나지 않고.',
+      translateBtnTitle: '번역',
+      translateDetected: '감지됨:',
+      translateOff: '번역 끄기',
+      translateInProgress: '번역 중...',
+      translateSameLang: '같은 언어',
+      releaseV042Date: '2026년 2월',
+      releaseV042_1: '실시간 번역: 자동 언어 감지 및 즉시 번역',
+      releaseV042_2: '미디어 전환 시 부드러운 오디오 페이드 인/아웃',
+      releaseV042_3: '시네마 모드에서 기본적으로 소리 켜짐',
+      releaseV042_4: '마케팅 콘텐츠 강화 및 「사용 방법」의 새로운 단계',
+      releaseV043Date: '2026년 2월',
+      releaseV043_1: '랜딩 페이지 일러스트 조정: 전화기가 더 이상 윤곽선과 겹치지 않습니다',
+      releaseV043_2: '오류를 반환하는 YouTube 링크는 시네마 모드에서 더 이상 표시되지 않습니다',
+      releaseV043_3: '시네마 모드 스크롤 텍스트에 미디어 썸네일이 표시되어 사진과 동영상 전송 시점을 더 잘 추적할 수 있습니다',
+      releaseV044Date: '2026년 2월',
+      releaseV044_1: '시네마 모드: 시작 시 검은 배경, 사진 및 동영상 썸네일 수정 및 확대',
+      releaseV044_2: 'YouTube 자동 재생 비활성화, 썸네일만 표시',
+      releaseV044_3: '번역: 둘 다 표시하는 대신 원본 텍스트를 번역으로 대체',
+      releaseV044_4: '시네마 모드: 통합 언어 선택 메뉴가 있는 실시간 번역',
+      releaseV044_5: '오버플로 방지를 위해 랜딩 페이지 일러스트 조정',
+      releaseV04Date: '2026년 2월',
+      releaseV04_1: 'Live 배경 블러 제거, 선명한 이미지와 동영상',
+      releaseV04_2: '전화기와 콘텐츠가 항상 전면에 표시',
+      releaseV04_3: '새로운 「전체 화면」 모드: 윤곽선 있는 큰 텍스트, 전체 페이지 미디어',
+      releaseV012Date: '2026년 2월',
+      releaseV011Date: '2026년 2월',
+      releaseV010Date: '2026년 2월',
+      releaseInitialLabel: '최초 릴리스',
+      releaseV02_1: '다국어 지원（영어, 프랑스어, 스페인어, 이탈리아어, 독일어, 코르시카어, 러시아어, 중국어, 일본어, 한국어）',
+      releaseV02_2: '「사용 방법」, 「소개」, 「릴리스 노트」섹션이 있는 홈 화면',
+      releaseV02_3: '긴 그룹 이름 및 사이드바 채팅 이름을 위한 티커 스크롤',
+      releaseV02_4: '홈 화면에 버전 번호 표시',
+      releaseV03_5: '4개 언어 지원 추가: 러시아어, 중국어, 일본어, 한국어',
+      releaseV012_1: '발신자 선택기에서 그룹 이름 제외',
+      releaseV012_2: '상태 표시줄의 실시간 시계',
+      releaseV012_3: '기기 상태를 반영하는 실시간 Wi-Fi 및 배터리 아이콘',
+      releaseV012_4: '@멘션을 WhatsApp 스타일 색상으로 굵게 표시',
+      releaseV012_5: '전체 목록을 표시하는 클릭 가능한 참가자 수',
+      releaseV012_6: '홈 화면에서 여러 파일 업로드 지원',
+      releaseV012_7: '너무 긴 채팅 이름을 위한 뉴스 티커（헤더 및 사이드바）',
+      releaseV011_1: '왼쪽 채팅 패널 사이드바가 있는 iPad 가로 뷰',
+      releaseV011_2: '전체 화면 모드에서의 사이드바 지원',
+      releaseV011_3: 'iPad/전체 화면 모드에서 작동하지 않는 통화 및 설정 아이콘 제거',
+      releaseV011_4: '그룹 이름 감지 및 발신자 선택기에서 제외',
+      releaseV010_1: '휴대폰 스타일 화면으로 표시되는 WhatsApp 채팅 내보내기(.zip) 뷰어',
+      releaseV010_2: 'iOS 및 Android 내보내기 형식 지원',
+      releaseV010_3: '발신자 선택에 따른 좌우 정렬 메시지 말풍선',
+      releaseV010_4: '미디어 지원: 이미지（라이트박스 포함）, 동영상, 오디오/음성 메시지, 문서',
+      releaseV010_5: '색상별 발신자 이름이 있는 그룹 채팅 지원',
+      releaseV010_6: '하이라이트 및 탐색 기능이 있는 검색',
+      releaseV010_7: '전체 화면 모드',
+      releaseV010_8: 'WhatsApp 다크 테마',
+      releaseV010_9: '프랑스어 UI',
     },
     co_FR: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -487,17 +1788,116 @@
       howStep3Title: 'Vedete in l\'applicazione',
       howStep3Desc: 'Trascina u schedariu .zip nant\'à sta pagina (o clicca "Sceglite i schedari"). Sceglite u vostru nome in a lista, è u vostru chat appare esattamente cum\'in u to telefunu.',
       aboutTitle: 'À prupòsitu di l\'autore',
+      bioIntro: 'Localization Program Manager à Perplexity (dapoi ghjennaghju 2026, San Francisco, ibridu). Specializatu in a lucalizazione è a gestione di prugrammi linguistichi, cù più di 25 anni d\'esperienza internaziunale.',
+      bioExpTitle: 'Esperienza',
+      bioPresent: 'oghje',
+      bioMinistryTitle: 'Ministeriu di l\'Educazione naziunale',
+      bioMinistryRole: 'Prufessore agrégé d\'inglese',
+      bioPrepenaRole: 'Stagiaire Prep\'ENA',
+      bioBramhallRole: 'Assistente di lingua straniera',
+      bioEduTitle: 'Furmazione',
+      bioEduField: 'Lingua è Litteratura inglese',
+      bioEduSchool: 'Università Côte d\'Azur',
+      bioPubTitle: 'Publicazioni accademiche',
+      bioCertTitle: 'Certificazioni',
+      bioCertEna: 'Certificatu di furmazione ENA (dic. 2013)',
+      bioCertLinkedin: 'Certificazioni LinkedIn Learning (Linux, Python, Data Science)',
+      bioLangTitle: 'Lingue',
+      bioLangList: 'Corsu, inglese, francese, italianu — livellu nativu o bilingue.',
+      bioMiscTitle: 'Varii',
+      bioMiscContent: 'Attore in u curtimètraghju « Mission insulaire » (2005)',
+      bioMiscRally: 'Copilota di rally.',
       releaseTitle: 'Note di versione',
+      releaseV023Date: 'Ferraghju 2026',
+      releaseV023_1: 'Biografia di l\'autore riscritta cumplettamente secondu u prufilu LinkedIn',
+      releaseV023_2: 'Tutte e bandiere rimpiazzate da SVG rettangulari piatti uniformi (nisunu schedariu PNG esternu)',
+      releaseV022Date: 'Ferraghju 2026',
+      releaseV022_1: 'Bandiera corsa autentica (testa di Moru) invintatu di l\'icona precedente',
+      releaseV022_2: 'Currezzione di u ligame LinkedIn di l\'autore',
+      releaseV021Date: 'Ferraghju 2026',
+      releaseV021_1: 'Currezzione di a biografia di l\'autore',
+      releaseV021_2: 'Bandiera corsa animata invintatu di u testu "CO"',
+      releaseV021_3: 'Aghjurnamentu di u numeru di versione',
       releaseV02Date: 'Ferraghju 2026',
       releaseCurrentLabel: 'Versione attuale',
+      releaseV03Date: 'Ferraghju 2026',
+      releaseV03_1: 'Vista Viva cù riproduzzione animata di cunversazioni è soni di bolle',
+      releaseV03_2: 'Biografia di l\'autore curretta sicondu u prufilu LinkedIn verificatu',
+      releaseV03_3: 'Nova sezione \'À ch\'usa serve?\' in a pagina d\'accoglienza',
+      releaseV03_4: 'Selettore di vista spustatu à mancinu, bandiere à diritta',
+      whatIsItForTitle: 'À ch\'usa serve?',
+      whatIsPoint1: 'WhatsApp invade u to telefunu. Foto, video è messaghji si accumulani nant\'anni — è a memoria si riempie prestu.',
+      whatIsPoint2: 'Apple face pagà caru per ogni livellu di almacenamentu. 128 Go, 256 Go, 512 Go, 1 To\u2026 è u prezzu cresce cù ogni novu iPhone.',
+      whatIsPoint3: 'Epù nisunu vole cancellà quei ricordi: cunversazioni prezziose, foto di famiglia, momenti di gruppu. Quelli attimi cuntani.',
+      whatIsPoint4: 'St\'app aumenta a vostra memoria : esportate e vostre conversazione WhatsApp, liberate spaziu nant\'à u telefonu è riviscite ogni mumentu esattamente cum\'ellu hè statu — bolle, media, marche di tempu, tuttu in pienu schermu cinema.',
+      whatIsPoint5: 'Riviscite u mumentu : u modu cinema trasforma e vostre conversazione in un\'esperienza immersiva pienu schermu. E foto è i video sfumanu in sfondu, u testu fluttueghja sopra — cum\'è un filmu di i vostri ricordi.',
+      whatIsPoint6: 'I vostri dati restanu strettamente privati : tuttu funziona lucalmente ind\'è u vostru navigatore. Niente hè mandatu à un servitore.',
+      liveSpeedLabel: 'Velocità',
+      homeButtonTitle: 'Accoglienza',
+      livePrevYear: '-1 annu',
+      livePrevMonth: '-1 mese',
+      livePrevDay: '-1 ghjornu',
+      liveNextDay: '+1 ghjornu',
+      liveNextMonth: '+1 mese',
+      liveNextYear: '+1 annu',
+      livePlayPause: 'Lettura / Pausa',
+      liveTimelineLabel: 'Cronologia',
+      releaseV031Date: 'Ferraghju 2026',
+      releaseV031_1: 'Bandiere UK, USA è Corea di u Sud migliurate',
+      releaseV031_2: 'Buttone d\'accoglienza separatu per turnà à a pagina d\'accoglienza',
+      releaseV031_3: 'Fundu d\'imaghjine in dissolvenza durante a lettura Live',
+      releaseV031_4: 'Effettu di maschina da scrivere per i messagi in vista Live',
+      releaseV031_5: 'Cursore di cronologia per navighi in a cunversazione',
+      releaseV031_6: 'Tutti i elementi d\'interfaccia lucalizati',
+      releaseV032Date: 'Ferraghju 2026',
+      releaseV032_1: 'Fundu Live: supporta avà imaghjni È video (schermo pienu)',
+      releaseV032_2: 'Biografia di l\'autore ristrutturata è lucalizata in tutte l\'11 lingue',
+      releaseV032_3: 'Menzzioni @ in verde grassettu cum\'in WhatsApp',
+      releaseV032_4: 'Effettu di scrittura naturale cù intervalli variabili',
+      releaseV032_5: 'Nome currettu: Pierre Régis Gonsolin',
+      cinemaButtonTitle: 'Pienu schermu cinema',
+      cinemaAutoScroll: 'Scurrimentu automaticu',
+      releaseV041Date: 'Ferraghju 2026',
+      releaseV041_1: 'Modu cinema cù pienu schermu reale di u navigatore è bottonu di commutazione',
+      releaseV041_2: 'Media senza bande nere, riempimentu tutale di u schermu',
+      releaseV041_3: 'Ligami YouTube integrati automaticamente cum\'è video di fondu cù dissolvenza',
+      howStep4Title: 'Sceglete u vostru modu di visualizazione',
+      howStep4Desc: 'Cinque modi di vista : iPhone, iPad (barra laterale multi-conversazione), pienu schermu web, lettura Live animata è modu Cinema immersivu cù media di sfondu.',
+      howStep5Title: 'Modu Cinema',
+      howStep5Desc: 'Pienu schermu di u navigatore, foto è video in dissolvenza di sfondu, ligami YouTube integrati automaticamente, sonu cù dissolvenza progressiva è testu cù cuntorni chì fluttueghja sopra.',
+      howStep6Title: 'Traduzzione in direttu',
+      howStep6Desc: 'A lingua di a conversazione hè rilevata automaticamente. Sceglete una lingua di destinazione è tutti i messaghji sò tradotti istantaneamente — senza lascià l\'app.',
+      translateBtnTitle: 'Traduce',
+      translateDetected: 'Rilevatu:',
+      translateOff: 'Traduzzione disattivata',
+      translateInProgress: 'Traduzzione...',
+      translateSameLang: 'Stessa lingua',
+      releaseV042Date: 'Ferraghju 2026',
+      releaseV042_1: 'Traduzzione in direttu : rilevamentu automaticu di a lingua è traduzzione istantanea',
+      releaseV042_2: 'Dissolvenza audio progressiva à l\'entrata è à a sortita di i media',
+      releaseV042_3: 'Sonu attivatu per difettu in modu cinema',
+      releaseV042_4: 'Cuntenutu marketing arricchitu è novi passi in « Cume funziona »',
+      releaseV043Date: 'Ferraghju 2026',
+      releaseV043_1: 'Illustrazione di a pagina d\'accoglienza aggiustata: u telefunu ùn si sovrappone più à u cuntornu',
+      releaseV043_2: 'I ligami YouTube in errore ùn si mostranu più in modu cinema',
+      releaseV043_3: 'Miniature di i media affissate ind\'è u testu chì scorge di u modu cinema per seguità megliu e foto è i video mandati',
+      releaseV044Date: 'Ferraghju 2026',
+      releaseV044_1: 'Modu cinema : sfondu neru à l\'avviu, miniature di foto è video curette è ingrandite',
+      releaseV044_2: 'Lettura automatica YouTube disattivata, solu e miniature sò affissate',
+      releaseV044_3: 'Traduzzione : u testu uriginale hè rimpiazzatu da a traduzzione inveci di mustrà tutti i dui',
+      releaseV044_4: 'Modu cinema : traduzzione in direttu cù menu di selezzione di lingua integratu',
+      releaseV044_5: 'Illustrazione di a pagina d\'accoglienza aggiustata per evità u trasbordamentu',
+      releaseV04Date: 'Ferraghju 2026',
+      releaseV04_1: 'Sfondu live senza sfucatura, imagine è video nitidi',
+      releaseV04_2: 'Telefonu è u so cuntenutu sempre in primu pianu',
+      releaseV04_3: 'Novu modu « Pienu schermu »: testu grande cù cuntorni, media à pagina intera',
       releaseV012Date: 'Ferraghju 2026',
-      releaseV011Date: 'Ferraghju 2026',
-      releaseV010Date: 'Ferraghju 2026',
       releaseInitialLabel: 'Prima versione',
-      releaseV02_1: 'Supportu multilingue (inglese, francese, spagnolu, italiano, tedescu, corsu)',
+      releaseV02_1: 'Supportu multilingue (inglese, francese, spagnolu, italiano, tedescu, corsu, russu, cinese, giappunese, coreanu)',
       releaseV02_2: 'Pagina d\'accoglienza cù sezioni "Cumu funziona", "À prupòsitu" è "Note di versione"',
       releaseV02_3: 'Scurruta ticker per i nomi di gruppu lunghi è i nomi in a barra laterale',
       releaseV02_4: 'Numeru di versione mustratu in a pagina d\'accoglienza',
+      releaseV03_5: 'Supportu aghjuntu per 4 nove lingue: russu, cinese, giappunese, coreanu',
       releaseV012_1: 'Nome di gruppu escluso da u selettore di mittente',
       releaseV012_2: 'Orologhju in tempu reale in a barra di statu',
       releaseV012_3: 'Icone WiFi è batteria in direttu chì riflettenu u statu di u dispositivu',
@@ -551,6 +1951,12 @@
       const key = el.getAttribute('data-i18n-placeholder');
       const val = t(key);
       if (val !== undefined) el.placeholder = val;
+    });
+    // Update all data-i18n-title
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      const val = t(key);
+      if (val !== undefined) el.title = val;
     });
     // Update sidebar empty state if visible
     const sidebarEmptyEl = document.querySelector('.sidebar-empty p');
@@ -1076,6 +2482,20 @@
     if (!chat) return;
 
     closeSearch();
+
+    // Reset translation state on chat switch
+    if (typeof translateBar !== 'undefined' && translateBar && !translateBar.classList.contains('hidden')) {
+      translateBar.classList.add('hidden');
+    }
+    if (typeof translateTarget !== 'undefined' && translateTarget) translateTarget.value = '';
+    if (typeof translateState !== 'undefined') {
+      translateState.active = false;
+      translateState.targetLang = '';
+      translateState.detectedLang = '';
+      translateState.originalTexts.clear();
+    }
+    // Restore any translated text to originals
+    removeTranslations();
 
     sidebarList.querySelectorAll('.sidebar-chat-item').forEach(el => {
       el.classList.toggle('active', el.dataset.chatId === chatId);
@@ -1952,14 +3372,32 @@
   const btnPhone = $('btn-phone');
   const btnIpad = $('btn-ipad');
   const btnFull = $('btn-full');
+  const btnLive = $('btn-live');
+  const btnCinema = $('btn-cinema');
   let currentView = 'phone';
 
   btnPhone.addEventListener('click', () => switchView('phone'));
   btnIpad.addEventListener('click', () => switchView('ipad'));
   btnFull.addEventListener('click', () => switchView('full'));
+  btnLive.addEventListener('click', () => switchView('live'));
+  btnCinema.addEventListener('click', () => switchView('cinema'));
 
   function switchView(mode) {
     if (mode === currentView) return;
+
+    // Stop Live playback when leaving Live mode
+    if (currentView === 'live') {
+      liveStop();
+      const liveControls = $('live-controls');
+      if (liveControls) liveControls.classList.add('hidden');
+      chatScreen.classList.remove('live-mode');
+    }
+
+    // Clean up cinema mode when leaving it
+    if (currentView === 'cinema') {
+      cleanupCinema();
+    }
+
     currentView = mode;
 
     const scrollRatio = chatArea.scrollHeight > chatArea.clientHeight
@@ -1969,8 +3407,10 @@
     btnPhone.classList.toggle('active', mode === 'phone');
     btnIpad.classList.toggle('active', mode === 'ipad');
     btnFull.classList.toggle('active', mode === 'full');
+    btnLive.classList.toggle('active', mode === 'live');
+    btnCinema.classList.toggle('active', mode === 'cinema');
 
-    chatScreen.classList.remove('fullscreen-mode', 'ipad-mode');
+    chatScreen.classList.remove('fullscreen-mode', 'ipad-mode', 'cinema-mode');
 
     if (mode === 'full') {
       chatScreen.classList.add('fullscreen-mode');
@@ -1998,6 +3438,22 @@
         chatHeader.classList.remove('hidden');
         chatEmptyState.classList.add('hidden');
       }
+    } else if (mode === 'live') {
+      chatScreen.classList.add('live-mode');
+      const liveControls = $('live-controls');
+      if (liveControls) liveControls.classList.remove('hidden');
+      chatEmptyState.classList.add('hidden');
+      if (activeChatId) {
+        chatArea.classList.remove('hidden');
+        chatHeader.classList.remove('hidden');
+        liveStart();
+      }
+    } else if (mode === 'cinema') {
+      chatScreen.classList.add('cinema-mode');
+      chatEmptyState.classList.add('hidden');
+      if (activeChatId) {
+        renderCinemaView();
+      }
     }
 
     if (mode === 'phone') {
@@ -2005,13 +3461,601 @@
       if (activeChatId) {
         chatArea.classList.remove('hidden');
         chatHeader.classList.remove('hidden');
+        // Re-render full messages
+        const chat = getActiveChat();
+        if (chat) renderMessages(chat);
       }
     }
 
-    requestAnimationFrame(() => {
-      const newMax = chatArea.scrollHeight - chatArea.clientHeight;
-      chatArea.scrollTop = scrollRatio * newMax;
+    if (mode !== 'live') {
+      requestAnimationFrame(() => {
+        const newMax = chatArea.scrollHeight - chatArea.clientHeight;
+        chatArea.scrollTop = scrollRatio * newMax;
+      });
+    }
+  }
+
+  // ===================== CINEMA VIEW =====================
+  let cinemaState = { observer: null, bgLayer: null, soundBtn: null, fsBtn: null, muted: true, activeMedia: null };
+
+  // YouTube URL detection → returns embed URL or null
+  function extractYoutubeEmbedUrl(text) {
+    if (!text) return null;
+    // Match youtube.com/watch?v=ID, youtu.be/ID, youtube.com/shorts/ID, youtube.com/embed/ID
+    const patterns = [
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?[^\s]*v=([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/
+    ];
+    for (const p of patterns) {
+      const m = text.match(p);
+      if (m) return 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&mute=0&controls=0&loop=1&playlist=' + m[1] + '&enablejsapi=1';
+    }
+    return null;
+  }
+
+  function cinemaRequestFullscreen() {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+  }
+
+  function cinemaExitFullscreen() {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
+  }
+
+  function cleanupCinema() {
+    if (cinemaState.observer) { cinemaState.observer.disconnect(); cinemaState.observer = null; }
+    const ct = document.getElementById('cinema-container');
+    if (ct) ct.remove();
+    if (cinemaState.bgLayer) {
+      // Pause/clean all videos and remove iframes
+      cinemaState.bgLayer.querySelectorAll('video').forEach(v => { v.pause(); v.src = ''; });
+      cinemaState.bgLayer.querySelectorAll('iframe').forEach(f => { f.src = ''; });
+      cinemaState.bgLayer.remove();
+      cinemaState.bgLayer = null;
+    }
+    const bb = document.querySelector('.cinema-back-btn');
+    if (bb) bb.remove();
+    if (cinemaState.soundBtn) { cinemaState.soundBtn.remove(); cinemaState.soundBtn = null; }
+    if (cinemaState.fsBtn) { cinemaState.fsBtn.remove(); cinemaState.fsBtn = null; }
+    if (cinemaState.ciTransBtn) { cinemaState.ciTransBtn.remove(); cinemaState.ciTransBtn = null; }
+    if (cinemaState.langMenu) { cinemaState.langMenu.remove(); cinemaState.langMenu = null; }
+    if (cinemaState._stopAutoScroll) { cinemaState._stopAutoScroll(); cinemaState._stopAutoScroll = null; }
+    if (cinemaState.autoScrollBtn) { cinemaState.autoScrollBtn.remove(); cinemaState.autoScrollBtn = null; }
+    if (cinemaState._closeLangMenu) {
+      document.removeEventListener('click', cinemaState._closeLangMenu);
+      cinemaState._closeLangMenu = null;
+    }
+    cinemaState.activeMedia = null;
+    // Remove fullscreen change listeners
+    if (cinemaState._fsListeners) {
+      document.removeEventListener('fullscreenchange', cinemaState._fsListeners.fn);
+      document.removeEventListener('webkitfullscreenchange', cinemaState._fsListeners.fn);
+      cinemaState._fsListeners = null;
+    }
+    cinemaExitFullscreen();
+  }
+
+  function renderCinemaView() {
+    cleanupCinema();
+
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    cinemaState.muted = false;
+
+    // Request browser fullscreen immediately
+    cinemaRequestFullscreen();
+
+    // ---- Back button ----
+    const backBtn = document.createElement('button');
+    backBtn.className = 'cinema-back-btn';
+    backBtn.title = t('cinemaButtonTitle');
+    backBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+    backBtn.addEventListener('click', () => switchView('phone'));
+    document.body.appendChild(backBtn);
+
+    // ---- Sound toggle button ----
+    const soundBtn = document.createElement('button');
+    soundBtn.className = 'cinema-sound-btn';
+    const muteIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3.63 3.63a.996.996 0 000 1.41L7.29 8.7 7 9H3v6h4l5 5V13.41l4.18 4.18c-.65.49-1.38.88-2.18 1.12v2.06a8.94 8.94 0 003.61-1.74l2.04 2.04a.996.996 0 101.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8A4.5 4.5 0 0014 8.18v.73l2.5 2.5V12z"/></svg>';
+    const unmuteIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.18v7.64A4.49 4.49 0 0016.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+    soundBtn.innerHTML = unmuteIcon;
+    soundBtn.classList.add('unmuted');
+    soundBtn.addEventListener('click', () => {
+      cinemaState.muted = !cinemaState.muted;
+      soundBtn.classList.toggle('unmuted', !cinemaState.muted);
+      soundBtn.innerHTML = cinemaState.muted ? muteIcon : unmuteIcon;
+      // Apply to active video
+      if (cinemaState.activeMedia) {
+        if (cinemaState.activeMedia.tagName === 'VIDEO') {
+          cinemaState.activeMedia.muted = cinemaState.muted;
+        } else if (cinemaState.activeMedia.tagName === 'IFRAME') {
+          // Rebuild iframe src with mute param
+          const src = cinemaState.activeMedia.src;
+          cinemaState.activeMedia.src = src.replace(/mute=[01]/, 'mute=' + (cinemaState.muted ? '1' : '0'));
+        }
+      }
     });
+    document.body.appendChild(soundBtn);
+    cinemaState.soundBtn = soundBtn;
+
+    // ---- Fullscreen toggle button ----
+    const fsEnterIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
+    const fsExitIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>';
+    const fsBtn = document.createElement('button');
+    fsBtn.className = 'cinema-fs-btn';
+    fsBtn.innerHTML = fsExitIcon; // we start in fullscreen
+    fsBtn.addEventListener('click', () => {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        cinemaExitFullscreen();
+      } else {
+        cinemaRequestFullscreen();
+      }
+    });
+    // Listen for fullscreen changes to update icon
+    const onFsChange = () => {
+      fsBtn.innerHTML = (document.fullscreenElement || document.webkitFullscreenElement) ? fsExitIcon : fsEnterIcon;
+    };
+    document.addEventListener('fullscreenchange', onFsChange);
+    document.addEventListener('webkitfullscreenchange', onFsChange);
+    cinemaState._fsListeners = { fn: onFsChange };
+    document.body.appendChild(fsBtn);
+    cinemaState.fsBtn = fsBtn;
+
+    // ---- Translate button + language menu for cinema ----
+    const cinemaTranslateIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>';
+    const ciTransBtn = document.createElement('button');
+    ciTransBtn.className = 'cinema-translate-btn';
+    ciTransBtn.innerHTML = cinemaTranslateIcon;
+    document.body.appendChild(ciTransBtn);
+    cinemaState.ciTransBtn = ciTransBtn;
+
+    // Language menu popup
+    const langMenu = document.createElement('div');
+    langMenu.className = 'cinema-lang-menu';
+    // "Off" option
+    const offItem = document.createElement('button');
+    offItem.className = 'cinema-lang-menu-item off-item active';
+    offItem.textContent = t('translateOff') || 'Translation off';
+    offItem.dataset.lang = '';
+    langMenu.appendChild(offItem);
+    // Language options (same as translate bar)
+    const cinemaLangs = [
+      { code: 'fr', name: 'Fran\u00e7ais' }, { code: 'en', name: 'English' },
+      { code: 'es', name: 'Espa\u00f1ol' }, { code: 'it', name: 'Italiano' },
+      { code: 'de', name: 'Deutsch' }, { code: 'ru', name: '\u0420\u0443\u0441\u0441\u043a\u0438\u0439' },
+      { code: 'zh', name: '\u4e2d\u6587' }, { code: 'ja', name: '\u65e5\u672c\u8a9e' },
+      { code: 'ko', name: '\ud55c\uad6d\uc5b4' }, { code: 'pt', name: 'Portugu\u00eas' },
+      { code: 'ar', name: '\u0627\u0644\u0639\u0631\u0628\u064a\u0629' }, { code: 'hi', name: '\u0939\u093f\u0928\u094d\u0926\u0940' },
+      { code: 'co', name: 'Corsu' }
+    ];
+    for (const lang of cinemaLangs) {
+      const item = document.createElement('button');
+      item.className = 'cinema-lang-menu-item';
+      item.textContent = lang.name;
+      item.dataset.lang = lang.code;
+      langMenu.appendChild(item);
+    }
+    document.body.appendChild(langMenu);
+    cinemaState.langMenu = langMenu;
+
+    // Cinema translation state
+    let cinemaTranslateActive = false;
+    let cinemaTranslateLang = '';
+    const cinemaOriginalTexts = new Map();
+
+    // Toggle menu on button click
+    ciTransBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langMenu.classList.toggle('visible');
+    });
+
+    // Close menu when clicking elsewhere
+    const closeLangMenu = (e) => {
+      if (!langMenu.contains(e.target) && e.target !== ciTransBtn) {
+        langMenu.classList.remove('visible');
+      }
+    };
+    document.addEventListener('click', closeLangMenu);
+    cinemaState._closeLangMenu = closeLangMenu;
+
+    // Handle language selection
+    langMenu.addEventListener('click', async (e) => {
+      const item = e.target.closest('.cinema-lang-menu-item');
+      if (!item) return;
+      const lang = item.dataset.lang;
+
+      // Update active state
+      langMenu.querySelectorAll('.cinema-lang-menu-item').forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      langMenu.classList.remove('visible');
+
+      if (!lang) {
+        // Turn off translation — restore originals
+        ciTransBtn.classList.remove('active');
+        cinemaTranslateActive = false;
+        cinemaTranslateLang = '';
+        cinemaOriginalTexts.forEach((origHtml, span) => {
+          span.innerHTML = origHtml;
+        });
+        cinemaOriginalTexts.clear();
+        return;
+      }
+
+      ciTransBtn.classList.add('active');
+      cinemaTranslateActive = true;
+      cinemaTranslateLang = lang;
+
+      // Restore originals first if switching languages
+      cinemaOriginalTexts.forEach((origHtml, span) => {
+        span.innerHTML = origHtml;
+      });
+      cinemaOriginalTexts.clear();
+
+      // Detect source language
+      if (!translateState.detectedLang) {
+        translateState.detectedLang = detectLanguage(chat.messages);
+      }
+
+      if (translateState.detectedLang === lang) return;
+
+      // Translate all cinema text spans (replace source, don't keep both)
+      const textSpans = container.querySelectorAll('.cinema-msg-text');
+      const batchSize = 5;
+      for (let i = 0; i < textSpans.length; i += batchSize) {
+        const batch = Array.from(textSpans).slice(i, i + batchSize);
+        await Promise.all(batch.map(async (span) => {
+          const originalText = span.textContent;
+          if (!originalText || originalText.trim().length < 2) return;
+          if (!cinemaOriginalTexts.has(span)) {
+            cinemaOriginalTexts.set(span, span.innerHTML);
+          }
+          const result = await translateText(originalText, translateState.detectedLang, lang);
+          if (result && result !== originalText && cinemaTranslateActive && cinemaTranslateLang === lang) {
+            span.textContent = result;
+          }
+        }));
+      }
+    });
+
+    // ---- Auto-scroll button ----
+    const autoScrollPlayIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18a1 1 0 000-1.69L9.54 5.98A.998.998 0 008 6.82z"/></svg>';
+    const autoScrollPauseIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    const autoScrollBtn = document.createElement('button');
+    autoScrollBtn.className = 'cinema-autoscroll-btn';
+    autoScrollBtn.innerHTML = autoScrollPlayIcon;
+    autoScrollBtn.title = t('cinemaAutoScroll') || 'Auto-scroll';
+    let autoScrollInterval = null;
+    let autoScrollActive = false;
+    const autoScrollSpeed = 1; // pixels per tick
+    const autoScrollTick = 30; // ms between ticks
+
+    function startAutoScroll() {
+      const ct = document.getElementById('cinema-container');
+      if (!ct) return;
+      autoScrollActive = true;
+      autoScrollBtn.innerHTML = autoScrollPauseIcon;
+      autoScrollBtn.classList.add('active');
+      autoScrollInterval = setInterval(() => {
+        const ct2 = document.getElementById('cinema-container');
+        if (!ct2) { stopAutoScroll(); return; }
+        // Stop when reached the bottom
+        if (ct2.scrollTop + ct2.clientHeight >= ct2.scrollHeight - 2) {
+          stopAutoScroll();
+          return;
+        }
+        ct2.scrollTop += autoScrollSpeed;
+      }, autoScrollTick);
+    }
+
+    function stopAutoScroll() {
+      autoScrollActive = false;
+      autoScrollBtn.innerHTML = autoScrollPlayIcon;
+      autoScrollBtn.classList.remove('active');
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    }
+
+    autoScrollBtn.addEventListener('click', () => {
+      if (autoScrollActive) {
+        stopAutoScroll();
+      } else {
+        startAutoScroll();
+      }
+    });
+    document.body.appendChild(autoScrollBtn);
+    cinemaState.autoScrollBtn = autoScrollBtn;
+    cinemaState._stopAutoScroll = stopAutoScroll;
+
+    // ---- Fixed background layer ----
+    const bgLayer = document.createElement('div');
+    bgLayer.className = 'cinema-bg-layer';
+    chatScreen.appendChild(bgLayer);
+    cinemaState.bgLayer = bgLayer;
+
+    // ---- Scrollable container ----
+    const container = document.createElement('div');
+    container.id = 'cinema-container';
+    container.className = 'cinema-container';
+
+    // Pre-load media into bgLayer and track which message divs should trigger them
+    const mediaMap = []; // { msgDiv, bgEl, isVideo, isYoutube }
+    let hasAnyVideo = false;
+
+    for (const msg of chat.messages) {
+      if (msg.type === 'date') continue;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'cinema-msg';
+
+      if (msg.isSystem) {
+        msgDiv.classList.add('cinema-system');
+        const textSpan = document.createElement('span');
+        textSpan.className = 'cinema-msg-text';
+        textSpan.innerHTML = linkify(escapeHtml(msg.text || ''));
+        msgDiv.appendChild(textSpan);
+        container.appendChild(msgDiv);
+        continue;
+      }
+
+      // Left / right alignment
+      const isOutgoing = msg.sender === chat.mySender;
+      msgDiv.classList.add(isOutgoing ? 'cinema-outgoing' : 'cinema-incoming');
+
+      // Sender
+      const senderSpan = document.createElement('span');
+      senderSpan.className = 'cinema-sender';
+      senderSpan.textContent = msg.sender || '';
+      msgDiv.appendChild(senderSpan);
+
+      // Check for attached media — create background element + inline thumbnail
+      let hasAttachedMedia = false;
+      if (msg.media && msg.media.type !== 'omitted') {
+        const entry = findMediaFile(msg.media.filename, chat);
+        if (entry) {
+          if (msg.media.mediaType === 'image') {
+            const bgImg = document.createElement('img');
+            bgImg.alt = msg.media.filename || '';
+            // Create inline thumbnail in scrolling text
+            const thumbEl = document.createElement('img');
+            thumbEl.className = 'cinema-media-thumb';
+            thumbEl.alt = 'photo';
+            msgDiv.appendChild(thumbEl);
+            loadMediaBlob(msg.media.filename, entry).then(url => {
+              bgImg.src = url;
+              thumbEl.src = url;
+            });
+            bgLayer.appendChild(bgImg);
+            mediaMap.push({ msgDiv, bgEl: bgImg, isVideo: false, isYoutube: false });
+            hasAttachedMedia = true;
+          } else if (msg.media.mediaType === 'video') {
+            hasAnyVideo = true;
+            const bgVid = document.createElement('video');
+            bgVid.muted = true;
+            bgVid.loop = true;
+            bgVid.playsInline = true;
+            bgVid.preload = 'auto';
+            // Create inline video thumbnail (poster image from video)
+            const vidThumbEl = document.createElement('video');
+            vidThumbEl.className = 'cinema-media-thumb';
+            vidThumbEl.muted = true;
+            vidThumbEl.autoplay = false;
+            vidThumbEl.playsInline = true;
+            vidThumbEl.preload = 'metadata';
+            msgDiv.appendChild(vidThumbEl);
+            loadMediaBlob(msg.media.filename, entry).then(url => {
+              bgVid.src = url;
+              vidThumbEl.src = url;
+            });
+            bgLayer.appendChild(bgVid);
+            mediaMap.push({ msgDiv, bgEl: bgVid, isVideo: true, isYoutube: false });
+            hasAttachedMedia = true;
+          }
+        }
+      }
+
+      // Check for YouTube links in message text (only if no attached media)
+      // Show thumbnail only — no autoplay embed
+      if (!hasAttachedMedia && msg.text) {
+        const ytUrl = extractYoutubeEmbedUrl(msg.text);
+        if (ytUrl) {
+          // Extract video ID for thumbnail
+          const ytIdMatch = ytUrl.match(/embed\/([a-zA-Z0-9_-]{11})/);
+          if (ytIdMatch) {
+            const ytThumb = document.createElement('img');
+            ytThumb.className = 'cinema-yt-thumb';
+            ytThumb.src = 'https://img.youtube.com/vi/' + ytIdMatch[1] + '/mqdefault.jpg';
+            ytThumb.alt = 'YouTube';
+            ytThumb.onerror = function() { this.style.display = 'none'; };
+            msgDiv.appendChild(ytThumb);
+          }
+        }
+      }
+
+      // Text
+      if (msg.text && msg.text.trim()) {
+        const textSpan = document.createElement('span');
+        textSpan.className = 'cinema-msg-text';
+        textSpan.innerHTML = linkify(escapeHtml(msg.text));
+        msgDiv.appendChild(textSpan);
+      }
+
+      // Time (with date)
+      if (msg.timeStr) {
+        const timeSpan = document.createElement('span');
+        timeSpan.className = 'cinema-time';
+        timeSpan.textContent = (msg.dateStr ? msg.dateStr + '  ' : '') + msg.timeStr;
+        msgDiv.appendChild(timeSpan);
+      }
+
+      container.appendChild(msgDiv);
+    }
+
+    chatScreen.appendChild(container);
+
+    // ---- IntersectionObserver for media fade in/out ----
+    const allMsgDivs = Array.from(container.querySelectorAll('.cinema-msg'));
+
+    // Assign media zones: each media affects messages from itself until the next media message
+    for (let m = 0; m < mediaMap.length; m++) {
+      const startIdx = allMsgDivs.indexOf(mediaMap[m].msgDiv);
+      const endIdx = (m + 1 < mediaMap.length) ? allMsgDivs.indexOf(mediaMap[m + 1].msgDiv) : allMsgDivs.length;
+      mediaMap[m].affectedDivs = allMsgDivs.slice(startIdx, endIdx);
+    }
+
+    // Audio fade helper (for <video> elements)
+    function audioFadeIn(videoEl, targetVolume, duration) {
+      if (!videoEl || videoEl.tagName !== 'VIDEO') return;
+      videoEl.volume = 0;
+      videoEl.muted = false;
+      const steps = 20;
+      const stepTime = duration / steps;
+      const stepVol = targetVolume / steps;
+      let currentStep = 0;
+      const fadeInterval = setInterval(() => {
+        currentStep++;
+        videoEl.volume = Math.min(targetVolume, stepVol * currentStep);
+        if (currentStep >= steps) clearInterval(fadeInterval);
+      }, stepTime);
+      videoEl._fadeInterval = fadeInterval;
+    }
+
+    function audioFadeOut(videoEl, duration, callback) {
+      if (!videoEl || videoEl.tagName !== 'VIDEO') { if (callback) callback(); return; }
+      if (videoEl._fadeInterval) clearInterval(videoEl._fadeInterval);
+      const startVol = videoEl.volume;
+      if (startVol === 0) { if (callback) callback(); return; }
+      const steps = 20;
+      const stepTime = duration / steps;
+      const stepVol = startVol / steps;
+      let currentStep = 0;
+      const fadeInterval = setInterval(() => {
+        currentStep++;
+        videoEl.volume = Math.max(0, startVol - stepVol * currentStep);
+        if (currentStep >= steps) {
+          clearInterval(fadeInterval);
+          if (callback) callback();
+        }
+      }, stepTime);
+      videoEl._fadeInterval = fadeInterval;
+    }
+
+    function activateMedia(entry) {
+      // Skip YouTube iframes that previously failed
+      if (entry.isYoutube && entry.bgEl.dataset.ytFailed === 'true') return;
+
+      // Deactivate previous
+      if (cinemaState.activeMedia && cinemaState.activeMedia !== entry.bgEl) {
+        const prevMedia = cinemaState.activeMedia;
+        if (prevMedia.tagName === 'VIDEO') {
+          audioFadeOut(prevMedia, 400, () => {
+            prevMedia.classList.remove('active');
+            prevMedia.pause();
+          });
+        } else {
+          prevMedia.classList.remove('active');
+          if (prevMedia.tagName === 'IFRAME') prevMedia.src = '';
+        }
+      }
+      // Activate new
+      entry.bgEl.classList.add('active');
+      cinemaState.activeMedia = entry.bgEl;
+      if (entry.isVideo) {
+        if (entry.isYoutube) {
+          let src = entry.bgEl.dataset.cinemaSrc || '';
+          src = src.replace(/mute=[01]/, 'mute=' + (cinemaState.muted ? '1' : '0'));
+          entry.bgEl.src = src;
+          // Detect failed YouTube embeds after a timeout
+          const ytTimeout = setTimeout(() => {
+            try {
+              // If the iframe has no contentWindow or is blocked, mark as failed
+              if (!entry.bgEl.contentWindow) {
+                entry.bgEl.dataset.ytFailed = 'true';
+                entry.bgEl.classList.remove('active');
+                entry.bgEl.src = '';
+              }
+            } catch(e) {
+              // Cross-origin error is expected for working YouTube embeds, do nothing
+            }
+          }, 5000);
+          entry.bgEl._ytTimeout = ytTimeout;
+        } else {
+          if (cinemaState.muted) {
+            entry.bgEl.muted = true;
+            entry.bgEl.volume = 1;
+          } else {
+            entry.bgEl.muted = false;
+            entry.bgEl.volume = 0;
+          }
+          entry.bgEl.play().catch(() => {});
+          if (!cinemaState.muted) {
+            audioFadeIn(entry.bgEl, 1, 600);
+          }
+        }
+        soundBtn.classList.add('visible');
+      }
+      entry.affectedDivs.forEach(d => d.classList.add('has-media-bg'));
+    }
+
+    function deactivateMedia(entry) {
+      // Clear YouTube timeout if any
+      if (entry.bgEl._ytTimeout) {
+        clearTimeout(entry.bgEl._ytTimeout);
+        entry.bgEl._ytTimeout = null;
+      }
+      if (entry.isVideo && !entry.isYoutube && entry.bgEl.tagName === 'VIDEO') {
+        audioFadeOut(entry.bgEl, 400, () => {
+          entry.bgEl.classList.remove('active');
+          entry.bgEl.pause();
+        });
+      } else {
+        entry.bgEl.classList.remove('active');
+        if (entry.isVideo && entry.isYoutube) {
+          entry.bgEl.src = '';
+        } else if (entry.isVideo) {
+          entry.bgEl.pause();
+        }
+      }
+      if (cinemaState.activeMedia === entry.bgEl) {
+        cinemaState.activeMedia = null;
+        const anyActive = mediaMap.some(e => e.bgEl.classList.contains('active'));
+        if (!anyActive) {
+          soundBtn.classList.remove('visible');
+        }
+      }
+      entry.affectedDivs.forEach(d => d.classList.remove('has-media-bg'));
+    }
+
+    // Observe each media message div
+    const observer = new IntersectionObserver((entries) => {
+      for (const obsEntry of entries) {
+        const match = mediaMap.find(m => m.msgDiv === obsEntry.target);
+        if (!match) continue;
+        if (obsEntry.isIntersecting) {
+          activateMedia(match);
+        } else {
+          deactivateMedia(match);
+        }
+      }
+    }, {
+      root: container,
+      rootMargin: '200px 0px 200px 0px',
+      threshold: 0
+    });
+
+    for (const entry of mediaMap) {
+      observer.observe(entry.msgDiv);
+    }
+    cinemaState.observer = observer;
   }
 
   // ===================== PARTICIPANTS POPUP =====================
@@ -2105,5 +4149,734 @@
 
   // ===================== INITIAL LOCALE APPLY =====================
   applyLocale();
+
+  // ===================== LIVE VIEW ENGINE =====================
+  const liveState = {
+    playing: false,
+    currentIndex: 0,
+    timer: null,
+    speed: 1,       // playback speed multiplier
+    audioCtx: null, // Web Audio context (lazy-created)
+  };
+
+  // Logarithmic slider: maps 0–100 to 0.1–100
+  function sliderToSpeed(v) {
+    // v=0 => 0.1x, v=50 => ~1x, v=100 => 100x
+    return Math.pow(10, (v / 100) * 3 - 1); // 10^(-1) to 10^2
+  }
+
+  function speedToSlider(s) {
+    return Math.round(((Math.log10(s) + 1) / 3) * 100);
+  }
+
+  function formatSpeed(s) {
+    if (s < 1) return s.toFixed(1) + '×';
+    if (s < 10) return s.toFixed(1) + '×';
+    return Math.round(s) + '×';
+  }
+
+  // Synthesize a short pop/burst sound using Web Audio API
+  function playBubbleSound(senderIndex) {
+    try {
+      if (!liveState.audioCtx) {
+        liveState.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const ctx = liveState.audioCtx;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      // Vary pitch per speaker: 400-900 Hz range
+      const baseFreq = 480 + (senderIndex % 8) * 60;
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.6, ctx.currentTime + 0.05);
+
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.055);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } catch (e) {
+      // Web Audio not available — silent fallback
+    }
+  }
+
+  // Get speaker index for a given sender name (for consistent sound pitch)
+  function getSenderIndex(senderName, chat) {
+    if (!senderName || !chat) return 0;
+    return chat.senders.indexOf(senderName);
+  }
+
+  // ---- Live background media ----
+  let liveBgEl = null;
+  let liveBgTimeout = null;
+
+  // Start Live mode: clear container and replay from currentIndex
+  function liveStart() {
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    // Clear messages area
+    messagesContainer.innerHTML = '';
+    allRenderedElements = [];
+
+    // Reset timeline slider
+    const timelineSlider = $('live-timeline-slider');
+    const timelineValue = $('live-timeline-value');
+    if (timelineSlider) timelineSlider.value = 0;
+    if (timelineValue) timelineValue.textContent = '0%';
+
+    updateLiveDatetime(chat);
+    setLivePlaying(true);
+    scheduleNextMessage(chat);
+  }
+
+  function liveStop() {
+    setLivePlaying(false);
+    if (liveState.timer) {
+      clearTimeout(liveState.timer);
+      liveState.timer = null;
+    }
+    if (liveBgTimeout) { clearTimeout(liveBgTimeout); liveBgTimeout = null; }
+    if (liveBgEl) {
+      liveBgEl.classList.remove('active');
+      const oldEl = liveBgEl;
+      liveBgEl = null;
+      setTimeout(() => { if (oldEl.parentNode) oldEl.parentNode.removeChild(oldEl); }, 1600);
+    }
+  }
+
+  function livePause() {
+    setLivePlaying(false);
+    if (liveState.timer) {
+      clearTimeout(liveState.timer);
+      liveState.timer = null;
+    }
+  }
+
+  function liveResume() {
+    const chat = getActiveChat();
+    if (!chat) return;
+    setLivePlaying(true);
+    scheduleNextMessage(chat);
+  }
+
+  function setLivePlaying(playing) {
+    liveState.playing = playing;
+    const playIcon = $('live-play-icon');
+    if (!playIcon) return;
+    if (playing) {
+      // Show pause icon
+      playIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    } else {
+      // Show play icon
+      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+  }
+
+  function updateLiveDatetime(chat) {
+    const el = $('live-datetime');
+    if (!el) return;
+    const idx = Math.min(liveState.currentIndex, chat.messages.length - 1);
+    if (idx < 0 || !chat.messages[idx]) { el.innerHTML = '&nbsp;'; return; }
+    const msg = chat.messages[idx];
+    if (msg.date instanceof Date && !isNaN(msg.date)) {
+      el.textContent = msg.dateStr + '  ' + msg.timeStr;
+    } else {
+      el.innerHTML = '&nbsp;';
+    }
+    updateTimelineDisplay(chat);
+  }
+
+  // Append one message element with Live animation
+  function appendLiveMessage(msg, chat) {
+    const prevSender = liveState.currentIndex > 0
+      ? (chat.messages[liveState.currentIndex - 1] || {}).sender
+      : null;
+
+    // Check if we need a date separator
+    const currentDateKey = getDateKey(msg.date);
+    const prevDateKey = liveState.currentIndex > 0
+      ? getDateKey((chat.messages[liveState.currentIndex - 1] || {}).date)
+      : null;
+
+    if (currentDateKey !== prevDateKey) {
+      const sep = createDateSeparator(msg.dateStr, currentDateKey);
+      sep.classList.add('live-appear');
+      messagesContainer.appendChild(sep);
+    }
+
+    const el = createMessageElement(msg, prevSender, chat);
+    el.dataset.msgId = liveState.currentIndex;
+    el.classList.add('live-appear');
+    messagesContainer.appendChild(el);
+    allRenderedElements.push({ idx: liveState.currentIndex, el });
+
+    // Auto-scroll to keep latest bubble visible
+    requestAnimationFrame(() => {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    });
+
+    // Play bubble pop sound
+    if (!msg.isSystem) {
+      const si = getSenderIndex(msg.sender, chat);
+      playBubbleSound(si >= 0 ? si : 0);
+    }
+
+    // Typewriter effect for text
+    const textEl = el.querySelector('.message-text');
+    if (textEl && !msg.isSystem) {
+      typewriterEffect(textEl, liveState.speed);
+    }
+
+    // Show media as background fade (images and videos)
+    if (msg.media && msg.media.type === 'file' && (msg.media.mediaType === 'image' || msg.media.mediaType === 'video')) {
+      const entry = findMediaFile(msg.media.filename, chat);
+      if (entry) {
+        loadMediaBlob(msg.media.filename, entry).then(url => {
+          showLiveBackground(url, msg.media.mediaType);
+        });
+      }
+    }
+  }
+
+  // Schedule the next message appearance
+  function scheduleNextMessage(chat) {
+    if (!liveState.playing) return;
+    if (liveState.currentIndex >= chat.messages.length) {
+      // End of chat reached
+      setLivePlaying(false);
+      return;
+    }
+
+    const msg = chat.messages[liveState.currentIndex];
+    appendLiveMessage(msg, chat);
+    updateLiveDatetime(chat);
+
+    liveState.currentIndex++;
+
+    if (liveState.currentIndex >= chat.messages.length) {
+      setLivePlaying(false);
+      return;
+    }
+
+    // Calculate delay until next message
+    const nextMsg = chat.messages[liveState.currentIndex];
+    const delay = calculateLiveDelay(msg, nextMsg);
+
+    liveState.timer = setTimeout(() => scheduleNextMessage(chat), delay);
+  }
+
+  // Calculate delay between messages (proportional to real time gap, scaled by speed)
+  function calculateLiveDelay(currentMsg, nextMsg) {
+    const MIN_DELAY = 80;   // ms
+    const MAX_DELAY = 4000; // ms cap
+    const BASE_DELAY = 400; // ms for same-second messages
+
+    if (!currentMsg.date || !nextMsg.date ||
+        !(currentMsg.date instanceof Date) || !(nextMsg.date instanceof Date) ||
+        isNaN(currentMsg.date) || isNaN(nextMsg.date) ||
+        !currentMsg.time || !nextMsg.time) {
+      return Math.max(MIN_DELAY, BASE_DELAY / liveState.speed);
+    }
+
+    // Combine date + time into ms timestamp
+    const tA = currentMsg.date.getTime() +
+      (currentMsg.time.hours * 3600 + currentMsg.time.minutes * 60 + (currentMsg.time.seconds || 0)) * 1000;
+    const tB = nextMsg.date.getTime() +
+      (nextMsg.time.hours * 3600 + nextMsg.time.minutes * 60 + (nextMsg.time.seconds || 0)) * 1000;
+
+    let gapMs = tB - tA;
+    if (gapMs <= 0) gapMs = BASE_DELAY;
+
+    // Scale: 1 real second = 1000ms in playback, then apply speed multiplier
+    // But we cap long pauses to MAX_DELAY
+    const scaled = Math.min(gapMs / liveState.speed, MAX_DELAY);
+    return Math.max(MIN_DELAY, scaled);
+  }
+
+  // Seek to a specific message index and re-render from there
+  function liveSeekTo(newIndex) {
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    const wasPlaying = liveState.playing;
+    liveStop();
+
+    liveState.currentIndex = Math.max(0, Math.min(newIndex, chat.messages.length - 1));
+
+    // Re-render messages from 0 to currentIndex
+    messagesContainer.innerHTML = '';
+    allRenderedElements = [];
+
+    const fragment = document.createDocumentFragment();
+    let prevDate = null;
+    let prevSender = null;
+
+    for (let i = 0; i < liveState.currentIndex; i++) {
+      const msg = chat.messages[i];
+      const currentDateKey = getDateKey(msg.date);
+      if (currentDateKey !== prevDate) {
+        const sep = createDateSeparator(msg.dateStr, currentDateKey);
+        fragment.appendChild(sep);
+        prevDate = currentDateKey;
+        prevSender = null;
+      }
+      const el = createMessageElement(msg, prevSender, chat);
+      el.dataset.msgId = i;
+      fragment.appendChild(el);
+      allRenderedElements.push({ idx: i, el });
+      prevSender = msg.sender;
+    }
+    messagesContainer.appendChild(fragment);
+    requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; });
+
+    updateLiveDatetime(chat);
+
+    if (wasPlaying) {
+      setLivePlaying(true);
+      scheduleNextMessage(chat);
+    }
+  }
+
+  // Find the message index for a given date offset
+  function findIndexForDateOffset(offsetDays, offsetMonths, offsetYears) {
+    const chat = getActiveChat();
+    if (!chat || chat.messages.length === 0) return 0;
+
+    const currentIdx = Math.min(liveState.currentIndex, chat.messages.length - 1);
+    const currentMsg = chat.messages[currentIdx];
+    if (!currentMsg || !(currentMsg.date instanceof Date)) return currentIdx;
+
+    const targetDate = new Date(currentMsg.date);
+    targetDate.setFullYear(targetDate.getFullYear() + offsetYears);
+    targetDate.setMonth(targetDate.getMonth() + offsetMonths);
+    targetDate.setDate(targetDate.getDate() + offsetDays);
+    const targetTime = targetDate.getTime();
+
+    // Binary search for closest message at or after target date
+    let lo = 0, hi = chat.messages.length - 1, best = currentIdx;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const mDate = chat.messages[mid].date;
+      if (!(mDate instanceof Date) || isNaN(mDate)) { lo = mid + 1; continue; }
+      if (mDate.getTime() <= targetTime) { best = mid; lo = mid + 1; }
+      else { hi = mid - 1; }
+    }
+    return best;
+  }
+
+  // ---- Live controls wiring ----
+  const livePlayBtn = $('live-play-btn');
+  const liveSpeedSlider = $('live-speed-slider');
+  const liveSpeedValue = $('live-speed-value');
+
+  // Initialize speed from slider default (value=50 => ~1x)
+  liveState.speed = sliderToSpeed(50);
+
+  if (livePlayBtn) {
+    livePlayBtn.addEventListener('click', () => {
+      if (liveState.playing) {
+        livePause();
+      } else {
+        const chat = getActiveChat();
+        if (chat && liveState.currentIndex >= chat.messages.length) {
+          // Rewind to start if at end
+          liveState.currentIndex = 0;
+          messagesContainer.innerHTML = '';
+          allRenderedElements = [];
+        }
+        liveResume();
+      }
+    });
+  }
+
+  if (liveSpeedSlider) {
+    liveSpeedSlider.addEventListener('input', () => {
+      const v = parseInt(liveSpeedSlider.value, 10);
+      liveState.speed = sliderToSpeed(v);
+      if (liveSpeedValue) liveSpeedValue.textContent = formatSpeed(liveState.speed);
+    });
+  }
+
+  function wireLiveNavBtn(id, offsetDays, offsetMonths, offsetYears) {
+    const btn = $(id);
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const idx = findIndexForDateOffset(offsetDays, offsetMonths, offsetYears);
+      liveSeekTo(idx);
+    });
+  }
+
+  wireLiveNavBtn('live-prev-day',   -1,  0,  0);
+  wireLiveNavBtn('live-next-day',    1,  0,  0);
+  wireLiveNavBtn('live-prev-month',  0, -1,  0);
+  wireLiveNavBtn('live-next-month',  0,  1,  0);
+  wireLiveNavBtn('live-prev-year',   0,  0, -1);
+  wireLiveNavBtn('live-next-year',   0,  0,  1);
+
+  // ---- Home button ----
+  const btnHome = $('btn-home');
+  if (btnHome) {
+    btnHome.addEventListener('click', () => {
+      // Stop live if active
+      if (currentView === 'live') {
+        liveStop();
+        const liveControls = $('live-controls');
+        if (liveControls) liveControls.classList.add('hidden');
+        chatScreen.classList.remove('live-mode');
+      }
+      // Reset state
+      chats.length = 0;
+      activeChatId = null;
+      allRenderedElements = [];
+      messagesContainer.innerHTML = '';
+      closeSearch();
+      // Clean up cinema if active
+      if (currentView === 'cinema') {
+        cleanupCinema();
+      }
+      currentView = 'phone';
+      chatScreen.classList.remove('active', 'fullscreen-mode', 'ipad-mode', 'live-mode', 'cinema-mode');
+      dropZoneScreen.classList.add('active');
+      btnPhone.classList.add('active');
+      btnIpad.classList.remove('active');
+      btnFull.classList.remove('active');
+      btnLive.classList.remove('active');
+      btnCinema.classList.remove('active');
+      liveState.currentIndex = 0;
+    });
+  }
+
+  // ---- Live background media functions ----
+  function showLiveBackground(url, mediaType) {
+    // Remove previous background element entirely to allow fresh transition
+    if (liveBgEl) {
+      liveBgEl.classList.remove('active');
+      const oldEl = liveBgEl;
+      setTimeout(() => { if (oldEl.parentNode) oldEl.parentNode.removeChild(oldEl); }, 600);
+      liveBgEl = null;
+    }
+    if (liveBgTimeout) { clearTimeout(liveBgTimeout); liveBgTimeout = null; }
+
+    const container = document.createElement('div');
+    container.className = 'live-bg-media';
+
+    if (mediaType === 'video') {
+      const vid = document.createElement('video');
+      vid.src = url;
+      vid.autoplay = true;
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.className = 'live-bg-video';
+      container.appendChild(vid);
+    } else {
+      const img = document.createElement('img');
+      img.src = url;
+      img.className = 'live-bg-img';
+      container.appendChild(img);
+    }
+
+    document.body.appendChild(container);
+    liveBgEl = container;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        liveBgEl.classList.add('active');
+      });
+    });
+
+    // Fade out after 8 seconds for images, let videos play longer (15s)
+    const duration = mediaType === 'video' ? 15000 : 8000;
+    liveBgTimeout = setTimeout(() => {
+      if (liveBgEl) liveBgEl.classList.remove('active');
+    }, duration);
+  }
+
+  // ---- Typewriter effect ----
+  function typewriterEffect(textEl, speed) {
+    if (!textEl) return Promise.resolve();
+    const fullHtml = textEl.innerHTML;
+    const fullText = textEl.textContent;
+    if (!fullText || fullText.length === 0) return Promise.resolve();
+    // For very fast speed, skip typewriter
+    if (speed > 10) {
+      return Promise.resolve();
+    }
+    textEl.textContent = '';
+    textEl.style.visibility = 'visible';
+    const s = Math.max(0.1, speed);
+    return new Promise(resolve => {
+      let i = 0;
+      function getDelay(ch, prevCh) {
+        // Punctuation: longer pause after sentence enders
+        if ('.!?'.includes(prevCh)) return (120 + Math.random() * 80) / s;
+        // Mid-sentence punctuation
+        if (',;:'.includes(prevCh)) return (70 + Math.random() * 50) / s;
+        // Space: slight word boundary pause
+        if (ch === ' ') return (40 + Math.random() * 50) / s;
+        // Occasional micro-hesitation (~7% chance)
+        if (Math.random() < 0.07) return (80 + Math.random() * 60) / s;
+        // Normal typing: variable 20-55ms
+        return (20 + Math.random() * 35) / s;
+      }
+      function addChar() {
+        if (i < fullText.length) {
+          textEl.textContent = fullText.substring(0, i + 1);
+          const ch = fullText[i];
+          const prevCh = i > 0 ? fullText[i - 1] : '';
+          i++;
+          setTimeout(addChar, Math.max(3, getDelay(ch, prevCh)));
+        } else {
+          // Restore original HTML (with links, mentions etc.)
+          textEl.innerHTML = fullHtml;
+          resolve();
+        }
+      }
+      addChar();
+    });
+  }
+
+  // ===================== TRANSLATION SYSTEM =====================
+  const translateBtn = $('translate-btn');
+  const translateBar = $('translate-bar');
+  const translateCloseBtn = $('translate-close-btn');
+  const translateTarget = $('translate-target');
+  const translateSourceLang = $('translate-source-lang');
+  const translateStatus = $('translate-status');
+  let translateState = { active: false, targetLang: '', detectedLang: '', cache: {}, originalTexts: new Map() };
+
+  // Language names for display
+  const LANG_NAMES = {
+    af: 'Afrikaans', sq: 'Albanian', ar: 'Arabic', hy: 'Armenian', az: 'Azerbaijani',
+    eu: 'Basque', be: 'Belarusian', bg: 'Bulgarian', ca: 'Catalan', 'zh-CN': 'Chinese',
+    zh: 'Chinese', hr: 'Croatian', cs: 'Czech', da: 'Danish', nl: 'Dutch',
+    en: 'English', et: 'Estonian', fi: 'Finnish', fr: 'French', gl: 'Galician',
+    ka: 'Georgian', de: 'German', el: 'Greek', hi: 'Hindi', hu: 'Hungarian',
+    is: 'Icelandic', id: 'Indonesian', ga: 'Irish', it: 'Italian', ja: 'Japanese',
+    ko: 'Korean', lv: 'Latvian', lt: 'Lithuanian', mk: 'Macedonian', ms: 'Malay',
+    mt: 'Maltese', no: 'Norwegian', fa: 'Persian', pl: 'Polish', pt: 'Portuguese',
+    ro: 'Romanian', ru: 'Russian', sr: 'Serbian', sk: 'Slovak', sl: 'Slovenian',
+    es: 'Spanish', sw: 'Swahili', sv: 'Swedish', th: 'Thai', tr: 'Turkish',
+    uk: 'Ukrainian', ur: 'Urdu', vi: 'Vietnamese', cy: 'Welsh', co: 'Corsican'
+  };
+
+  function detectLanguage(messages) {
+    // Sample text from the first 50 non-system messages to detect language
+    let sample = '';
+    let count = 0;
+    for (const msg of messages) {
+      if (msg.isSystem || !msg.text || msg.text.trim().length < 3) continue;
+      sample += msg.text + ' ';
+      count++;
+      if (count >= 50) break;
+    }
+    if (!sample.trim()) return 'en';
+
+    // Simple heuristic language detection based on character patterns and common words
+    const text = sample.toLowerCase();
+
+    // Check for script-based detection first
+    if (/[\u3040-\u309f\u30a0-\u30ff]/.test(text)) return 'ja';
+    if (/[\u4e00-\u9fff]/.test(text)) return 'zh';
+    if (/[\uac00-\ud7af]/.test(text)) return 'ko';
+    if (/[\u0600-\u06ff]/.test(text)) return 'ar';
+    if (/[\u0400-\u04ff]/.test(text)) return 'ru';
+    if (/[\u0900-\u097f]/.test(text)) return 'hi';
+    if (/[\u0e00-\u0e7f]/.test(text)) return 'th';
+
+    // Word frequency detection for Latin-script languages
+    const wordCounts = {};
+    const langMarkers = {
+      fr: /\b(les|des|une|est|pas|pour|que|dans|avec|sur|sont|cette|mais|nous|vous|ils|aussi|tout|ont|comme|très|même|peut|faire|ça|qui|lui|c'est|j'ai|n'est|l'a)\b/gi,
+      es: /\b(los|las|una|por|que|del|con|para|como|más|pero|todo|esta|son|hay|fue|ser|tiene|puede|este|todos|nos|muy|ese|algo|así|bien|donde|sin|sobre)\b/gi,
+      it: /\b(gli|una|per|che|del|con|non|sono|come|più|questo|anche|tutto|quella|hanno|solo|essere|fatto|dove|bene|molto|così|ogni|sua|stato|perché)\b/gi,
+      de: /\b(die|der|das|und|ist|ein|eine|nicht|mit|auf|den|für|sich|des|auch|von|haben|werden|sind|wird|aber|noch|wie|nach|über|bei|kann|nur|schon)\b/gi,
+      pt: /\b(uma|para|que|com|não|como|mais|foi|por|seu|sua|são|tem|mas|nos|dos|muito|também|pode|isso|bem|todo|esse|aqui|está|ser|ter|fazer)\b/gi,
+      en: /\b(the|and|that|have|for|not|with|you|this|but|his|they|from|she|will|one|all|would|there|their|what|about|which|when|make|can|like|just|been)\b/gi,
+      co: /\b(chì|hè|una|pè|cù|ùn|sò|più|ancu|tuttu|essa|fattu|indè|bè|assai|cusì|ogni|statu|perchè|u|a|i|e|di|in|da)\b/gi
+    };
+
+    let maxScore = 0;
+    let detected = 'en';
+    for (const [lang, regex] of Object.entries(langMarkers)) {
+      const matches = text.match(regex);
+      const score = matches ? matches.length : 0;
+      if (score > maxScore) {
+        maxScore = score;
+        detected = lang;
+      }
+    }
+    return detected;
+  }
+
+  async function translateText(text, sourceLang, targetLang) {
+    if (!text || !text.trim() || text.trim().length < 2) return text;
+    const cacheKey = sourceLang + '>' + targetLang + ':' + text;
+    if (translateState.cache[cacheKey]) return translateState.cache[cacheKey];
+
+    try {
+      const url = 'https://api.mymemory.translated.net/get?q=' +
+        encodeURIComponent(text.substring(0, 500)) +
+        '&langpair=' + encodeURIComponent(sourceLang + '|' + targetLang);
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if (data.responseStatus === 200 && data.responseData && data.responseData.translatedText) {
+        let translated = data.responseData.translatedText;
+        // Ignore if API returns the same text or an error message
+        if (translated.toUpperCase() === text.toUpperCase() || translated.includes('MYMEMORY WARNING')) {
+          return text;
+        }
+        translateState.cache[cacheKey] = translated;
+        return translated;
+      }
+    } catch (e) {
+      // Silently fail, return original
+    }
+    return text;
+  }
+
+  async function applyTranslation(targetLang) {
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    // Restore originals first
+    removeTranslations();
+
+    if (!targetLang) {
+      translateState.active = false;
+      translateState.targetLang = '';
+      return;
+    }
+
+    translateState.active = true;
+    translateState.targetLang = targetLang;
+
+    // Detect source language if not done yet
+    if (!translateState.detectedLang) {
+      translateState.detectedLang = detectLanguage(chat.messages);
+      translateSourceLang.textContent = LANG_NAMES[translateState.detectedLang] || translateState.detectedLang;
+    }
+
+    // Skip if source and target are the same
+    if (translateState.detectedLang === targetLang) {
+      if (translateStatus) translateStatus.textContent = t('translateSameLang') || '=';
+      return;
+    }
+
+    if (translateStatus) {
+      translateStatus.textContent = t('translateInProgress') || '...';
+      translateStatus.classList.add('translating');
+    }
+
+    // Get all visible message text spans
+    const textSpans = messagesContainer.querySelectorAll('.message-text');
+    let translated = 0;
+    const total = textSpans.length;
+    const batchSize = 5;
+
+    for (let i = 0; i < textSpans.length; i += batchSize) {
+      const batch = Array.from(textSpans).slice(i, i + batchSize);
+      const promises = batch.map(async (span) => {
+        const originalText = span.textContent;
+        if (!originalText || originalText.trim().length < 2) return;
+
+        // Store original HTML
+        if (!translateState.originalTexts.has(span)) {
+          translateState.originalTexts.set(span, span.innerHTML);
+        }
+
+        const result = await translateText(originalText, translateState.detectedLang, targetLang);
+        if (result && result !== originalText && translateState.active && translateState.targetLang === targetLang) {
+          // Replace source text with translation
+          span.textContent = result;
+        }
+        translated++;
+      });
+      await Promise.all(promises);
+
+      // Update status
+      if (translateStatus && translateState.active) {
+        const pct = Math.round((Math.min(translated, total) / total) * 100);
+        translateStatus.textContent = pct + '%';
+      }
+    }
+
+    if (translateStatus) {
+      translateStatus.textContent = '\u2713';
+      translateStatus.classList.remove('translating');
+      setTimeout(() => { if (translateStatus.textContent === '\u2713') translateStatus.textContent = ''; }, 2000);
+    }
+  }
+
+  function removeTranslations() {
+    // Restore original texts
+    translateState.originalTexts.forEach((origHtml, span) => {
+      span.innerHTML = origHtml;
+    });
+    translateState.originalTexts.clear();
+  }
+
+  if (translateBtn) {
+    translateBtn.addEventListener('click', () => {
+      translateBar.classList.toggle('hidden');
+      if (!translateBar.classList.contains('hidden')) {
+        // Detect language on open
+        const chat = getActiveChat();
+        if (chat && !translateState.detectedLang) {
+          translateState.detectedLang = detectLanguage(chat.messages);
+        }
+        translateSourceLang.textContent = LANG_NAMES[translateState.detectedLang] || translateState.detectedLang || '--';
+      }
+    });
+  }
+
+  if (translateCloseBtn) {
+    translateCloseBtn.addEventListener('click', () => {
+      translateBar.classList.add('hidden');
+      translateTarget.value = '';
+      applyTranslation('');
+    });
+  }
+
+  if (translateTarget) {
+    translateTarget.addEventListener('change', () => {
+      applyTranslation(translateTarget.value);
+    });
+  }
+
+  // Reset translation state when switching chats
+  const origLoadChat = typeof loadChat === 'function' ? loadChat : null;
+  // We hook into chat switching by overriding sidebar click behavior
+  // Translation resets are handled in the existing openChat flow
+
+  // ---- Timeline scrubber ----
+  const liveTimelineSlider = $('live-timeline-slider');
+  const liveTimelineValue = $('live-timeline-value');
+
+  function updateTimelineDisplay(chat) {
+    const slider = $('live-timeline-slider');
+    const valueEl = $('live-timeline-value');
+    if (!slider || !valueEl || !chat) return;
+    const total = chat.messages.length;
+    if (total === 0) return;
+    const pct = Math.round((liveState.currentIndex / Math.max(1, total - 1)) * 100);
+    slider.value = pct;
+    valueEl.textContent = pct + '%';
+  }
+
+  if (liveTimelineSlider) {
+    liveTimelineSlider.addEventListener('input', () => {
+      const chat = getActiveChat();
+      if (!chat || chat.messages.length === 0) return;
+      const v = parseInt(liveTimelineSlider.value, 10);
+      const idx = Math.round((v / 100) * (chat.messages.length - 1));
+      liveSeekTo(idx);
+      updateTimelineDisplay(chat);
+    });
+  }
 
 })();
