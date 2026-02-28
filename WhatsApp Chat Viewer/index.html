@@ -11,6 +11,18 @@
 
   <!-- DROP ZONE / UPLOAD SCREEN -->
   <div id="drop-zone-screen" class="screen active">
+
+    <!-- Language picker (visible on both screens) -->
+    <div class="lang-picker" id="lang-picker-landing">
+      <button class="lang-picker-btn active" data-locale="fr_FR" title="Français">🇫🇷</button>
+      <button class="lang-picker-btn" data-locale="en_GB" title="English (UK)">🇬🇧</button>
+      <button class="lang-picker-btn" data-locale="en_US" title="English (US)">🇺🇸</button>
+      <button class="lang-picker-btn" data-locale="es_ES" title="Español">🇪🇸</button>
+      <button class="lang-picker-btn" data-locale="it_IT" title="Italiano">🇮🇹</button>
+      <button class="lang-picker-btn" data-locale="de_DE" title="Deutsch">🇩🇪</button>
+      <button class="lang-picker-btn" data-locale="co_FR" title="Corsu">CO</button>
+    </div>
+
     <div id="drop-zone" class="drop-zone">
       <div class="drop-zone-content">
         <div class="phone-silhouette">
@@ -23,25 +35,168 @@
             </svg>
           </div>
         </div>
-        <h1 class="drop-zone-title">WhatsApp Chat Viewer</h1>
-        <p class="drop-zone-subtitle">Glissez votre export WhatsApp (.zip) ici</p>
-        <p class="drop-zone-hint">ou</p>
+        <h1 class="drop-zone-title" data-i18n="appTitle">WhatsApp Chat Viewer</h1>
+        <p class="drop-zone-subtitle" data-i18n="dropSubtitle">Glissez votre export WhatsApp (.zip) ici</p>
+        <p class="drop-zone-hint" data-i18n="dropHint">ou</p>
         <label class="file-input-btn">
-          Choisir des fichiers
+          <span data-i18n="dropButton">Choisir des fichiers</span>
           <input type="file" id="file-input" accept=".zip" multiple hidden>
         </label>
-        <p class="drop-zone-formats">Formats supportés : iOS & Android</p>
+        <p class="drop-zone-formats" data-i18n="dropFormats">Formats supportés : iOS &amp; Android</p>
+        <p class="drop-zone-version">v0.2</p>
       </div>
       <div class="drop-zone-border"></div>
     </div>
+
+    <!-- Collapsible sections -->
+    <div id="landing-sections" class="landing-sections">
+
+      <!-- How it works -->
+      <div class="landing-section" id="section-howto">
+        <button class="landing-section-header" onclick="toggleSection('section-howto')">
+          <span data-i18n="howItWorksTitle">Comment ça marche ?</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="landing-section-body">
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="how-step-num">1</div>
+              <div class="how-step-content">
+                <strong data-i18n="howStep1Title">Préparez l'archive</strong>
+                <p data-i18n="howStep1Desc">Sur votre téléphone, ouvrez WhatsApp &rarr; ouvrez la conversation &rarr; appuyez sur ⋮ (menu) &rarr; « Exporter la discussion » &rarr; choisissez « Joindre les médias » (ou sans médias pour un fichier plus léger). Cela crée un fichier .zip.</p>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">2</div>
+              <div class="how-step-content">
+                <strong data-i18n="howStep2Title">Transférez sur votre ordinateur</strong>
+                <p data-i18n="howStep2Desc">Envoyez le fichier .zip par e-mail, AirDrop, Google Drive, câble USB ou tout autre moyen de transfert.</p>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">3</div>
+              <div class="how-step-content">
+                <strong data-i18n="howStep3Title">Visualisez dans l'application</strong>
+                <p data-i18n="howStep3Desc">Glissez le fichier .zip sur cette page (ou cliquez sur « Choisir des fichiers »). Sélectionnez votre nom dans la liste, et votre conversation s'affiche exactement comme sur votre téléphone.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About the author -->
+      <div class="landing-section" id="section-about">
+        <button class="landing-section-header" onclick="toggleSection('section-about')">
+          <span data-i18n="aboutTitle">À propos de l'auteur</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="landing-section-body">
+          <div class="about-content">
+            <p><strong>Pierre Gonsolin</strong> est un professionnel français basé dans la région parisienne.</p>
+            <p>Il est actuellement <strong>Head of Sales EMEA</strong> chez <a href="https://www.elogen.fr" target="_blank" rel="noopener noreferrer" class="about-link">Elogen</a>, leader français dans la technologie d'électrolyse à membrane échangeuse de protons (PEM) pour la production d'hydrogène vert.</p>
+            <p>Auparavant, il a travaillé chez <strong>Anotech Energy</strong> (Qatar), <strong>Otis Elevator</strong>, <strong>Sodexo</strong> et <strong>Renault</strong>.</p>
+            <p>Diplômé de l'<strong>École supérieure de Commerce de Montpellier</strong> (Master en Commerce International) et de l'<strong>École de Guerre Économique</strong> (MBA en Intelligence Stratégique). A également étudié à l'IUT Nice Sophia-Antipolis et à l'<strong>Universidad ICESI</strong> en Colombie.</p>
+            <p>Auteur d'articles sur l'économie de l'énergie et la stratégie industrielle sur <a href="https://portail-ie.fr" target="_blank" rel="noopener noreferrer" class="about-link">Portail IE</a>. Passionné de vin (certifié <strong>WSET Level 2</strong>).</p>
+            <p class="about-linkedin"><a href="https://www.linkedin.com/in/pierre-gonsolin" target="_blank" rel="noopener noreferrer" class="about-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              LinkedIn
+            </a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Release notes -->
+      <div class="landing-section" id="section-release">
+        <button class="landing-section-header" onclick="toggleSection('section-release')">
+          <span data-i18n="releaseTitle">Notes de version</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="landing-section-body">
+          <div class="release-notes">
+            <div class="release-version">
+              <div class="release-version-header">
+                <span class="release-version-tag">v0.2</span>
+                <span class="release-version-date" data-i18n="releaseV02Date">Février 2026</span>
+                <span class="release-version-current" data-i18n="releaseCurrentLabel">Version actuelle</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV02_1">Support multilingue (anglais, français, espagnol, italien, allemand, corse)</li>
+                <li data-i18n="releaseV02_2">Page d'accueil avec sections « Comment ça marche », « À propos » et « Notes de version »</li>
+                <li data-i18n="releaseV02_3">Défilement ticker pour les noms de groupes longs et les noms dans la barre latérale</li>
+                <li data-i18n="releaseV02_4">Numéro de version affiché sur la page d'accueil</li>
+              </ul>
+            </div>
+            <div class="release-version">
+              <div class="release-version-header">
+                <span class="release-version-tag">v0.1.2</span>
+                <span class="release-version-date" data-i18n="releaseV012Date">Février 2026</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV012_1">Nom du groupe exclu du sélecteur d'expéditeur</li>
+                <li data-i18n="releaseV012_2">Horloge en temps réel dans la barre d'état</li>
+                <li data-i18n="releaseV012_3">Icônes Wi-Fi et batterie en direct reflétant l'état de l'appareil</li>
+                <li data-i18n="releaseV012_4">Mentions @en gras avec couleur style WhatsApp</li>
+                <li data-i18n="releaseV012_5">Nombre de participants cliquable affichant la liste complète</li>
+                <li data-i18n="releaseV012_6">Support de l'upload de plusieurs fichiers sur la page d'accueil</li>
+                <li data-i18n="releaseV012_7">Ticker d'actualités pour les noms de chats trop longs (en-tête et barre latérale)</li>
+              </ul>
+            </div>
+            <div class="release-version">
+              <div class="release-version-header">
+                <span class="release-version-tag">v0.1.1</span>
+                <span class="release-version-date" data-i18n="releaseV011Date">Février 2026</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV011_1">Vue iPad paysage avec panneau latéral gauche</li>
+                <li data-i18n="releaseV011_2">Support de la barre latérale en mode plein écran</li>
+                <li data-i18n="releaseV011_3">Suppression des icônes d'appel et de paramètres non fonctionnels en mode iPad/plein écran</li>
+                <li data-i18n="releaseV011_4">Détection du nom de groupe et exclusion du sélecteur d'expéditeur</li>
+              </ul>
+            </div>
+            <div class="release-version">
+              <div class="release-version-header">
+                <span class="release-version-tag">v0.1.0</span>
+                <span class="release-version-date" data-i18n="releaseV010Date">Février 2026</span>
+                <span class="release-version-initial" data-i18n="releaseInitialLabel">Version initiale</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV010_1">Visionneuse d'export de chat WhatsApp (.zip) avec affichage style téléphone</li>
+                <li data-i18n="releaseV010_2">Support des formats d'export iOS et Android</li>
+                <li data-i18n="releaseV010_3">Bulles de messages avec alignement gauche/droite selon l'expéditeur sélectionné</li>
+                <li data-i18n="releaseV010_4">Support des médias : images (avec lightbox), vidéos, audio/messages vocaux, documents</li>
+                <li data-i18n="releaseV010_5">Support des chats de groupe avec noms d'expéditeurs colorés</li>
+                <li data-i18n="releaseV010_6">Fonctionnalité de recherche avec surlignage et navigation</li>
+                <li data-i18n="releaseV010_7">Mode plein écran</li>
+                <li data-i18n="releaseV010_8">Thème sombre WhatsApp</li>
+                <li data-i18n="releaseV010_9">Interface en français</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /landing-sections -->
+
     <div id="loading-overlay" class="loading-overlay hidden">
       <div class="loading-spinner"></div>
-      <p class="loading-text">Chargement de la conversation...</p>
+      <p class="loading-text" data-i18n="loadingText">Chargement de la conversation...</p>
     </div>
-  </div>
+
+  </div><!-- /drop-zone-screen -->
 
   <!-- CHAT VIEWER SCREEN -->
   <div id="chat-screen" class="screen">
+    <!-- Language picker -->
+    <div class="lang-picker" id="lang-picker">
+      <button class="lang-picker-btn active" data-locale="fr_FR" title="Français">🇫🇷</button>
+      <button class="lang-picker-btn" data-locale="en_GB" title="English (UK)">🇬🇧</button>
+      <button class="lang-picker-btn" data-locale="en_US" title="English (US)">🇺🇸</button>
+      <button class="lang-picker-btn" data-locale="es_ES" title="Español">🇪🇸</button>
+      <button class="lang-picker-btn" data-locale="it_IT" title="Italiano">🇮🇹</button>
+      <button class="lang-picker-btn" data-locale="de_DE" title="Deutsch">🇩🇪</button>
+      <button class="lang-picker-btn" data-locale="co_FR" title="Corsu">CO</button>
+    </div>
+
     <!-- View toggle button -->
     <div class="view-toggle" id="view-toggle" title="Changer de vue">
       <button class="view-toggle-btn active" id="btn-phone" title="Vue téléphone">
@@ -60,7 +215,7 @@
       <!-- Sidebar (only visible in iPad mode) -->
       <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-          <span class="sidebar-title">Discussions</span>
+          <span class="sidebar-title" data-i18n="sidebarTitle">Discussions</span>
           <button class="sidebar-add-btn" id="sidebar-add-btn" title="Ajouter un chat">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
           </button>
@@ -116,7 +271,7 @@
           <button class="header-btn" id="search-close-btn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
           </button>
-          <input type="text" class="search-input" id="search-input" placeholder="Rechercher...">
+          <input type="text" class="search-input" id="search-input" placeholder="Rechercher..." data-i18n-placeholder="searchPlaceholder">
           <span class="search-count" id="search-count"></span>
           <button class="header-btn" id="search-up-btn" title="Résultat précédent">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
@@ -140,18 +295,18 @@
         <!-- Empty state for iPad when no chat selected -->
         <div class="chat-empty-state hidden" id="chat-empty-state">
           <svg viewBox="0 0 24 24" fill="currentColor" width="64" height="64" style="opacity:0.2"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
-          <p style="color:var(--wa-text-secondary);margin-top:16px;font-size:14px;">Sélectionnez une discussion</p>
+          <p class="chat-empty-state-text" style="color:var(--wa-text-secondary);margin-top:16px;font-size:14px;" data-i18n="chatEmptyState">Sélectionnez une discussion</p>
         </div>
 
       </div>
     </div>
-  </div>
+  </div><!-- /chat-screen -->
 
   <!-- Sender picker overlay -->
   <div class="sender-picker-overlay hidden" id="sender-picker">
     <div class="sender-picker">
-      <h2 class="sender-picker-title">Qui êtes-vous ?</h2>
-      <p class="sender-picker-subtitle">Sélectionnez votre nom pour afficher vos messages à droite</p>
+      <h2 class="sender-picker-title" data-i18n="senderPickerTitle">Qui êtes-vous ?</h2>
+      <p class="sender-picker-subtitle" data-i18n="senderPickerSubtitle">Sélectionnez votre nom pour afficher vos messages à droite</p>
       <div class="sender-picker-list" id="sender-picker-list"></div>
     </div>
   </div>

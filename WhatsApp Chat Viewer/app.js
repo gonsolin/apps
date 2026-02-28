@@ -1,14 +1,606 @@
 /* ================================================
-   WhatsApp Chat Viewer — Main Application
+   WhatsApp Chat Viewer — Main Application v0.2
    Multi-chat architecture with iPad sidebar
    ================================================ */
 
 (function () {
   'use strict';
 
+  // ===================== I18N SYSTEM =====================
+  const I18N = {
+    fr_FR: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Glissez votre export WhatsApp (.zip) ici',
+      dropHint: 'ou',
+      dropButton: 'Choisir des fichiers',
+      dropFormats: 'Formats supportés : iOS & Android',
+      loadingText: 'Chargement de la conversation...',
+      sidebarTitle: 'Discussions',
+      sidebarEmpty: 'Ajoutez un export WhatsApp (.zip) avec le bouton +',
+      senderPickerTitle: 'Qui êtes-vous ?',
+      senderPickerSubtitle: 'Sélectionnez votre nom pour afficher vos messages à droite',
+      msgSuffix: 'msg',
+      participantsSuffix: 'participants',
+      participantsPopupTitle: 'Participants',
+      youTag: 'Vous',
+      searchPlaceholder: 'Rechercher...',
+      searchResult: 'résultat',
+      searchResults: 'résultats',
+      chatEmptyState: 'Sélectionnez une discussion',
+      alertZipOnly: 'Veuillez sélectionner des fichiers .zip',
+      alertZipOnlySingle: 'Veuillez sélectionner un fichier .zip',
+      alertNoChatFile: 'Aucun fichier de chat trouvé dans le ZIP. Assurez-vous que le fichier contient _chat.txt.',
+      alertParseError: 'Impossible de parser le chat. Vérifiez le format du fichier.',
+      alertLoadError: 'Erreur lors du chargement du fichier : ',
+      mediaImage: '📷 Image non incluse',
+      mediaVideo: '🎥 Vidéo non incluse',
+      mediaAudio: '🎵 Audio non inclus',
+      mediaSticker: '🏷️ Autocollant non inclus',
+      mediaDocument: '📄 Document non inclus',
+      mediaGif: '🎬 GIF non inclus',
+      mediaContact: '👤 Carte de contact non incluse',
+      mediaUnknown: '📎 Média non inclus',
+      months: ['JANVIER','FÉVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOÛT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DÉCEMBRE'],
+      howItWorksTitle: 'Comment ça marche ?',
+      howStep1Title: 'Préparez l\'archive',
+      howStep1Desc: 'Sur votre téléphone, ouvrez WhatsApp → ouvrez la conversation → appuyez sur ⋮ (menu) → « Exporter la discussion » → choisissez « Joindre les médias » (ou sans médias pour un fichier plus léger). Cela crée un fichier .zip.',
+      howStep2Title: 'Transférez sur votre ordinateur',
+      howStep2Desc: 'Envoyez le fichier .zip par e-mail, AirDrop, Google Drive, câble USB ou tout autre moyen de transfert.',
+      howStep3Title: 'Visualisez dans l\'application',
+      howStep3Desc: 'Glissez le fichier .zip sur cette page (ou cliquez sur « Choisir des fichiers »). Sélectionnez votre nom dans la liste, et votre conversation s\'affiche exactement comme sur votre téléphone.',
+      aboutTitle: 'À propos de l\'auteur',
+      releaseTitle: 'Notes de version',
+      releaseV02Date: 'Février 2026',
+      releaseCurrentLabel: 'Version actuelle',
+      releaseV012Date: 'Février 2026',
+      releaseV011Date: 'Février 2026',
+      releaseV010Date: 'Février 2026',
+      releaseInitialLabel: 'Version initiale',
+      releaseV02_1: 'Support multilingue (anglais, français, espagnol, italien, allemand, corse)',
+      releaseV02_2: 'Page d\'accueil avec sections « Comment ça marche », « À propos » et « Notes de version »',
+      releaseV02_3: 'Défilement ticker pour les noms de groupes longs et les noms dans la barre latérale',
+      releaseV02_4: 'Numéro de version affiché sur la page d\'accueil',
+      releaseV012_1: 'Nom du groupe exclu du sélecteur d\'expéditeur',
+      releaseV012_2: 'Horloge en temps réel dans la barre d\'état',
+      releaseV012_3: 'Icônes Wi-Fi et batterie en direct reflétant l\'état de l\'appareil',
+      releaseV012_4: 'Mentions @en gras avec couleur style WhatsApp',
+      releaseV012_5: 'Nombre de participants cliquable affichant la liste complète',
+      releaseV012_6: 'Support de l\'upload de plusieurs fichiers sur la page d\'accueil',
+      releaseV012_7: 'Ticker d\'actualités pour les noms de chats trop longs (en-tête et barre latérale)',
+      releaseV011_1: 'Vue iPad paysage avec panneau latéral gauche',
+      releaseV011_2: 'Support de la barre latérale en mode plein écran',
+      releaseV011_3: 'Suppression des icônes d\'appel et de paramètres non fonctionnels en mode iPad/plein écran',
+      releaseV011_4: 'Détection du nom de groupe et exclusion du sélecteur d\'expéditeur',
+      releaseV010_1: 'Visionneuse d\'export de chat WhatsApp (.zip) avec affichage style téléphone',
+      releaseV010_2: 'Support des formats d\'export iOS et Android',
+      releaseV010_3: 'Bulles de messages avec alignement gauche/droite selon l\'expéditeur sélectionné',
+      releaseV010_4: 'Support des médias : images (avec lightbox), vidéos, audio/messages vocaux, documents',
+      releaseV010_5: 'Support des chats de groupe avec noms d\'expéditeurs colorés',
+      releaseV010_6: 'Fonctionnalité de recherche avec surlignage et navigation',
+      releaseV010_7: 'Mode plein écran',
+      releaseV010_8: 'Thème sombre WhatsApp',
+      releaseV010_9: 'Interface en français',
+    },
+    en_GB: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Drop your WhatsApp export (.zip) here',
+      dropHint: 'or',
+      dropButton: 'Choose files',
+      dropFormats: 'Supported formats: iOS & Android',
+      loadingText: 'Loading conversation...',
+      sidebarTitle: 'Chats',
+      sidebarEmpty: 'Add a WhatsApp export (.zip) using the + button',
+      senderPickerTitle: 'Who are you?',
+      senderPickerSubtitle: 'Select your name to display your messages on the right',
+      msgSuffix: 'msg',
+      participantsSuffix: 'participants',
+      participantsPopupTitle: 'Participants',
+      youTag: 'You',
+      searchPlaceholder: 'Search...',
+      searchResult: 'result',
+      searchResults: 'results',
+      chatEmptyState: 'Select a chat',
+      alertZipOnly: 'Please select .zip files',
+      alertZipOnlySingle: 'Please select a .zip file',
+      alertNoChatFile: 'No chat file found in the ZIP. Make sure the file contains _chat.txt.',
+      alertParseError: 'Unable to parse the chat. Please check the file format.',
+      alertLoadError: 'Error loading file: ',
+      mediaImage: '📷 Image not included',
+      mediaVideo: '🎥 Video not included',
+      mediaAudio: '🎵 Audio not included',
+      mediaSticker: '🏷️ Sticker not included',
+      mediaDocument: '📄 Document not included',
+      mediaGif: '🎬 GIF not included',
+      mediaContact: '👤 Contact card not included',
+      mediaUnknown: '📎 Media not included',
+      months: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'],
+      howItWorksTitle: 'How it works',
+      howStep1Title: 'Prepare the archive',
+      howStep1Desc: 'On your phone, open WhatsApp → open the chat → tap ⋮ (menu) → "Export chat" → choose "Include media" (or without media for a smaller file). This creates a .zip file.',
+      howStep2Title: 'Transfer to your computer',
+      howStep2Desc: 'Send the .zip to yourself via email, AirDrop, Google Drive, USB cable, or any file transfer method.',
+      howStep3Title: 'View in the app',
+      howStep3Desc: 'Drag the .zip file onto this page (or click "Choose files"). Select your name from the list, and your chat appears exactly as it looked on your phone.',
+      aboutTitle: 'About the author',
+      releaseTitle: 'Release notes',
+      releaseV02Date: 'February 2026',
+      releaseCurrentLabel: 'Current version',
+      releaseV012Date: 'February 2026',
+      releaseV011Date: 'February 2026',
+      releaseV010Date: 'February 2026',
+      releaseInitialLabel: 'Initial release',
+      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican)',
+      releaseV02_2: 'Landing page with "How it works", "About", and "Release notes" sections',
+      releaseV02_3: 'News ticker scrolling for long group names and sidebar chat names',
+      releaseV02_4: 'Version number displayed on landing page',
+      releaseV012_1: 'Group name excluded from sender picker',
+      releaseV012_2: 'Real-time clock in status bar',
+      releaseV012_3: 'Live WiFi and battery status icons reflecting device state',
+      releaseV012_4: '@Mentions displayed in bold with WhatsApp-style colouring',
+      releaseV012_5: 'Clickable participant count showing popup with full list',
+      releaseV012_6: 'Multiple file upload support on landing page',
+      releaseV012_7: 'News ticker for overflowing chat names (header and sidebar)',
+      releaseV011_1: 'iPad landscape view with left chat panel sidebar',
+      releaseV011_2: 'Sidebar support in fullscreen view',
+      releaseV011_3: 'Removed non-functional call and settings icons in iPad/fullscreen modes',
+      releaseV011_4: 'Group chat name detection and exclusion from sender picker',
+      releaseV010_1: 'WhatsApp chat export (.zip) viewer with phone-style display',
+      releaseV010_2: 'Support for iOS and Android export formats',
+      releaseV010_3: 'Message bubbles with correct left/right alignment based on sender selection',
+      releaseV010_4: 'Media support: images (with lightbox), videos, audio/voice notes, documents',
+      releaseV010_5: 'Group chat support with coloured sender names',
+      releaseV010_6: 'Search functionality with highlighting and navigation',
+      releaseV010_7: 'Fullscreen view mode',
+      releaseV010_8: 'WhatsApp dark theme',
+      releaseV010_9: 'French UI',
+    },
+    en_US: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Drop your WhatsApp export (.zip) here',
+      dropHint: 'or',
+      dropButton: 'Choose files',
+      dropFormats: 'Supported formats: iOS & Android',
+      loadingText: 'Loading conversation...',
+      sidebarTitle: 'Chats',
+      sidebarEmpty: 'Add a WhatsApp export (.zip) using the + button',
+      senderPickerTitle: 'Who are you?',
+      senderPickerSubtitle: 'Select your name to display your messages on the right',
+      msgSuffix: 'msg',
+      participantsSuffix: 'participants',
+      participantsPopupTitle: 'Participants',
+      youTag: 'You',
+      searchPlaceholder: 'Search...',
+      searchResult: 'result',
+      searchResults: 'results',
+      chatEmptyState: 'Select a chat',
+      alertZipOnly: 'Please select .zip files',
+      alertZipOnlySingle: 'Please select a .zip file',
+      alertNoChatFile: 'No chat file found in the ZIP. Make sure the file contains _chat.txt.',
+      alertParseError: 'Unable to parse the chat. Please check the file format.',
+      alertLoadError: 'Error loading file: ',
+      mediaImage: '📷 Image not included',
+      mediaVideo: '🎥 Video not included',
+      mediaAudio: '🎵 Audio not included',
+      mediaSticker: '🏷️ Sticker not included',
+      mediaDocument: '📄 Document not included',
+      mediaGif: '🎬 GIF not included',
+      mediaContact: '👤 Contact card not included',
+      mediaUnknown: '📎 Media not included',
+      months: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'],
+      howItWorksTitle: 'How it works',
+      howStep1Title: 'Prepare the archive',
+      howStep1Desc: 'On your phone, open WhatsApp → open the chat → tap ⋮ (menu) → "Export chat" → choose "Include media" (or without media for a smaller file). This creates a .zip file.',
+      howStep2Title: 'Transfer to your computer',
+      howStep2Desc: 'Send the .zip to yourself via email, AirDrop, Google Drive, USB cable, or any file transfer method.',
+      howStep3Title: 'View in the app',
+      howStep3Desc: 'Drag the .zip file onto this page (or click "Choose files"). Select your name from the list, and your chat appears exactly as it looked on your phone.',
+      aboutTitle: 'About the author',
+      releaseTitle: 'Release notes',
+      releaseV02Date: 'February 2026',
+      releaseCurrentLabel: 'Current version',
+      releaseV012Date: 'February 2026',
+      releaseV011Date: 'February 2026',
+      releaseV010Date: 'February 2026',
+      releaseInitialLabel: 'Initial release',
+      releaseV02_1: 'Multi-language support (English, French, Spanish, Italian, German, Corsican)',
+      releaseV02_2: 'Landing page with "How it works", "About", and "Release notes" sections',
+      releaseV02_3: 'News ticker scrolling for long group names and sidebar chat names',
+      releaseV02_4: 'Version number displayed on landing page',
+      releaseV012_1: 'Group name excluded from sender picker',
+      releaseV012_2: 'Real-time clock in status bar',
+      releaseV012_3: 'Live WiFi and battery status icons reflecting device state',
+      releaseV012_4: '@Mentions displayed in bold with WhatsApp-style coloring',
+      releaseV012_5: 'Clickable participant count showing popup with full list',
+      releaseV012_6: 'Multiple file upload support on landing page',
+      releaseV012_7: 'News ticker for overflowing chat names (header and sidebar)',
+      releaseV011_1: 'iPad landscape view with left chat panel sidebar',
+      releaseV011_2: 'Sidebar support in fullscreen view',
+      releaseV011_3: 'Removed non-functional call and settings icons in iPad/fullscreen modes',
+      releaseV011_4: 'Group chat name detection and exclusion from sender picker',
+      releaseV010_1: 'WhatsApp chat export (.zip) viewer with phone-style display',
+      releaseV010_2: 'Support for iOS and Android export formats',
+      releaseV010_3: 'Message bubbles with correct left/right alignment based on sender selection',
+      releaseV010_4: 'Media support: images (with lightbox), videos, audio/voice notes, documents',
+      releaseV010_5: 'Group chat support with colored sender names',
+      releaseV010_6: 'Search functionality with highlighting and navigation',
+      releaseV010_7: 'Fullscreen view mode',
+      releaseV010_8: 'WhatsApp dark theme',
+      releaseV010_9: 'French UI',
+    },
+    es_ES: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Arrastra tu exportación de WhatsApp (.zip) aquí',
+      dropHint: 'o',
+      dropButton: 'Elegir archivos',
+      dropFormats: 'Formatos compatibles: iOS & Android',
+      loadingText: 'Cargando conversación...',
+      sidebarTitle: 'Chats',
+      sidebarEmpty: 'Añade una exportación de WhatsApp (.zip) con el botón +',
+      senderPickerTitle: '¿Quién eres tú?',
+      senderPickerSubtitle: 'Selecciona tu nombre para ver tus mensajes a la derecha',
+      msgSuffix: 'msg',
+      participantsSuffix: 'participantes',
+      participantsPopupTitle: 'Participantes',
+      youTag: 'Tú',
+      searchPlaceholder: 'Buscar...',
+      searchResult: 'resultado',
+      searchResults: 'resultados',
+      chatEmptyState: 'Selecciona un chat',
+      alertZipOnly: 'Por favor selecciona archivos .zip',
+      alertZipOnlySingle: 'Por favor selecciona un archivo .zip',
+      alertNoChatFile: 'No se encontró ningún archivo de chat en el ZIP. Asegúrate de que el archivo contiene _chat.txt.',
+      alertParseError: 'No se puede analizar el chat. Verifica el formato del archivo.',
+      alertLoadError: 'Error al cargar el archivo: ',
+      mediaImage: '📷 Imagen no incluida',
+      mediaVideo: '🎥 Vídeo no incluido',
+      mediaAudio: '🎵 Audio no incluido',
+      mediaSticker: '🏷️ Sticker no incluido',
+      mediaDocument: '📄 Documento no incluido',
+      mediaGif: '🎬 GIF no incluido',
+      mediaContact: '👤 Tarjeta de contacto no incluida',
+      mediaUnknown: '📎 Archivo multimedia no incluido',
+      months: ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'],
+      howItWorksTitle: '¿Cómo funciona?',
+      howStep1Title: 'Prepara el archivo',
+      howStep1Desc: 'En tu teléfono, abre WhatsApp → abre el chat → toca ⋮ (menú) → "Exportar chat" → elige "Incluir archivos multimedia" (o sin multimedia para un archivo más ligero). Esto crea un archivo .zip.',
+      howStep2Title: 'Transfiere a tu ordenador',
+      howStep2Desc: 'Envíate el .zip por email, AirDrop, Google Drive, cable USB o cualquier método de transferencia.',
+      howStep3Title: 'Visualiza en la aplicación',
+      howStep3Desc: 'Arrastra el archivo .zip a esta página (o haz clic en "Elegir archivos"). Selecciona tu nombre en la lista y tu chat aparece exactamente como en tu teléfono.',
+      aboutTitle: 'Acerca del autor',
+      releaseTitle: 'Notas de versión',
+      releaseV02Date: 'Febrero 2026',
+      releaseCurrentLabel: 'Versión actual',
+      releaseV012Date: 'Febrero 2026',
+      releaseV011Date: 'Febrero 2026',
+      releaseV010Date: 'Febrero 2026',
+      releaseInitialLabel: 'Versión inicial',
+      releaseV02_1: 'Soporte multilingüe (inglés, francés, español, italiano, alemán, corso)',
+      releaseV02_2: 'Página de inicio con secciones "Cómo funciona", "Sobre" y "Notas de versión"',
+      releaseV02_3: 'Desplazamiento ticker para nombres de grupos largos y nombres en la barra lateral',
+      releaseV02_4: 'Número de versión mostrado en la página de inicio',
+      releaseV012_1: 'Nombre del grupo excluido del selector de remitente',
+      releaseV012_2: 'Reloj en tiempo real en la barra de estado',
+      releaseV012_3: 'Iconos de WiFi y batería en vivo reflejando el estado del dispositivo',
+      releaseV012_4: 'Menciones @ en negrita con colores estilo WhatsApp',
+      releaseV012_5: 'Recuento de participantes clicable mostrando la lista completa',
+      releaseV012_6: 'Soporte de carga múltiple de archivos en la página de inicio',
+      releaseV012_7: 'Ticker de noticias para nombres de chats largos (cabecera y barra lateral)',
+      releaseV011_1: 'Vista iPad horizontal con panel lateral izquierdo',
+      releaseV011_2: 'Soporte de barra lateral en modo pantalla completa',
+      releaseV011_3: 'Eliminación de iconos de llamada y ajustes no funcionales en modos iPad/pantalla completa',
+      releaseV011_4: 'Detección del nombre del grupo y exclusión del selector de remitente',
+      releaseV010_1: 'Visor de exportación de chat WhatsApp (.zip) con visualización estilo teléfono',
+      releaseV010_2: 'Soporte para formatos de exportación iOS y Android',
+      releaseV010_3: 'Burbujas de mensajes con alineación izquierda/derecha según el remitente seleccionado',
+      releaseV010_4: 'Soporte multimedia: imágenes (con lightbox), vídeos, audio/notas de voz, documentos',
+      releaseV010_5: 'Soporte de chats de grupo con nombres de remitentes de colores',
+      releaseV010_6: 'Función de búsqueda con resaltado y navegación',
+      releaseV010_7: 'Modo pantalla completa',
+      releaseV010_8: 'Tema oscuro WhatsApp',
+      releaseV010_9: 'Interfaz en francés',
+    },
+    it_IT: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Trascina il tuo export WhatsApp (.zip) qui',
+      dropHint: 'o',
+      dropButton: 'Scegli file',
+      dropFormats: 'Formati supportati: iOS & Android',
+      loadingText: 'Caricamento conversazione...',
+      sidebarTitle: 'Chat',
+      sidebarEmpty: 'Aggiungi un export WhatsApp (.zip) con il pulsante +',
+      senderPickerTitle: 'Chi sei?',
+      senderPickerSubtitle: 'Seleziona il tuo nome per visualizzare i tuoi messaggi a destra',
+      msgSuffix: 'msg',
+      participantsSuffix: 'partecipanti',
+      participantsPopupTitle: 'Partecipanti',
+      youTag: 'Tu',
+      searchPlaceholder: 'Cerca...',
+      searchResult: 'risultato',
+      searchResults: 'risultati',
+      chatEmptyState: 'Seleziona una chat',
+      alertZipOnly: 'Seleziona file .zip',
+      alertZipOnlySingle: 'Seleziona un file .zip',
+      alertNoChatFile: 'Nessun file di chat trovato nel ZIP. Assicurati che il file contenga _chat.txt.',
+      alertParseError: 'Impossibile analizzare la chat. Verifica il formato del file.',
+      alertLoadError: 'Errore durante il caricamento del file: ',
+      mediaImage: '📷 Immagine non inclusa',
+      mediaVideo: '🎥 Video non incluso',
+      mediaAudio: '🎵 Audio non incluso',
+      mediaSticker: '🏷️ Sticker non incluso',
+      mediaDocument: '📄 Documento non incluso',
+      mediaGif: '🎬 GIF non inclusa',
+      mediaContact: '👤 Scheda contatto non inclusa',
+      mediaUnknown: '📎 Media non incluso',
+      months: ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO','LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'],
+      howItWorksTitle: 'Come funziona',
+      howStep1Title: 'Prepara l\'archivio',
+      howStep1Desc: 'Sul tuo telefono, apri WhatsApp → apri la chat → tocca ⋮ (menu) → "Esporta chat" → scegli "Includi media" (o senza media per un file più leggero). Questo crea un file .zip.',
+      howStep2Title: 'Trasferisci sul computer',
+      howStep2Desc: 'Invia il .zip a te stesso tramite email, AirDrop, Google Drive, cavo USB o qualsiasi metodo di trasferimento.',
+      howStep3Title: 'Visualizza nell\'app',
+      howStep3Desc: 'Trascina il file .zip su questa pagina (o clicca su "Scegli file"). Seleziona il tuo nome dall\'elenco e la tua chat appare esattamente come sul telefono.',
+      aboutTitle: 'Informazioni sull\'autore',
+      releaseTitle: 'Note di rilascio',
+      releaseV02Date: 'Febbraio 2026',
+      releaseCurrentLabel: 'Versione corrente',
+      releaseV012Date: 'Febbraio 2026',
+      releaseV011Date: 'Febbraio 2026',
+      releaseV010Date: 'Febbraio 2026',
+      releaseInitialLabel: 'Versione iniziale',
+      releaseV02_1: 'Supporto multilingue (inglese, francese, spagnolo, italiano, tedesco, corso)',
+      releaseV02_2: 'Pagina iniziale con sezioni "Come funziona", "Info" e "Note di rilascio"',
+      releaseV02_3: 'Scorrimento ticker per nomi di gruppo lunghi e nomi nella barra laterale',
+      releaseV02_4: 'Numero di versione visualizzato nella pagina iniziale',
+      releaseV012_1: 'Nome del gruppo escluso dal selettore mittente',
+      releaseV012_2: 'Orologio in tempo reale nella barra di stato',
+      releaseV012_3: 'Icone WiFi e batteria in tempo reale che riflettono lo stato del dispositivo',
+      releaseV012_4: 'Menzioni @ in grassetto con colori stile WhatsApp',
+      releaseV012_5: 'Conteggio partecipanti cliccabile con popup della lista completa',
+      releaseV012_6: 'Supporto caricamento file multipli nella pagina iniziale',
+      releaseV012_7: 'Ticker di notizie per nomi chat troppo lunghi (intestazione e barra laterale)',
+      releaseV011_1: 'Vista iPad orizzontale con pannello laterale sinistro',
+      releaseV011_2: 'Supporto barra laterale in modalità schermo intero',
+      releaseV011_3: 'Rimozione icone chiamata e impostazioni non funzionali in modalità iPad/schermo intero',
+      releaseV011_4: 'Rilevamento nome gruppo ed esclusione dal selettore mittente',
+      releaseV010_1: 'Visualizzatore di export chat WhatsApp (.zip) con display stile telefono',
+      releaseV010_2: 'Supporto per formati di export iOS e Android',
+      releaseV010_3: 'Bolle di messaggi con allineamento sinistra/destra in base al mittente selezionato',
+      releaseV010_4: 'Supporto media: immagini (con lightbox), video, audio/note vocali, documenti',
+      releaseV010_5: 'Supporto chat di gruppo con nomi mittente colorati',
+      releaseV010_6: 'Funzione di ricerca con evidenziazione e navigazione',
+      releaseV010_7: 'Modalità schermo intero',
+      releaseV010_8: 'Tema scuro WhatsApp',
+      releaseV010_9: 'Interfaccia in francese',
+    },
+    de_DE: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'WhatsApp-Export (.zip) hier ablegen',
+      dropHint: 'oder',
+      dropButton: 'Dateien auswählen',
+      dropFormats: 'Unterstützte Formate: iOS & Android',
+      loadingText: 'Konversation wird geladen...',
+      sidebarTitle: 'Chats',
+      sidebarEmpty: 'Füge einen WhatsApp-Export (.zip) mit der + Schaltfläche hinzu',
+      senderPickerTitle: 'Wer bist du?',
+      senderPickerSubtitle: 'Wähle deinen Namen aus, um deine Nachrichten rechts anzuzeigen',
+      msgSuffix: 'Nachr.',
+      participantsSuffix: 'Teilnehmer',
+      participantsPopupTitle: 'Teilnehmer',
+      youTag: 'Du',
+      searchPlaceholder: 'Suchen...',
+      searchResult: 'Ergebnis',
+      searchResults: 'Ergebnisse',
+      chatEmptyState: 'Chat auswählen',
+      alertZipOnly: 'Bitte .zip-Dateien auswählen',
+      alertZipOnlySingle: 'Bitte eine .zip-Datei auswählen',
+      alertNoChatFile: 'Keine Chat-Datei im ZIP gefunden. Stelle sicher, dass die Datei _chat.txt enthält.',
+      alertParseError: 'Chat konnte nicht verarbeitet werden. Bitte überprüfe das Dateiformat.',
+      alertLoadError: 'Fehler beim Laden der Datei: ',
+      mediaImage: '📷 Bild nicht enthalten',
+      mediaVideo: '🎥 Video nicht enthalten',
+      mediaAudio: '🎵 Audio nicht enthalten',
+      mediaSticker: '🏷️ Sticker nicht enthalten',
+      mediaDocument: '📄 Dokument nicht enthalten',
+      mediaGif: '🎬 GIF nicht enthalten',
+      mediaContact: '👤 Visitenkarte nicht enthalten',
+      mediaUnknown: '📎 Medien nicht enthalten',
+      months: ['JANUAR','FEBRUAR','MÄRZ','APRIL','MAI','JUNI','JULI','AUGUST','SEPTEMBER','OKTOBER','NOVEMBER','DEZEMBER'],
+      howItWorksTitle: 'Wie es funktioniert',
+      howStep1Title: 'Das Archiv vorbereiten',
+      howStep1Desc: 'Öffne auf deinem Telefon WhatsApp → öffne den Chat → tippe auf ⋮ (Menü) → „Chat exportieren" → wähle „Medien einschließen" (oder ohne Medien für eine kleinere Datei). Dadurch wird eine .zip-Datei erstellt.',
+      howStep2Title: 'Auf den Computer übertragen',
+      howStep2Desc: 'Sende die .zip per E-Mail, AirDrop, Google Drive, USB-Kabel oder eine andere Übertragungsmethode an dich selbst.',
+      howStep3Title: 'In der App anzeigen',
+      howStep3Desc: 'Ziehe die .zip-Datei auf diese Seite (oder klicke auf „Dateien auswählen"). Wähle deinen Namen aus der Liste – dein Chat erscheint genau so, wie er auf deinem Telefon aussah.',
+      aboutTitle: 'Über den Autor',
+      releaseTitle: 'Versionshinweise',
+      releaseV02Date: 'Februar 2026',
+      releaseCurrentLabel: 'Aktuelle Version',
+      releaseV012Date: 'Februar 2026',
+      releaseV011Date: 'Februar 2026',
+      releaseV010Date: 'Februar 2026',
+      releaseInitialLabel: 'Erstveröffentlichung',
+      releaseV02_1: 'Mehrsprachige Unterstützung (Englisch, Französisch, Spanisch, Italienisch, Deutsch, Korsisch)',
+      releaseV02_2: 'Startseite mit Abschnitten „Wie es funktioniert", „Über" und „Versionshinweise"',
+      releaseV02_3: 'Ticker-Scrolling für lange Gruppennamen und Namen in der Seitenleiste',
+      releaseV02_4: 'Versionsnummer auf der Startseite angezeigt',
+      releaseV012_1: 'Gruppenname aus der Absenderauswahl ausgeschlossen',
+      releaseV012_2: 'Echtzeituhr in der Statusleiste',
+      releaseV012_3: 'Live-WLAN- und Batteriesymbole, die den Gerätestatus widerspiegeln',
+      releaseV012_4: '@Erwähnungen fett mit WhatsApp-Farbgebung',
+      releaseV012_5: 'Anklickbare Teilnehmeranzahl mit vollständiger Liste',
+      releaseV012_6: 'Unterstützung für mehrfachen Datei-Upload auf der Startseite',
+      releaseV012_7: 'Newsticker für zu lange Chat-Namen (Kopfzeile und Seitenleiste)',
+      releaseV011_1: 'iPad-Querformat mit linkem Chat-Panel',
+      releaseV011_2: 'Seitenleistenunterstützung im Vollbildmodus',
+      releaseV011_3: 'Nicht funktionsfähige Anruf- und Einstellungssymbole im iPad/Vollbildmodus entfernt',
+      releaseV011_4: 'Gruppennamenerkennung und Ausschluss aus der Absenderauswahl',
+      releaseV010_1: 'WhatsApp-Chat-Export (.zip) Viewer mit telefonähnlicher Anzeige',
+      releaseV010_2: 'Unterstützung für iOS- und Android-Exportformate',
+      releaseV010_3: 'Nachrichtenblasen mit korrekter Links/Rechts-Ausrichtung basierend auf der Absenderauswahl',
+      releaseV010_4: 'Medienunterstützung: Bilder (mit Lightbox), Videos, Audio/Sprachnachrichten, Dokumente',
+      releaseV010_5: 'Gruppenunterstützung mit farbigen Absendernamen',
+      releaseV010_6: 'Suchfunktion mit Hervorhebung und Navigation',
+      releaseV010_7: 'Vollbildmodus',
+      releaseV010_8: 'WhatsApp-Dunkelthema',
+      releaseV010_9: 'Französische Benutzeroberfläche',
+    },
+    co_FR: {
+      appTitle: 'WhatsApp Chat Viewer',
+      dropSubtitle: 'Trascina u to\' esportu WhatsApp (.zip) quì',
+      dropHint: 'o',
+      dropButton: 'Sceglite i schedari',
+      dropFormats: 'Formati supportati: iOS & Android',
+      loadingText: 'Caricamentu di a cunversazione...',
+      sidebarTitle: 'Discussioni',
+      sidebarEmpty: 'Aghjunghjite un esportu WhatsApp (.zip) cù u buttone +',
+      senderPickerTitle: 'Chì sì tù?',
+      senderPickerSubtitle: 'Sceglite u vostru nome per mustrà i vostri messaghji à diritta',
+      msgSuffix: 'msg',
+      participantsSuffix: 'participanti',
+      participantsPopupTitle: 'Participanti',
+      youTag: 'Voi',
+      searchPlaceholder: 'Circhà...',
+      searchResult: 'risultatu',
+      searchResults: 'risultati',
+      chatEmptyState: 'Sceglite una discussione',
+      alertZipOnly: 'Per piacè sceglite schedari .zip',
+      alertZipOnlySingle: 'Per piacè sceglite un schedariu .zip',
+      alertNoChatFile: 'Nisunu schedariu di chat trovu in u ZIP. Assicuratevi chì u schedariu cuntene _chat.txt.',
+      alertParseError: 'Impussibule d\'analizà u chat. Verificate u formatu di u schedariu.',
+      alertLoadError: 'Errore durante u caricamentu di u schedariu: ',
+      mediaImage: '📷 Imaghjne micca inclusa',
+      mediaVideo: '🎥 Video micca inclusu',
+      mediaAudio: '🎵 Audiu micca inclusu',
+      mediaSticker: '🏷️ Sticker micca inclusu',
+      mediaDocument: '📄 Documentu micca inclusu',
+      mediaGif: '🎬 GIF micca inclusu',
+      mediaContact: '👤 Carta di cuntattu micca inclusa',
+      mediaUnknown: '📎 Media micca inclusu',
+      months: ['GHJENNAGHJU','FERRAGHJU','MARZU','APRILE','MAGHJU','GHJUGNU','LUGLIU','AOSTU','SETTEMBRE','UTTOBRE','NUVEMBRE','DICEMBRE'],
+      howItWorksTitle: 'Cumu funziona?',
+      howStep1Title: 'Pripara l\'archiviu',
+      howStep1Desc: 'In u to telefunu, apre WhatsApp → apre a cunversazione → toca ⋮ (menu) → "Esportà u chat" → sceglite "Includite i media" (o senza media per un schedariu più liggeru). Questu crèa un schedariu .zip.',
+      howStep2Title: 'Trasferisce à u to ordinatore',
+      howStep2Desc: 'Manda u .zip à tè stessu per email, AirDrop, Google Drive, cavu USB o qualsiasi mèzzu di trasferta.',
+      howStep3Title: 'Vedete in l\'applicazione',
+      howStep3Desc: 'Trascina u schedariu .zip nant\'à sta pagina (o clicca "Sceglite i schedari"). Sceglite u vostru nome in a lista, è u vostru chat appare esattamente cum\'in u to telefunu.',
+      aboutTitle: 'À prupòsitu di l\'autore',
+      releaseTitle: 'Note di versione',
+      releaseV02Date: 'Ferraghju 2026',
+      releaseCurrentLabel: 'Versione attuale',
+      releaseV012Date: 'Ferraghju 2026',
+      releaseV011Date: 'Ferraghju 2026',
+      releaseV010Date: 'Ferraghju 2026',
+      releaseInitialLabel: 'Prima versione',
+      releaseV02_1: 'Supportu multilingue (inglese, francese, spagnolu, italiano, tedescu, corsu)',
+      releaseV02_2: 'Pagina d\'accoglienza cù sezioni "Cumu funziona", "À prupòsitu" è "Note di versione"',
+      releaseV02_3: 'Scurruta ticker per i nomi di gruppu lunghi è i nomi in a barra laterale',
+      releaseV02_4: 'Numeru di versione mustratu in a pagina d\'accoglienza',
+      releaseV012_1: 'Nome di gruppu escluso da u selettore di mittente',
+      releaseV012_2: 'Orologhju in tempu reale in a barra di statu',
+      releaseV012_3: 'Icone WiFi è batteria in direttu chì riflettenu u statu di u dispositivu',
+      releaseV012_4: 'Menzzione @ in grassettu cù culori WhatsApp',
+      releaseV012_5: 'Cuntaré di participanti clicabile cù lista cumpleta',
+      releaseV012_6: 'Supportu caricamentu ficheri multipli in a pagina d\'accoglienza',
+      releaseV012_7: 'Ticker di nutizie per i nomi di chat troppu lunghi (intestazione è barra laterale)',
+      releaseV011_1: 'Vista iPad in orizzontale cù pannellu laterale mancinu',
+      releaseV011_2: 'Supportu barra laterale in modu schermo interu',
+      releaseV011_3: 'Eliminazione di icone di chiamata è impostazioni micca funziunali in modu iPad/schermo interu',
+      releaseV011_4: 'Rilevazione nome di gruppu è esclusione da u selettore di mittente',
+      releaseV010_1: 'Visulaizzatore di esportu chat WhatsApp (.zip) cù visualizazione stile telefunu',
+      releaseV010_2: 'Supportu per i formati di esportu iOS è Android',
+      releaseV010_3: 'Bolle di messaghji cù allineamentu mancinu/diritta sicondu u mittente sceltu',
+      releaseV010_4: 'Supportu media: imaghjne (cù lightbox), video, audiu/note vocale, documenti',
+      releaseV010_5: 'Supportu chat di gruppu cù nomi di mittente culori',
+      releaseV010_6: 'Funzione di ricerca cù evidenziazione è navigazione',
+      releaseV010_7: 'Modu schermo interu',
+      releaseV010_8: 'Tema scuru WhatsApp',
+      releaseV010_9: 'Interfaccia in francese',
+    },
+  };
+
+  let currentLocale = 'fr_FR';
+
+  function t(key) {
+    return (I18N[currentLocale] && I18N[currentLocale][key] !== undefined)
+      ? I18N[currentLocale][key]
+      : (I18N['fr_FR'][key] || key);
+  }
+
+  function setLocale(locale) {
+    if (!I18N[locale]) return;
+    currentLocale = locale;
+    applyLocale();
+    // Update lang picker active state
+    document.querySelectorAll('.lang-picker-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.locale === locale);
+    });
+  }
+
+  function applyLocale() {
+    // Update all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const val = t(key);
+      if (val !== undefined) el.textContent = val;
+    });
+    // Update all data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      const val = t(key);
+      if (val !== undefined) el.placeholder = val;
+    });
+    // Update sidebar empty state if visible
+    const sidebarEmptyEl = document.querySelector('.sidebar-empty p');
+    if (sidebarEmptyEl) sidebarEmptyEl.textContent = t('sidebarEmpty');
+    // Update chat empty state
+    const chatEmptyEl = document.querySelector('.chat-empty-state-text');
+    if (chatEmptyEl) chatEmptyEl.textContent = t('chatEmptyState');
+    // Update loading text
+    const loadingTextEl = document.querySelector('.loading-text');
+    if (loadingTextEl) loadingTextEl.textContent = t('loadingText');
+    // Update sender picker if visible
+    const sptEl = document.querySelector('.sender-picker-title');
+    if (sptEl) sptEl.textContent = t('senderPickerTitle');
+    const spsEl = document.querySelector('.sender-picker-subtitle');
+    if (spsEl) spsEl.textContent = t('senderPickerSubtitle');
+    // Update participants popup if open
+    const ppTitle = document.querySelector('.participants-popup-title');
+    if (ppTitle) ppTitle.textContent = t('participantsPopupTitle');
+    // Update header status if group chat is active
+    const chat = getActiveChat();
+    if (chat) {
+      const isGroup = chat.senders.length > 2;
+      if (isGroup) {
+        headerStatus.textContent = chat.senders.length + ' ' + t('participantsSuffix');
+      }
+      // Refresh header marquee text for group chats
+      updateHeaderNameText(chat);
+    }
+    // Refresh search count if search is open
+    if (searchState.results.length > 0 && searchState.isOpen) {
+      if (searchState.index >= 0) {
+        searchCount.textContent = (searchState.index + 1) + '/' + searchState.results.length;
+      } else {
+        const n = searchState.results.length;
+        searchCount.textContent = n + ' ' + (n !== 1 ? t('searchResults') : t('searchResult'));
+      }
+    }
+    // Refresh picker msg suffix
+    document.querySelectorAll('.picker-count').forEach(el => {
+      const n = parseInt(el.dataset.count || '0', 10);
+      el.textContent = n + ' ' + t('msgSuffix');
+    });
+    // Refresh "Vous" tag in participants popup
+    document.querySelectorAll('.participants-you-tag').forEach(el => {
+      el.textContent = t('youTag');
+    });
+  }
+
   // ===================== MULTI-CHAT STATE =====================
-  // Each loaded ZIP becomes a "chat" object in this array
-  const chats = []; // { id, messages, mediaFiles, chatName, senders, mySender, senderColors, renderedRange, lastMessage, lastTime }
+  const chats = [];
   let activeChatId = null;
 
   // Search state (per-session, reset on chat switch)
@@ -24,12 +616,6 @@
     '#25d366', '#53bdeb', '#e6c84f', '#ff7eb3', '#ff6b6b',
     '#7c4dff', '#ffa726', '#26c6da', '#ef5350', '#66bb6a',
     '#ab47bc', '#29b6f6', '#ec407a', '#8d6e63', '#78909c',
-  ];
-
-  // French month names
-  const MONTHS_FR = [
-    'JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN',
-    'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCEMBRE'
   ];
 
   // ===================== DOM REFS =====================
@@ -72,19 +658,14 @@
     $('status-time').textContent = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
   }
   updateStatusTime();
-  setInterval(updateStatusTime, 10000); // update every 10 seconds
+  setInterval(updateStatusTime, 10000);
 
-  // Live WiFi icon — uses Network Information API when available
+  // Live WiFi icon
   function updateWifiIcon() {
     const wifiSvg = document.querySelector('.status-icons .status-icon:first-child');
     if (!wifiSvg) return;
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const online = navigator.onLine;
-    if (!online) {
-      wifiSvg.style.opacity = '0.3';
-    } else {
-      wifiSvg.style.opacity = '1';
-    }
+    wifiSvg.style.opacity = online ? '1' : '0.3';
   }
   updateWifiIcon();
   window.addEventListener('online', updateWifiIcon);
@@ -93,14 +674,13 @@
     navigator.connection.addEventListener('change', updateWifiIcon);
   }
 
-  // Live Battery icon — uses Battery API when available
+  // Live Battery icon
   function updateBatteryIcon(battery) {
     const battSvg = document.querySelector('.status-icons .status-icon:last-child');
     if (!battSvg) return;
-    const level = battery.level; // 0 to 1
+    const level = battery.level;
     const charging = battery.charging;
-    // Draw battery with fill level
-    const fillHeight = Math.round(level * 14); // max inner height ~14
+    const fillHeight = Math.round(level * 14);
     const fillY = 6 + (14 - fillHeight);
     const fillColor = level <= 0.2 ? '#ef5350' : (charging ? '#25d366' : 'currentColor');
     battSvg.innerHTML = '<rect x="7" y="4" width="10" height="18" rx="1" ry="1" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
@@ -174,17 +754,15 @@
   async function handleMultipleFiles(fileList) {
     const zipFiles = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.zip'));
     if (zipFiles.length === 0) {
-      alert('Veuillez s\u00e9lectionner des fichiers .zip');
+      alert(t('alertZipOnly'));
       return;
     }
-    // Queue all files and process them one by one (each needs sender picker)
     fileQueue.push(...zipFiles);
     if (!processingQueue) {
       processingQueue = true;
       while (fileQueue.length > 0) {
         const file = fileQueue.shift();
         await handleFile(file);
-        // Wait for sender picker to complete before processing next file
         if (pendingChat) {
           await new Promise(resolve => {
             const check = setInterval(() => {
@@ -201,12 +779,11 @@
   }
 
   // ===================== MAIN FILE HANDLER =====================
-  // pendingChat temporarily holds chat data while we wait for sender picker
   let pendingChat = null;
 
   async function handleFile(file) {
     if (!file.name.toLowerCase().endsWith('.zip')) {
-      alert('Veuillez sélectionner un fichier .zip');
+      alert(t('alertZipOnlySingle'));
       return;
     }
 
@@ -217,7 +794,6 @@
       let chatText = null;
       const mediaEntries = {};
 
-      // Find _chat.txt and media files
       zip.forEach((relativePath, entry) => {
         if (entry.dir) return;
         const name = relativePath.split('/').pop();
@@ -233,7 +809,6 @@
         }
       });
 
-      // If no _chat.txt found, try any .txt file
       if (!chatText) {
         zip.forEach((relativePath, entry) => {
           if (!entry.dir && relativePath.toLowerCase().endsWith('.txt')) {
@@ -243,7 +818,7 @@
       }
 
       if (!chatText) {
-        alert('Aucun fichier de chat trouvé dans le ZIP. Assurez-vous que le fichier contient _chat.txt.');
+        alert(t('alertNoChatFile'));
         loadingOverlay.classList.add('hidden');
         return;
       }
@@ -252,21 +827,18 @@
       const messages = parseWhatsAppChat(text);
 
       if (messages.length === 0) {
-        alert('Impossible de parser le chat. Vérifiez le format du fichier.');
+        alert(t('alertParseError'));
         loadingOverlay.classList.add('hidden');
         return;
       }
 
-      // Collect senders
       const senderSet = new Set();
       for (const msg of messages) {
         if (msg.sender && !msg.isSystem) senderSet.add(msg.sender);
       }
       const senders = Array.from(senderSet);
 
-      // Detect group name early (before sender picker) so we can exclude it
       let detectedGroupName = null;
-      // Search ALL messages (including system ones) for group name patterns
       for (const msg of messages) {
         const fullText = msg.text || '';
         const gm = fullText.match(/created group \u201c(.+?)\u201d/i) ||
@@ -286,8 +858,6 @@
         }
       }
 
-      // Also try to detect group name from the txt file name
-      // WhatsApp exports often name the file "WhatsApp Chat with <Group Name>.txt"
       if (!detectedGroupName && chatText.name) {
         const fnm = chatText.name.match(/WhatsApp Chat (?:with|con|avec|mit) (.+)\.txt$/i);
         if (fnm) {
@@ -295,15 +865,11 @@
         }
       }
 
-      // Filter out the group name from the senders list
-      // Also filter any "sender" whose name matches the group name case-insensitively
       let filteredSenders = senders;
       if (detectedGroupName) {
         const gnLower = detectedGroupName.toLowerCase();
         filteredSenders = senders.filter(s => s.toLowerCase() !== gnLower);
       }
-      // Additional heuristic: if we have more than 2 senders, check if any sender
-      // has only system-like messages (no real text content) — likely a group name
       if (filteredSenders.length > 2) {
         const senderMsgCounts = {};
         for (const msg of messages) {
@@ -311,18 +877,16 @@
             senderMsgCounts[msg.sender] = (senderMsgCounts[msg.sender] || 0) + 1;
           }
         }
-        // A sender with 0 real messages in the filtered list is likely a group name artifact
         filteredSenders = filteredSenders.filter(s => (senderMsgCounts[s] || 0) > 0);
       }
 
-      // Store pending chat data
       pendingChat = {
         id: generateId(),
         messages: messages,
         mediaFiles: mediaEntries,
         chatName: '',
         senders: filteredSenders,
-        allSenders: senders, // keep original for reference
+        allSenders: senders,
         detectedGroupName: detectedGroupName,
         mySender: null,
         senderColors: {},
@@ -331,19 +895,17 @@
         lastTime: '',
       };
 
-      // Extract last message preview
       const lastMsg = messages.filter(m => !m.isSystem && m.sender).pop();
       if (lastMsg) {
         pendingChat.lastMessage = (lastMsg.text || '').slice(0, 60);
         pendingChat.lastTime = lastMsg.timeStr;
       }
 
-      // Show sender picker
       showSenderPicker(pendingChat);
 
     } catch (err) {
       console.error('Error loading ZIP:', err);
-      alert('Erreur lors du chargement du fichier : ' + err.message);
+      alert(t('alertLoadError') + err.message);
     }
 
     loadingOverlay.classList.add('hidden');
@@ -353,7 +915,6 @@
   function showSenderPicker(chat) {
     senderPickerList.innerHTML = '';
 
-    // Count messages per sender
     const counts = {};
     for (const msg of chat.messages) {
       if (msg.sender && !msg.isSystem) {
@@ -371,7 +932,7 @@
       btn.innerHTML =
         '<span class="picker-avatar">' + escapeHtml(initials) + '</span>' +
         '<span class="picker-name">' + escapeHtml(sender) + '</span>' +
-        '<span class="picker-count">' + count + ' msg</span>';
+        '<span class="picker-count" data-count="' + count + '">' + count + ' ' + t('msgSuffix') + '</span>';
 
       btn.addEventListener('click', () => selectSender(sender));
       senderPickerList.appendChild(btn);
@@ -386,7 +947,6 @@
     pendingChat.mySender = sender;
     senderPickerOverlay.classList.add('hidden');
 
-    // Assign colors to other senders
     pendingChat.senderColors = {};
     let colorIdx = 0;
     for (const s of pendingChat.senders) {
@@ -395,29 +955,22 @@
       colorIdx++;
     }
 
-    // Extract chat name
     extractChatName(pendingChat);
 
-    // Add to chats array
     chats.push(pendingChat);
 
-    // Switch to chat screen
     if (!chatScreen.classList.contains('active')) {
       dropZoneScreen.classList.remove('active');
       chatScreen.classList.add('active');
     }
 
-    // Update sidebar
     refreshSidebar();
-
-    // Activate this chat
     setActiveChat(pendingChat.id);
 
     pendingChat = null;
   }
 
   function extractChatName(chat) {
-    // If we already detected a group name during parsing, use it
     if (chat.detectedGroupName) {
       chat.chatName = chat.detectedGroupName;
       return;
@@ -425,7 +978,6 @@
 
     const isGroup = chat.senders.length > 2;
 
-    // Try to find group name from system messages
     for (const msg of chat.messages) {
       if (msg.isSystem) {
         const m = msg.text.match(/created group "(.+?)"/i) ||
@@ -448,6 +1000,19 @@
     }
   }
 
+  // ===================== HEADER NAME TEXT FOR GROUP CHATS =====================
+  function updateHeaderNameText(chat) {
+    if (!chat) return;
+    const isGroup = chat.senders.length > 2;
+    if (isGroup) {
+      // Show full title AND all members in ticker
+      headerName.textContent = chat.chatName + ' — ' + chat.senders.join(', ');
+    } else {
+      headerName.textContent = chat.chatName;
+    }
+    setupHeaderMarquee();
+  }
+
   // ===================== SIDEBAR =====================
   function refreshSidebar() {
     sidebarList.innerHTML = '';
@@ -455,7 +1020,7 @@
     if (chats.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'sidebar-empty';
-      empty.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg><p>Ajoutez un export WhatsApp (.zip) avec le bouton +</p>';
+      empty.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg><p>' + escapeHtml(t('sidebarEmpty')) + '</p>';
       sidebarList.appendChild(empty);
       return;
     }
@@ -467,7 +1032,6 @@
 
       const initials = chat.chatName.split(' ').map(w => w[0] || '').slice(0, 2).join('').toUpperCase();
 
-      // Get the last non-system message for preview
       let preview = chat.lastMessage || '';
       let time = chat.lastTime || '';
       if (!preview) {
@@ -511,31 +1075,26 @@
     const chat = getActiveChat();
     if (!chat) return;
 
-    // Close search if open
     closeSearch();
 
-    // Update sidebar active state
     sidebarList.querySelectorAll('.sidebar-chat-item').forEach(el => {
       el.classList.toggle('active', el.dataset.chatId === chatId);
     });
 
-    // Update header
-    headerName.textContent = chat.chatName;
-    setupHeaderMarquee();
+    // Update header — group chats show name + all members in ticker
+    updateHeaderNameText(chat);
+
     const isGroup = chat.senders.length > 2;
-    headerStatus.textContent = isGroup ? chat.senders.length + ' participants' : '';
+    headerStatus.textContent = isGroup ? chat.senders.length + ' ' + t('participantsSuffix') : '';
     headerStatus.classList.toggle('clickable-participants', isGroup);
     headerStatus.onclick = isGroup ? () => showParticipantsPopup(chat) : null;
 
-    // Show chat content, hide empty state
     chatArea.classList.remove('hidden');
     chatHeader.classList.remove('hidden');
     chatEmptyState.classList.add('hidden');
 
-    // Render messages
     renderMessages(chat);
 
-    // Scroll to bottom
     requestAnimationFrame(() => {
       chatArea.scrollTop = chatArea.scrollHeight;
     });
@@ -558,7 +1117,6 @@
 
     renderChunk(chat, startIdx, total);
 
-    // Rebind scroll listener
     chatArea.removeEventListener('scroll', handleScroll);
     chatArea.addEventListener('scroll', handleScroll, { passive: true });
   }
@@ -576,7 +1134,6 @@
       const msg = chat.messages[i];
       const currentDateKey = getDateKey(msg.date);
 
-      // Date separator
       if (currentDateKey !== prevDate) {
         const sep = createDateSeparator(msg.dateStr, currentDateKey);
         fragment.appendChild(sep);
@@ -584,7 +1141,6 @@
         prevSender = null;
       }
 
-      // Message element
       const el = createMessageElement(msg, prevSender, chat);
       el.dataset.msgId = i;
       fragment.appendChild(el);
@@ -610,7 +1166,6 @@
     const scrollHeight = chatArea.scrollHeight;
     const clientHeight = chatArea.clientHeight;
 
-    // Load more messages when scrolling near top
     if (scrollTop < 200 && chat.renderedRange.start > 0 && !topLoadingMore) {
       topLoadingMore = true;
       const newStart = Math.max(0, chat.renderedRange.start - CHUNK_SIZE);
@@ -620,14 +1175,12 @@
       topLoadingMore = false;
     }
 
-    // Show/hide scroll to bottom button
     if (scrollHeight - scrollTop - clientHeight > 300) {
       scrollBottomBtn.classList.remove('hidden');
     } else {
       scrollBottomBtn.classList.add('hidden');
     }
 
-    // Sticky date header
     updateStickyDate();
   }
 
@@ -689,7 +1242,6 @@
     const bubble = document.createElement('div');
     bubble.className = 'message-bubble';
 
-    // Sender name for group incoming messages
     if (isGroup && !isOutgoing && showTail) {
       const sName = document.createElement('span');
       sName.className = 'sender-name';
@@ -698,13 +1250,11 @@
       bubble.appendChild(sName);
     }
 
-    // Media content
     if (msg.media) {
       const mediaEl = createMediaElement(msg.media, chat);
       bubble.appendChild(mediaEl);
     }
 
-    // Text
     if (msg.text && msg.text.trim()) {
       const textSpan = document.createElement('span');
       textSpan.className = 'message-text';
@@ -712,7 +1262,6 @@
       bubble.appendChild(textSpan);
     }
 
-    // Meta (timestamp + check for outgoing)
     const meta = document.createElement('span');
     meta.className = 'message-meta';
     const timeEl = document.createElement('span');
@@ -737,14 +1286,14 @@
       const div = document.createElement('div');
       div.className = 'media-omitted';
       const labels = {
-        image: '📷 Image non incluse',
-        video: '🎥 Vidéo non incluse',
-        audio: '🎵 Audio non inclus',
-        sticker: '🏷️ Autocollant non inclus',
-        document: '📄 Document non inclus',
-        gif: '🎬 GIF non inclus',
-        contact: '👤 Carte de contact non incluse',
-        unknown: '📎 Média non inclus',
+        image: t('mediaImage'),
+        video: t('mediaVideo'),
+        audio: t('mediaAudio'),
+        sticker: t('mediaSticker'),
+        document: t('mediaDocument'),
+        gif: t('mediaGif'),
+        contact: t('mediaContact'),
+        unknown: t('mediaUnknown'),
       };
       div.textContent = labels[media.mediaType] || labels.unknown;
       return div;
@@ -867,7 +1416,6 @@
       return container;
     }
 
-    // Document / other
     const docDiv = document.createElement('div');
     docDiv.className = 'document-attachment';
 
@@ -1015,7 +1563,8 @@
       }
     }
 
-    searchCount.textContent = searchState.results.length + ' résultat' + (searchState.results.length !== 1 ? 's' : '');
+    const n = searchState.results.length;
+    searchCount.textContent = n + ' ' + (n !== 1 ? t('searchResults') : t('searchResult'));
 
     highlightSearchResults();
 
@@ -1097,7 +1646,6 @@
   // ===================== BACK BUTTON =====================
   backBtn.addEventListener('click', () => {
     if (currentView === 'ipad' || currentView === 'full') {
-      // In iPad/fullscreen mode, deselect chat (show empty state)
       activeChatId = null;
       messagesContainer.innerHTML = '';
       chatArea.classList.add('hidden');
@@ -1106,10 +1654,7 @@
       closeSearch();
       refreshSidebar();
     } else {
-      // Phone mode — if only one chat, go back to drop zone
-      // If multiple chats, switch to iPad mode so they can pick
       if (chats.length <= 1) {
-        // Reset everything
         chats.length = 0;
         activeChatId = null;
         allRenderedElements = [];
@@ -1120,7 +1665,6 @@
         chatScreen.classList.remove('ipad-mode');
         dropZoneScreen.classList.add('active');
       } else {
-        // Switch to iPad mode to show sidebar
         switchView('ipad');
       }
     }
@@ -1131,9 +1675,10 @@
     const messages = [];
     const lines = text.split('\n');
 
-    const iosRegex = /^\[(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\]\s*/;
-    const androidRegex = /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
-    const altDateRegex = /^(\d{1,2}[.\-]\d{1,2}[.\-]\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
+    // Working regexes for iOS and Android WhatsApp export formats
+    const iosRe = /^\[(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\]\s*/;
+    const androidRe = /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
+    const altDateRe = /^(\d{1,2}[.\-]\d{1,2}[.\-]\d{2,4}),?\s+(\d{1,2}[:.]\d{2}(?:[:.]\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)\s*[\-–]\s*/;
 
     const cleanLine = (l) => l.replace(/[\u200E\u200F\u200B\u200D\u2069\u2066\uFEFF]/g, '');
 
@@ -1145,7 +1690,7 @@
       let match = null;
       let dateStr, timeStr, rest;
 
-      match = cleaned.match(iosRegex);
+      match = cleaned.match(iosRe);
       if (match) {
         dateStr = match[1];
         timeStr = match[2];
@@ -1153,7 +1698,7 @@
       }
 
       if (!match) {
-        match = cleaned.match(androidRegex);
+        match = cleaned.match(androidRe);
         if (match) {
           dateStr = match[1];
           timeStr = match[2];
@@ -1162,7 +1707,7 @@
       }
 
       if (!match) {
-        match = cleaned.match(altDateRegex);
+        match = cleaned.match(altDateRe);
         if (match) {
           dateStr = match[1].replace(/[.\-]/g, '/');
           timeStr = match[2];
@@ -1196,7 +1741,7 @@
           date: parsedDate,
           time: parsedTime,
           timeStr: formatTime(parsedTime),
-          dateStr: formatDateFr(parsedDate),
+          dateStr: formatDateLocale(parsedDate),
           sender: sender,
           text: text,
           isSystem: sender === null,
@@ -1209,7 +1754,6 @@
       }
     }
 
-    // Post-process: detect media attachments
     for (const msg of messages) {
       msg.media = detectMedia(msg.text);
       if (msg.media && msg.media.type !== 'omitted') {
@@ -1350,7 +1894,7 @@
     const isPM = /PM/i.test(cleaned);
     const isAM = /AM/i.test(cleaned);
     const timePart = cleaned.replace(/\s*[AaPp][Mm]/i, '').replace(/\s*AM|PM/gi, '').trim();
-    const parts = timePart.split(/[:.]/);
+    const parts = timePart.split(/[:.]/) ;
 
     let hours = parseInt(parts[0], 10) || 0;
     const minutes = parseInt(parts[1], 10) || 0;
@@ -1362,13 +1906,14 @@
     return { hours, minutes, seconds };
   }
 
-  function formatTime(t) {
-    return String(t.hours).padStart(2, '0') + ':' + String(t.minutes).padStart(2, '0');
+  function formatTime(timeObj) {
+    return String(timeObj.hours).padStart(2, '0') + ':' + String(timeObj.minutes).padStart(2, '0');
   }
 
-  function formatDateFr(date) {
+  function formatDateLocale(date) {
     if (!(date instanceof Date) || isNaN(date)) return '';
-    return date.getDate() + ' ' + MONTHS_FR[date.getMonth()] + ' ' + date.getFullYear();
+    const months = I18N[currentLocale] ? I18N[currentLocale].months : I18N['fr_FR'].months;
+    return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
   }
 
   // ===================== UTILITY FUNCTIONS =====================
@@ -1383,12 +1928,10 @@
   }
 
   function linkify(html) {
-    // First linkify URLs
     let result = html.replace(
       /(https?:\/\/[^\s<]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#53bdeb;text-decoration:underline;">$1</a>'
     );
-    // Then format @mentions in bold with WhatsApp-style color
     result = result.replace(
       /@(\+?[\w\u00C0-\u024F\u0400-\u04FF]+(?: [\w\u00C0-\u024F\u0400-\u04FF]+)*)/g,
       '<span class="wa-mention">@$1</span>'
@@ -1409,7 +1952,7 @@
   const btnPhone = $('btn-phone');
   const btnIpad = $('btn-ipad');
   const btnFull = $('btn-full');
-  let currentView = 'phone'; // 'phone', 'ipad', or 'full'
+  let currentView = 'phone';
 
   btnPhone.addEventListener('click', () => switchView('phone'));
   btnIpad.addEventListener('click', () => switchView('ipad'));
@@ -1419,7 +1962,6 @@
     if (mode === currentView) return;
     currentView = mode;
 
-    // Save scroll position ratio before switching
     const scrollRatio = chatArea.scrollHeight > chatArea.clientHeight
       ? chatArea.scrollTop / (chatArea.scrollHeight - chatArea.clientHeight)
       : 1;
@@ -1434,7 +1976,6 @@
       chatScreen.classList.add('fullscreen-mode');
       refreshSidebar();
 
-      // Same empty-state logic as iPad
       if (!activeChatId && chats.length > 0) {
         chatArea.classList.add('hidden');
         chatHeader.classList.add('hidden');
@@ -1448,7 +1989,6 @@
       chatScreen.classList.add('ipad-mode');
       refreshSidebar();
 
-      // If we have chats but no active one, show empty state
       if (!activeChatId && chats.length > 0) {
         chatArea.classList.add('hidden');
         chatHeader.classList.add('hidden');
@@ -1460,7 +2000,6 @@
       }
     }
 
-    // In phone mode, hide sidebar/empty state and ensure chat is visible
     if (mode === 'phone') {
       chatEmptyState.classList.add('hidden');
       if (activeChatId) {
@@ -1469,7 +2008,6 @@
       }
     }
 
-    // Restore scroll position after layout reflow
     requestAnimationFrame(() => {
       const newMax = chatArea.scrollHeight - chatArea.clientHeight;
       chatArea.scrollTop = scrollRatio * newMax;
@@ -1478,7 +2016,6 @@
 
   // ===================== PARTICIPANTS POPUP =====================
   function showParticipantsPopup(chat) {
-    // Remove any existing popup
     const existing = document.querySelector('.participants-popup-overlay');
     if (existing) existing.remove();
 
@@ -1490,7 +2027,7 @@
 
     const header = document.createElement('div');
     header.className = 'participants-popup-header';
-    header.innerHTML = '<span class="participants-popup-title">Participants</span>';
+    header.innerHTML = '<span class="participants-popup-title">' + escapeHtml(t('participantsPopupTitle')) + '</span>';
     const closeBtn = document.createElement('button');
     closeBtn.className = 'participants-popup-close';
     closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
@@ -1506,7 +2043,7 @@
       const initials = sender.split(' ').map(w => w[0] || '').slice(0, 2).join('').toUpperCase();
       const isMe = sender === chat.mySender;
       item.innerHTML = '<span class="participants-popup-avatar">' + escapeHtml(initials) + '</span>' +
-        '<span class="participants-popup-name">' + escapeHtml(sender) + (isMe ? ' <span class="participants-you-tag">Vous</span>' : '') + '</span>';
+        '<span class="participants-popup-name">' + escapeHtml(sender) + (isMe ? ' <span class="participants-you-tag">' + escapeHtml(t('youTag')) + '</span>' : '') + '</span>';
       list.appendChild(item);
     }
     popup.appendChild(list);
@@ -1521,16 +2058,14 @@
 
   // ===================== HEADER MARQUEE FOR LONG NAMES =====================
   function setupHeaderMarquee() {
-    // Check if header name overflows and needs marquee
     requestAnimationFrame(() => {
       const el = headerName;
-      // Reset first to get true measurements
       el.classList.remove('marquee-scroll');
       el.style.removeProperty('--marquee-offset');
       el.style.removeProperty('--marquee-duration');
 
       if (el.scrollWidth > el.clientWidth + 2) {
-        const offset = -(el.scrollWidth - el.clientWidth + 10); // extra 10px padding
+        const offset = -(el.scrollWidth - el.clientWidth + 10);
         el.style.setProperty('--marquee-offset', offset + 'px');
         const duration = Math.max(5, Math.abs(offset) / 25);
         el.style.setProperty('--marquee-duration', duration + 's');
@@ -1538,6 +2073,23 @@
       }
     });
   }
+
+  // ===================== LANGUAGE PICKER =====================
+  document.querySelectorAll('.lang-picker-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setLocale(btn.dataset.locale);
+    });
+  });
+
+  // setLocale updates active state on ALL lang-picker-btn elements
+  // (already handled in setLocale via querySelectorAll)
+
+  // ===================== COLLAPSIBLE SECTIONS (landing page) =====================
+  window.toggleSection = function(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    section.classList.toggle('open');
+  };
 
   // ===================== KEYBOARD SHORTCUTS =====================
   document.addEventListener('keydown', (e) => {
@@ -1550,5 +2102,8 @@
       if (popup) popup.remove();
     }
   });
+
+  // ===================== INITIAL LOCALE APPLY =====================
+  applyLocale();
 
 })();
