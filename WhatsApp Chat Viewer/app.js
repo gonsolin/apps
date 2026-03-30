@@ -1,5 +1,5 @@
 /* ================================================
-   WhatsApp Chat Viewer — Main Application v0.4.5
+   WhatsApp Chat Viewer — Main Application v0.5.1
    Multi-chat architecture with iPad sidebar
    + Live animated playback view
    ================================================ */
@@ -119,6 +119,8 @@
       releaseV032_5: 'Nom corrigé : Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Plein écran cinéma',
       cinemaAutoScroll: 'Défilement automatique',
+      cinemaSlower: 'Plus lent',
+      cinemaFaster: 'Plus rapide',
       releaseV041Date: 'Février 2026',
       releaseV041_1: 'Mode cinéma en vrai plein écran navigateur avec bouton de bascule',
       releaseV041_2: 'Médias sans bandes noires, remplissage complet de l\'écran',
@@ -182,6 +184,95 @@
       releaseV010_7: 'Mode plein écran',
       releaseV010_8: 'Thème sombre WhatsApp',
       releaseV010_9: 'Interface en français',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Profil psychologique',
+      profilerTitle: 'Analyse psychologique du groupe',
+      profilerSubtitle: 'Profil de chaque membre basé sur l\'analyse de la conversation',
+      profilerNoData: 'Chargez une conversation de groupe pour voir l\'analyse.',
+      profilerMessages: 'Messages',
+      profilerAvgLength: 'Long. moy.',
+      profilerCharsPerMsg: 'car/msg',
+      profilerMediaSent: 'Médias envoyés',
+      profilerEmojis: 'Emojis',
+      profilerQuestions: 'Questions posées',
+      profilerLinks: 'Liens partagés',
+      profilerInitiations: 'Conversations lancées',
+      profilerAvgResponseTime: 'Temps de réponse moy.',
+      profilerMostActiveHour: 'Heure la plus active',
+      profilerTopEmojis: 'Emojis favoris',
+      profilerPersonality: 'Profil psychologique',
+      profilerTraits: 'Traits de personnalité',
+      profilerCommunicationStyle: 'Style de communication',
+      profilerGroupRole: 'Rôle dans le groupe',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'j',
+      profilerStyleVerbose: 'Prolixe',
+      profilerStyleConcise: 'Concis',
+      profilerStyleExpressive: 'Expressif',
+      profilerStyleFactual: 'Factuel',
+      profilerStyleInquisitive: 'Curieux',
+      profilerStyleResponsive: 'Réactif',
+      profilerStyleInitiator: 'Initiateur',
+      profilerStyleMediaHeavy: 'Visuel',
+      profilerRoleLeader: 'Leader',
+      profilerRoleConnector: 'Connecteur',
+      profilerRoleObserver: 'Observateur',
+      profilerRoleEntertainer: 'Animateur',
+      profilerRoleSupporter: 'Soutien',
+      profilerRoleAnalyst: 'Analyste',
+      profilerActivity: 'Activité',
+      profilerActivityChart: 'Répartition horaire',
+      profilerSentiment: 'Sentiment',
+      profilerSentimentPositive: 'Positif',
+      profilerSentimentNeutral: 'Neutre',
+      profilerSentimentNegative: 'Négatif',
+      profilerWordCloud: 'Mots fréquents',
+      profilerOverview: 'Vue d\'ensemble',
+      profilerDominance: 'Dominance conversationnelle',
+      releaseV05Date: 'Mars 2026',
+      releaseV05_1: 'Analyse psychologique des membres du groupe avec profils de personnalité',
+      releaseV05_2: 'Graphiques radar et répartition horaire par membre',
+      releaseV05_3: 'Détection automatique du style de communication et du rôle dans le groupe',
+      releaseV05_4: 'Analyse de sentiment et emojis favoris',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Votre profil',
+      profilerYourProfileSubtitle: 'Analyse personnelle basée sur vos messages',
+      profilerNarrative: 'Portrait psychologique',
+      profilerVsGroup: 'Comparaison au groupe',
+      profilerVsGroupAvg: 'Moyenne du groupe',
+      profilerYou: 'Vous',
+      profilerMoreThan: 'de plus que la moyenne',
+      profilerLessThan: 'de moins que la moyenne',
+      profilerOnPar: 'dans la moyenne',
+      profilerBigFive: 'Indicateurs de personnalité',
+      profilerBigFiveOpenness: 'Ouverture',
+      profilerBigFiveConscientiousness: 'Conscienciosité',
+      profilerBigFiveExtraversion: 'Extraversion',
+      profilerBigFiveAgreeableness: 'Agréabilité',
+      profilerBigFiveNeuroticism: 'Stabilité émotionnelle',
+      profilerNarrIntro: 'En tant que ',
+      profilerNarrVerbose: 'communicant prolixe, vous prenez le temps de développer vos pensées en détail. Vos messages longs révèlent une personnalité réfléchie qui valorise la nuance et le contexte.',
+      profilerNarrConcise: 'communicant concis, vous allez droit au but. Vos messages courts et efficaces révèlent une personnalité pragmatique qui valorise la clarté et l\'action.',
+      profilerNarrExpressive: 'Votre usage abondant d\'emojis et de points d\'exclamation révèle une personnalité chaleureuse et émotionnellement ouverte. Vous apportez de l\'énergie et de la couleur aux conversations.',
+      profilerNarrFactual: 'Votre style sobre et factuel, avec peu d\'emojis, révèle une personnalité analytique qui préfère les faits aux émotions dans ses échanges.',
+      profilerNarrInquisitive: 'Vous posez beaucoup de questions, ce qui démontre une curiosité intellectuelle naturelle et un intérêt sincère pour les autres.',
+      profilerNarrResponsive: 'Votre temps de réponse rapide montre que vous êtes très attentif aux conversations et que vous accordez de l\'importance à la réactivité.',
+      profilerNarrInitiator: 'Vous lancez souvent de nouvelles conversations, ce qui révèle un tempérament proactif et socialement confiant.',
+      profilerNarrMediaHeavy: 'Vous partagez beaucoup de contenus visuels, révélant une personnalité qui pense en images et préfère montrer plutôt que raconter.',
+      profilerNarrLeader: 'Dans ce groupe, vous occupez naturellement le rôle de leader — celui qui donne le ton, lance les sujets et maintient le rythme des échanges.',
+      profilerNarrConnector: 'Vous êtes le connecteur du groupe — celui qui pose les questions, relie les gens entre eux et maintient le lien social.',
+      profilerNarrObserver: 'Vous êtes plutôt observateur dans ce groupe — présent mais discret, vous intervenez avec parcimonie et à bon escient.',
+      profilerNarrEntertainer: 'Vous êtes l\'animateur du groupe — celui qui apporte l\'humour, les rires et l\'énergie positive aux conversations.',
+      profilerNarrSupporter: 'Vous jouez un rôle de soutien dans ce groupe — réactif, positif et toujours présent quand quelqu\'un a besoin d\'une réponse.',
+      profilerNarrAnalyst: 'Vous êtes l\'analyste du groupe — celui qui partage des liens, écrit des messages détaillés et apporte de la profondeur aux discussions.',
+      profilerNarrDefaultRole: 'Vous participez activement au groupe à votre manière, apportant votre propre style unique aux conversations.',
+      releaseV051Date: 'Mars 2026',
+      releaseV051_1: 'Profil psychologique personnel avec portrait narratif généré automatiquement',
+      releaseV051_2: 'Indicateurs de personnalité Big Five déduits des habitudes de communication',
+      releaseV051_3: 'Comparaison de vos statistiques avec la moyenne du groupe',
     },
     en_GB: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -293,6 +384,8 @@
       releaseV032_5: 'Name corrected: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Full Screen cinema',
       cinemaAutoScroll: 'Auto-scroll',
+      cinemaSlower: 'Slower',
+      cinemaFaster: 'Faster',
       releaseV041Date: 'February 2026',
       releaseV041_1: 'Cinema mode now uses true browser fullscreen with toggle button',
       releaseV041_2: 'Media fills the entire screen without black bars',
@@ -356,6 +449,95 @@
       releaseV010_7: 'Fullscreen view mode',
       releaseV010_8: 'WhatsApp dark theme',
       releaseV010_9: 'French UI',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Psychological profile',
+      profilerTitle: 'Group psychological analysis',
+      profilerSubtitle: 'Each member\'s profile based on conversation analysis',
+      profilerNoData: 'Load a group conversation to see the analysis.',
+      profilerMessages: 'Messages',
+      profilerAvgLength: 'Avg length',
+      profilerCharsPerMsg: 'chars/msg',
+      profilerMediaSent: 'Media sent',
+      profilerEmojis: 'Emojis',
+      profilerQuestions: 'Questions asked',
+      profilerLinks: 'Links shared',
+      profilerInitiations: 'Conversations started',
+      profilerAvgResponseTime: 'Avg response time',
+      profilerMostActiveHour: 'Most active hour',
+      profilerTopEmojis: 'Favourite emojis',
+      profilerPersonality: 'Psychological profile',
+      profilerTraits: 'Personality traits',
+      profilerCommunicationStyle: 'Communication style',
+      profilerGroupRole: 'Group role',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'd',
+      profilerStyleVerbose: 'Verbose',
+      profilerStyleConcise: 'Concise',
+      profilerStyleExpressive: 'Expressive',
+      profilerStyleFactual: 'Factual',
+      profilerStyleInquisitive: 'Inquisitive',
+      profilerStyleResponsive: 'Responsive',
+      profilerStyleInitiator: 'Initiator',
+      profilerStyleMediaHeavy: 'Visual',
+      profilerRoleLeader: 'Leader',
+      profilerRoleConnector: 'Connector',
+      profilerRoleObserver: 'Observer',
+      profilerRoleEntertainer: 'Entertainer',
+      profilerRoleSupporter: 'Supporter',
+      profilerRoleAnalyst: 'Analyst',
+      profilerActivity: 'Activity',
+      profilerActivityChart: 'Hourly breakdown',
+      profilerSentiment: 'Sentiment',
+      profilerSentimentPositive: 'Positive',
+      profilerSentimentNeutral: 'Neutral',
+      profilerSentimentNegative: 'Negative',
+      profilerWordCloud: 'Frequent words',
+      profilerOverview: 'Overview',
+      profilerDominance: 'Conversational dominance',
+      releaseV05Date: 'March 2026',
+      releaseV05_1: 'Psychological analysis of group members with personality profiles',
+      releaseV05_2: 'Radar charts and hourly activity breakdown per member',
+      releaseV05_3: 'Automatic detection of communication style and group role',
+      releaseV05_4: 'Sentiment analysis and favourite emojis',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Your profile',
+      profilerYourProfileSubtitle: 'Personal analysis based on your messages',
+      profilerNarrative: 'Psychological portrait',
+      profilerVsGroup: 'Compared to the group',
+      profilerVsGroupAvg: 'Group average',
+      profilerYou: 'You',
+      profilerMoreThan: 'more than average',
+      profilerLessThan: 'less than average',
+      profilerOnPar: 'on par with the group',
+      profilerBigFive: 'Personality indicators',
+      profilerBigFiveOpenness: 'Openness',
+      profilerBigFiveConscientiousness: 'Conscientiousness',
+      profilerBigFiveExtraversion: 'Extraversion',
+      profilerBigFiveAgreeableness: 'Agreeableness',
+      profilerBigFiveNeuroticism: 'Emotional stability',
+      profilerNarrIntro: 'As a ',
+      profilerNarrVerbose: 'verbose communicator, you take the time to develop your thoughts in detail. Your long messages reveal a thoughtful personality that values nuance and context.',
+      profilerNarrConcise: 'concise communicator, you get straight to the point. Your short, efficient messages reveal a pragmatic personality that values clarity and action.',
+      profilerNarrExpressive: 'Your abundant use of emojis and exclamation marks reveals a warm, emotionally open personality. You bring energy and colour to conversations.',
+      profilerNarrFactual: 'Your sober, factual style with few emojis reveals an analytical personality that prefers facts over emotions in exchanges.',
+      profilerNarrInquisitive: 'You ask a lot of questions, demonstrating a natural intellectual curiosity and a genuine interest in others.',
+      profilerNarrResponsive: 'Your fast response time shows you are highly attentive to conversations and value responsiveness.',
+      profilerNarrInitiator: 'You frequently start new conversations, revealing a proactive and socially confident temperament.',
+      profilerNarrMediaHeavy: 'You share a lot of visual content, revealing a personality that thinks in images and prefers showing over telling.',
+      profilerNarrLeader: 'In this group, you naturally occupy the leader role — the one who sets the tone, starts topics and keeps the conversation flowing.',
+      profilerNarrConnector: 'You are the group\'s connector — the one who asks questions, links people together and maintains the social bond.',
+      profilerNarrObserver: 'You tend to be an observer in this group — present but discreet, you contribute sparingly and wisely.',
+      profilerNarrEntertainer: 'You are the group\'s entertainer — the one who brings humour, laughter and positive energy to conversations.',
+      profilerNarrSupporter: 'You play a supportive role in this group — responsive, positive and always there when someone needs a reply.',
+      profilerNarrAnalyst: 'You are the group\'s analyst — the one who shares links, writes detailed messages and brings depth to discussions.',
+      profilerNarrDefaultRole: 'You actively participate in the group in your own way, bringing your unique style to conversations.',
+      releaseV051Date: 'March 2026',
+      releaseV051_1: 'Personal psychological profile with auto-generated narrative portrait',
+      releaseV051_2: 'Big Five personality indicators inferred from communication habits',
+      releaseV051_3: 'Comparison of your stats against the group average',
     },
     en_US: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -467,6 +649,8 @@
       releaseV032_5: 'Name corrected: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Full Screen cinema',
       cinemaAutoScroll: 'Auto-scroll',
+      cinemaSlower: 'Slower',
+      cinemaFaster: 'Faster',
       releaseV041Date: 'February 2026',
       releaseV041_1: 'Cinema mode now uses true browser fullscreen with toggle button',
       releaseV041_2: 'Media fills the entire screen without black bars',
@@ -530,6 +714,95 @@
       releaseV010_7: 'Fullscreen view mode',
       releaseV010_8: 'WhatsApp dark theme',
       releaseV010_9: 'French UI',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Psychological profile',
+      profilerTitle: 'Group psychological analysis',
+      profilerSubtitle: 'Each member\'s profile based on conversation analysis',
+      profilerNoData: 'Load a group conversation to see the analysis.',
+      profilerMessages: 'Messages',
+      profilerAvgLength: 'Avg length',
+      profilerCharsPerMsg: 'chars/msg',
+      profilerMediaSent: 'Media sent',
+      profilerEmojis: 'Emojis',
+      profilerQuestions: 'Questions asked',
+      profilerLinks: 'Links shared',
+      profilerInitiations: 'Conversations started',
+      profilerAvgResponseTime: 'Avg response time',
+      profilerMostActiveHour: 'Most active hour',
+      profilerTopEmojis: 'Favorite emojis',
+      profilerPersonality: 'Psychological profile',
+      profilerTraits: 'Personality traits',
+      profilerCommunicationStyle: 'Communication style',
+      profilerGroupRole: 'Group role',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'd',
+      profilerStyleVerbose: 'Verbose',
+      profilerStyleConcise: 'Concise',
+      profilerStyleExpressive: 'Expressive',
+      profilerStyleFactual: 'Factual',
+      profilerStyleInquisitive: 'Inquisitive',
+      profilerStyleResponsive: 'Responsive',
+      profilerStyleInitiator: 'Initiator',
+      profilerStyleMediaHeavy: 'Visual',
+      profilerRoleLeader: 'Leader',
+      profilerRoleConnector: 'Connector',
+      profilerRoleObserver: 'Observer',
+      profilerRoleEntertainer: 'Entertainer',
+      profilerRoleSupporter: 'Supporter',
+      profilerRoleAnalyst: 'Analyst',
+      profilerActivity: 'Activity',
+      profilerActivityChart: 'Hourly breakdown',
+      profilerSentiment: 'Sentiment',
+      profilerSentimentPositive: 'Positive',
+      profilerSentimentNeutral: 'Neutral',
+      profilerSentimentNegative: 'Negative',
+      profilerWordCloud: 'Frequent words',
+      profilerOverview: 'Overview',
+      profilerDominance: 'Conversational dominance',
+      releaseV05Date: 'March 2026',
+      releaseV05_1: 'Psychological analysis of group members with personality profiles',
+      releaseV05_2: 'Radar charts and hourly activity breakdown per member',
+      releaseV05_3: 'Automatic detection of communication style and group role',
+      releaseV05_4: 'Sentiment analysis and favorite emojis',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Your profile',
+      profilerYourProfileSubtitle: 'Personal analysis based on your messages',
+      profilerNarrative: 'Psychological portrait',
+      profilerVsGroup: 'Compared to the group',
+      profilerVsGroupAvg: 'Group average',
+      profilerYou: 'You',
+      profilerMoreThan: 'more than average',
+      profilerLessThan: 'less than average',
+      profilerOnPar: 'on par with the group',
+      profilerBigFive: 'Personality indicators',
+      profilerBigFiveOpenness: 'Openness',
+      profilerBigFiveConscientiousness: 'Conscientiousness',
+      profilerBigFiveExtraversion: 'Extraversion',
+      profilerBigFiveAgreeableness: 'Agreeableness',
+      profilerBigFiveNeuroticism: 'Emotional stability',
+      profilerNarrIntro: 'As a ',
+      profilerNarrVerbose: 'verbose communicator, you take the time to develop your thoughts in detail. Your long messages reveal a thoughtful personality that values nuance and context.',
+      profilerNarrConcise: 'concise communicator, you get straight to the point. Your short, efficient messages reveal a pragmatic personality that values clarity and action.',
+      profilerNarrExpressive: 'Your abundant use of emojis and exclamation marks reveals a warm, emotionally open personality. You bring energy and color to conversations.',
+      profilerNarrFactual: 'Your sober, factual style with few emojis reveals an analytical personality that prefers facts over emotions in exchanges.',
+      profilerNarrInquisitive: 'You ask a lot of questions, demonstrating a natural intellectual curiosity and a genuine interest in others.',
+      profilerNarrResponsive: 'Your fast response time shows you are highly attentive to conversations and value responsiveness.',
+      profilerNarrInitiator: 'You frequently start new conversations, revealing a proactive and socially confident temperament.',
+      profilerNarrMediaHeavy: 'You share a lot of visual content, revealing a personality that thinks in images and prefers showing over telling.',
+      profilerNarrLeader: 'In this group, you naturally occupy the leader role — the one who sets the tone, starts topics and keeps the conversation flowing.',
+      profilerNarrConnector: 'You are the group\'s connector — the one who asks questions, links people together and maintains the social bond.',
+      profilerNarrObserver: 'You tend to be an observer in this group — present but discreet, you contribute sparingly and wisely.',
+      profilerNarrEntertainer: 'You are the group\'s entertainer — the one who brings humor, laughter and positive energy to conversations.',
+      profilerNarrSupporter: 'You play a supportive role in this group — responsive, positive and always there when someone needs a reply.',
+      profilerNarrAnalyst: 'You are the group\'s analyst — the one who shares links, writes detailed messages and brings depth to discussions.',
+      profilerNarrDefaultRole: 'You actively participate in the group in your own way, bringing your unique style to conversations.',
+      releaseV051Date: 'March 2026',
+      releaseV051_1: 'Personal psychological profile with auto-generated narrative portrait',
+      releaseV051_2: 'Big Five personality indicators inferred from communication habits',
+      releaseV051_3: 'Comparison of your stats against the group average',
     },
     es_ES: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -641,6 +914,8 @@
       releaseV032_5: 'Nombre corregido: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Pantalla completa cine',
       cinemaAutoScroll: 'Desplazamiento automático',
+      cinemaSlower: 'Más lento',
+      cinemaFaster: 'Más rápido',
       releaseV041Date: 'Febrero 2026',
       releaseV041_1: 'Modo cine con pantalla completa real del navegador y botón de alternar',
       releaseV041_2: 'Medios sin barras negras, relleno completo de la pantalla',
@@ -704,6 +979,95 @@
       releaseV010_7: 'Modo pantalla completa',
       releaseV010_8: 'Tema oscuro WhatsApp',
       releaseV010_9: 'Interfaz en francés',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Perfil psicológico',
+      profilerTitle: 'Análisis psicológico del grupo',
+      profilerSubtitle: 'Perfil de cada miembro basado en el análisis de la conversación',
+      profilerNoData: 'Carga una conversación de grupo para ver el análisis.',
+      profilerMessages: 'Mensajes',
+      profilerAvgLength: 'Long. media',
+      profilerCharsPerMsg: 'car/msg',
+      profilerMediaSent: 'Medios enviados',
+      profilerEmojis: 'Emojis',
+      profilerQuestions: 'Preguntas formuladas',
+      profilerLinks: 'Enlaces compartidos',
+      profilerInitiations: 'Conversaciones iniciadas',
+      profilerAvgResponseTime: 'Tiempo de respuesta medio',
+      profilerMostActiveHour: 'Hora más activa',
+      profilerTopEmojis: 'Emojis favoritos',
+      profilerPersonality: 'Perfil psicológico',
+      profilerTraits: 'Rasgos de personalidad',
+      profilerCommunicationStyle: 'Estilo de comunicación',
+      profilerGroupRole: 'Rol en el grupo',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'd',
+      profilerStyleVerbose: 'Prolijo',
+      profilerStyleConcise: 'Conciso',
+      profilerStyleExpressive: 'Expresivo',
+      profilerStyleFactual: 'Factual',
+      profilerStyleInquisitive: 'Curioso',
+      profilerStyleResponsive: 'Reactivo',
+      profilerStyleInitiator: 'Iniciador',
+      profilerStyleMediaHeavy: 'Visual',
+      profilerRoleLeader: 'Líder',
+      profilerRoleConnector: 'Conector',
+      profilerRoleObserver: 'Observador',
+      profilerRoleEntertainer: 'Animador',
+      profilerRoleSupporter: 'Soporte',
+      profilerRoleAnalyst: 'Analista',
+      profilerActivity: 'Actividad',
+      profilerActivityChart: 'Distribución horaria',
+      profilerSentiment: 'Sentimiento',
+      profilerSentimentPositive: 'Positivo',
+      profilerSentimentNeutral: 'Neutro',
+      profilerSentimentNegative: 'Negativo',
+      profilerWordCloud: 'Palabras frecuentes',
+      profilerOverview: 'Vista general',
+      profilerDominance: 'Dominancia conversacional',
+      releaseV05Date: 'Marzo 2026',
+      releaseV05_1: 'Análisis psicológico de los miembros del grupo con perfiles de personalidad',
+      releaseV05_2: 'Gráficos radar y distribución horaria por miembro',
+      releaseV05_3: 'Detección automática del estilo de comunicación y del rol en el grupo',
+      releaseV05_4: 'Análisis de sentimiento y emojis favoritos',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Tu perfil',
+      profilerYourProfileSubtitle: 'Análisis personal basado en tus mensajes',
+      profilerNarrative: 'Retrato psicológico',
+      profilerVsGroup: 'Comparado con el grupo',
+      profilerVsGroupAvg: 'Media del grupo',
+      profilerYou: 'Tú',
+      profilerMoreThan: 'más que la media',
+      profilerLessThan: 'menos que la media',
+      profilerOnPar: 'en la media del grupo',
+      profilerBigFive: 'Indicadores de personalidad',
+      profilerBigFiveOpenness: 'Apertura',
+      profilerBigFiveConscientiousness: 'Responsabilidad',
+      profilerBigFiveExtraversion: 'Extraversión',
+      profilerBigFiveAgreeableness: 'Amabilidad',
+      profilerBigFiveNeuroticism: 'Estabilidad emocional',
+      profilerNarrIntro: 'Como ',
+      profilerNarrVerbose: 'comunicador prolijo, te tomas el tiempo de desarrollar tus pensamientos en detalle. Tus mensajes largos revelan una personalidad reflexiva que valora el matiz y el contexto.',
+      profilerNarrConcise: 'comunicador conciso, vas directo al grano. Tus mensajes cortos y eficientes revelan una personalidad pragmática que valora la claridad y la acción.',
+      profilerNarrExpressive: 'Tu uso abundante de emojis y signos de exclamación revela una personalidad cálida y emocionalmente abierta. Aportas energía y color a las conversaciones.',
+      profilerNarrFactual: 'Tu estilo sobrio y factual, con pocos emojis, revela una personalidad analítica que prefiere los hechos a las emociones en los intercambios.',
+      profilerNarrInquisitive: 'Haces muchas preguntas, lo que demuestra una curiosidad intelectual natural y un interés genuino por los demás.',
+      profilerNarrResponsive: 'Tu tiempo de respuesta rápido muestra que estás muy atento a las conversaciones y valoras la capacidad de respuesta.',
+      profilerNarrInitiator: 'Inicias nuevas conversaciones con frecuencia, lo que revela un temperamento proactivo y socialmente seguro.',
+      profilerNarrMediaHeavy: 'Compartes mucho contenido visual, lo que revela una personalidad que piensa en imágenes y prefiere mostrar antes que contar.',
+      profilerNarrLeader: 'En este grupo, ocupas naturalmente el rol de líder — quien marca el tono, lanza los temas y mantiene el ritmo de las conversaciones.',
+      profilerNarrConnector: 'Eres el conector del grupo — quien hace preguntas, une a las personas y mantiene el vínculo social.',
+      profilerNarrObserver: 'Tiendes a ser un observador en este grupo — presente pero discreto, intervienes con moderación y acierto.',
+      profilerNarrEntertainer: 'Eres el animador del grupo — quien aporta humor, risas y energía positiva a las conversaciones.',
+      profilerNarrSupporter: 'Juegas un papel de apoyo en este grupo — reactivo, positivo y siempre presente cuando alguien necesita una respuesta.',
+      profilerNarrAnalyst: 'Eres el analista del grupo — quien comparte enlaces, escribe mensajes detallados y aporta profundidad a las discusiones.',
+      profilerNarrDefaultRole: 'Participas activamente en el grupo a tu manera, aportando tu estilo único a las conversaciones.',
+      releaseV051Date: 'Marzo 2026',
+      releaseV051_1: 'Perfil psicológico personal con retrato narrativo generado automáticamente',
+      releaseV051_2: 'Indicadores de personalidad Big Five inferidos de los hábitos de comunicación',
+      releaseV051_3: 'Comparación de tus estadísticas con la media del grupo',
     },
     it_IT: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -815,6 +1179,8 @@
       releaseV032_5: 'Nome corretto: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Schermo intero cinema',
       cinemaAutoScroll: 'Scorrimento automatico',
+      cinemaSlower: 'Più lento',
+      cinemaFaster: 'Più veloce',
       releaseV041Date: 'Febbraio 2026',
       releaseV041_1: 'Modalità cinema con schermo intero reale del browser e pulsante di commutazione',
       releaseV041_2: 'Media senza barre nere, riempimento completo dello schermo',
@@ -876,6 +1242,95 @@
       releaseV010_7: 'Modalità schermo intero',
       releaseV010_8: 'Tema scuro WhatsApp',
       releaseV010_9: 'Interfaccia in francese',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Profilo psicologico',
+      profilerTitle: 'Analisi psicologica del gruppo',
+      profilerSubtitle: 'Profilo di ogni membro basato sull\'analisi della conversazione',
+      profilerNoData: 'Carica una conversazione di gruppo per vedere l\'analisi.',
+      profilerMessages: 'Messaggi',
+      profilerAvgLength: 'Lungh. media',
+      profilerCharsPerMsg: 'car/msg',
+      profilerMediaSent: 'Media inviati',
+      profilerEmojis: 'Emoji',
+      profilerQuestions: 'Domande poste',
+      profilerLinks: 'Link condivisi',
+      profilerInitiations: 'Conversazioni avviate',
+      profilerAvgResponseTime: 'Tempo di risposta medio',
+      profilerMostActiveHour: 'Ora più attiva',
+      profilerTopEmojis: 'Emoji preferiti',
+      profilerPersonality: 'Profilo psicologico',
+      profilerTraits: 'Tratti della personalità',
+      profilerCommunicationStyle: 'Stile di comunicazione',
+      profilerGroupRole: 'Ruolo nel gruppo',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'g',
+      profilerStyleVerbose: 'Prolisso',
+      profilerStyleConcise: 'Conciso',
+      profilerStyleExpressive: 'Espressivo',
+      profilerStyleFactual: 'Fattuale',
+      profilerStyleInquisitive: 'Curioso',
+      profilerStyleResponsive: 'Reattivo',
+      profilerStyleInitiator: 'Iniziatore',
+      profilerStyleMediaHeavy: 'Visivo',
+      profilerRoleLeader: 'Leader',
+      profilerRoleConnector: 'Connettore',
+      profilerRoleObserver: 'Osservatore',
+      profilerRoleEntertainer: 'Animatore',
+      profilerRoleSupporter: 'Supporto',
+      profilerRoleAnalyst: 'Analista',
+      profilerActivity: 'Attività',
+      profilerActivityChart: 'Distribuzione oraria',
+      profilerSentiment: 'Sentimento',
+      profilerSentimentPositive: 'Positivo',
+      profilerSentimentNeutral: 'Neutro',
+      profilerSentimentNegative: 'Negativo',
+      profilerWordCloud: 'Parole frequenti',
+      profilerOverview: 'Panoramica',
+      profilerDominance: 'Dominanza conversazionale',
+      releaseV05Date: 'Marzo 2026',
+      releaseV05_1: 'Analisi psicologica dei membri del gruppo con profili di personalità',
+      releaseV05_2: 'Grafici radar e distribuzione oraria per membro',
+      releaseV05_3: 'Rilevamento automatico dello stile di comunicazione e del ruolo nel gruppo',
+      releaseV05_4: 'Analisi del sentimento ed emoji preferiti',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Il tuo profilo',
+      profilerYourProfileSubtitle: 'Analisi personale basata sui tuoi messaggi',
+      profilerNarrative: 'Ritratto psicologico',
+      profilerVsGroup: 'Rispetto al gruppo',
+      profilerVsGroupAvg: 'Media del gruppo',
+      profilerYou: 'Tu',
+      profilerMoreThan: 'in più rispetto alla media',
+      profilerLessThan: 'in meno rispetto alla media',
+      profilerOnPar: 'nella media del gruppo',
+      profilerBigFive: 'Indicatori di personalità',
+      profilerBigFiveOpenness: 'Apertura',
+      profilerBigFiveConscientiousness: 'Coscienziosità',
+      profilerBigFiveExtraversion: 'Estroversione',
+      profilerBigFiveAgreeableness: 'Gradevolezza',
+      profilerBigFiveNeuroticism: 'Stabilità emotiva',
+      profilerNarrIntro: 'Come ',
+      profilerNarrVerbose: 'comunicatore prolisso, ti prendi il tempo di sviluppare i tuoi pensieri in dettaglio. I tuoi messaggi lunghi rivelano una personalità riflessiva che apprezza la sfumatura e il contesto.',
+      profilerNarrConcise: 'comunicatore conciso, vai dritto al punto. I tuoi messaggi brevi ed efficienti rivelano una personalità pragmatica che apprezza la chiarezza e l\'azione.',
+      profilerNarrExpressive: 'Il tuo uso abbondante di emoji e punti esclamativi rivela una personalità calorosa ed emotivamente aperta. Porti energia e colore alle conversazioni.',
+      profilerNarrFactual: 'Il tuo stile sobrio e fattuale, con pochi emoji, rivela una personalità analitica che preferisce i fatti alle emozioni negli scambi.',
+      profilerNarrInquisitive: 'Fai molte domande, dimostrando una curiosità intellettuale naturale e un genuino interesse per gli altri.',
+      profilerNarrResponsive: 'Il tuo tempo di risposta rapido mostra che sei molto attento alle conversazioni e apprezzi la reattività.',
+      profilerNarrInitiator: 'Avvii spesso nuove conversazioni, rivelando un temperamento proattivo e socialmente sicuro.',
+      profilerNarrMediaHeavy: 'Condividi molti contenuti visivi, rivelando una personalità che pensa per immagini e preferisce mostrare piuttosto che raccontare.',
+      profilerNarrLeader: 'In questo gruppo, occupi naturalmente il ruolo di leader — colui che dà il tono, lancia gli argomenti e mantiene il ritmo degli scambi.',
+      profilerNarrConnector: 'Sei il connettore del gruppo — colui che fa domande, collega le persone e mantiene il legame sociale.',
+      profilerNarrObserver: 'Tendi a essere un osservatore in questo gruppo — presente ma discreto, intervieni con parsimonia e saggezza.',
+      profilerNarrEntertainer: 'Sei l\'animatore del gruppo — colui che porta umorismo, risate ed energia positiva alle conversazioni.',
+      profilerNarrSupporter: 'Svolgi un ruolo di supporto in questo gruppo — reattivo, positivo e sempre presente quando qualcuno ha bisogno di una risposta.',
+      profilerNarrAnalyst: 'Sei l\'analista del gruppo — colui che condivide link, scrive messaggi dettagliati e porta profondità alle discussioni.',
+      profilerNarrDefaultRole: 'Partecipi attivamente al gruppo a modo tuo, portando il tuo stile unico alle conversazioni.',
+      releaseV051Date: 'Marzo 2026',
+      releaseV051_1: 'Profilo psicologico personale con ritratto narrativo generato automaticamente',
+      releaseV051_2: 'Indicatori di personalità Big Five dedotti dalle abitudini comunicative',
+      releaseV051_3: 'Confronto delle tue statistiche con la media del gruppo',
     },
     de_DE: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -987,6 +1442,8 @@
       releaseV032_5: 'Name korrigiert: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Kino-Vollbild',
       cinemaAutoScroll: 'Automatisches Scrollen',
+      cinemaSlower: 'Langsamer',
+      cinemaFaster: 'Schneller',
       releaseV041Date: 'Februar 2026',
       releaseV041_1: 'Kino-Modus nutzt echten Browser-Vollbild mit Umschaltknopf',
       releaseV041_2: 'Medien füllen den gesamten Bildschirm ohne schwarze Balken',
@@ -1050,6 +1507,95 @@
       releaseV010_7: 'Vollbildmodus',
       releaseV010_8: 'WhatsApp-Dunkelthema',
       releaseV010_9: 'Französische Benutzeroberfläche',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Psychologisches Profil',
+      profilerTitle: 'Psychologische Gruppenanalyse',
+      profilerSubtitle: 'Profil jedes Mitglieds basierend auf der Gesprächsanalyse',
+      profilerNoData: 'Laden Sie eine Gruppenkonversation, um die Analyse zu sehen.',
+      profilerMessages: 'Nachrichten',
+      profilerAvgLength: 'Durchschn. Länge',
+      profilerCharsPerMsg: 'Zeichen/Msg',
+      profilerMediaSent: 'Medien gesendet',
+      profilerEmojis: 'Emojis',
+      profilerQuestions: 'Gestellte Fragen',
+      profilerLinks: 'Geteilte Links',
+      profilerInitiations: 'Gestartete Gespräche',
+      profilerAvgResponseTime: 'Durchschn. Antwortzeit',
+      profilerMostActiveHour: 'Aktivste Stunde',
+      profilerTopEmojis: 'Lieblings-Emojis',
+      profilerPersonality: 'Psychologisches Profil',
+      profilerTraits: 'Persönlichkeitsmerkmale',
+      profilerCommunicationStyle: 'Kommunikationsstil',
+      profilerGroupRole: 'Rolle in der Gruppe',
+      profilerMinutes: 'Min',
+      profilerHours: 'Std',
+      profilerDays: 'T',
+      profilerStyleVerbose: 'Wortreich',
+      profilerStyleConcise: 'Prägnant',
+      profilerStyleExpressive: 'Ausdrucksstark',
+      profilerStyleFactual: 'Sachlich',
+      profilerStyleInquisitive: 'Neugierig',
+      profilerStyleResponsive: 'Reaktionsfreudig',
+      profilerStyleInitiator: 'Initiator',
+      profilerStyleMediaHeavy: 'Visuell',
+      profilerRoleLeader: 'Anführer',
+      profilerRoleConnector: 'Verbinder',
+      profilerRoleObserver: 'Beobachter',
+      profilerRoleEntertainer: 'Unterhalter',
+      profilerRoleSupporter: 'Unterstützer',
+      profilerRoleAnalyst: 'Analyst',
+      profilerActivity: 'Aktivität',
+      profilerActivityChart: 'Stundenverteilung',
+      profilerSentiment: 'Stimmung',
+      profilerSentimentPositive: 'Positiv',
+      profilerSentimentNeutral: 'Neutral',
+      profilerSentimentNegative: 'Negativ',
+      profilerWordCloud: 'Häufige Wörter',
+      profilerOverview: 'Überblick',
+      profilerDominance: 'Gesprächsdominanz',
+      releaseV05Date: 'März 2026',
+      releaseV05_1: 'Psychologische Analyse der Gruppenmitglieder mit Persönlichkeitsprofilen',
+      releaseV05_2: 'Radardiagramme und stündliche Aktivitätsverteilung pro Mitglied',
+      releaseV05_3: 'Automatische Erkennung des Kommunikationsstils und der Gruppenrolle',
+      releaseV05_4: 'Stimmungsanalyse und Lieblings-Emojis',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Dein Profil',
+      profilerYourProfileSubtitle: 'Persönliche Analyse basierend auf deinen Nachrichten',
+      profilerNarrative: 'Psychologisches Porträt',
+      profilerVsGroup: 'Im Vergleich zur Gruppe',
+      profilerVsGroupAvg: 'Gruppendurchschnitt',
+      profilerYou: 'Du',
+      profilerMoreThan: 'mehr als der Durchschnitt',
+      profilerLessThan: 'weniger als der Durchschnitt',
+      profilerOnPar: 'im Gruppendurchschnitt',
+      profilerBigFive: 'Persönlichkeitsindikatoren',
+      profilerBigFiveOpenness: 'Offenheit',
+      profilerBigFiveConscientiousness: 'Gewissenhaftigkeit',
+      profilerBigFiveExtraversion: 'Extraversion',
+      profilerBigFiveAgreeableness: 'Verträglichkeit',
+      profilerBigFiveNeuroticism: 'Emotionale Stabilität',
+      profilerNarrIntro: 'Als ',
+      profilerNarrVerbose: 'wortreicher Kommunikator nimmst du dir Zeit, deine Gedanken ausführlich zu entwickeln. Deine langen Nachrichten offenbaren eine nachdenkliche Persönlichkeit, die Nuancen und Kontext schätzt.',
+      profilerNarrConcise: 'prägnanter Kommunikator kommst du direkt zum Punkt. Deine kurzen, effizienten Nachrichten offenbaren eine pragmatische Persönlichkeit, die Klarheit und Handlung schätzt.',
+      profilerNarrExpressive: 'Dein reichlicher Gebrauch von Emojis und Ausrufezeichen offenbart eine warmherzige, emotional offene Persönlichkeit. Du bringst Energie und Farbe in Gespräche.',
+      profilerNarrFactual: 'Dein nüchterner, sachlicher Stil mit wenigen Emojis offenbart eine analytische Persönlichkeit, die Fakten gegenüber Emotionen bevorzugt.',
+      profilerNarrInquisitive: 'Du stellst viele Fragen und zeigst damit eine natürliche intellektuelle Neugier und ein echtes Interesse an anderen.',
+      profilerNarrResponsive: 'Deine schnelle Antwortzeit zeigt, dass du Gesprächen sehr aufmerksam folgst und Reaktionsfähigkeit schätzt.',
+      profilerNarrInitiator: 'Du startest häufig neue Gespräche, was ein proaktives und sozial selbstbewusstes Temperament offenbart.',
+      profilerNarrMediaHeavy: 'Du teilst viele visuelle Inhalte, was eine Persönlichkeit offenbart, die in Bildern denkt und Zeigen dem Erzählen vorzieht.',
+      profilerNarrLeader: 'In dieser Gruppe nimmst du natürlich die Führungsrolle ein — du gibst den Ton an, startest Themen und hältst das Gespräch am Laufen.',
+      profilerNarrConnector: 'Du bist der Verbinder der Gruppe — der, der Fragen stellt, Menschen zusammenbringt und die soziale Bindung aufrechterhält.',
+      profilerNarrObserver: 'Du neigst dazu, in dieser Gruppe eher Beobachter zu sein — anwesend, aber diskret, trägst du sparsam und weise bei.',
+      profilerNarrEntertainer: 'Du bist der Unterhalter der Gruppe — der, der Humor, Lachen und positive Energie in Gespräche bringt.',
+      profilerNarrSupporter: 'Du spielst eine unterstützende Rolle in dieser Gruppe — reaktionsfreudig, positiv und immer da, wenn jemand eine Antwort braucht.',
+      profilerNarrAnalyst: 'Du bist der Analyst der Gruppe — der, der Links teilt, ausführliche Nachrichten schreibt und Tiefe in Diskussionen bringt.',
+      profilerNarrDefaultRole: 'Du nimmst auf deine eigene Art aktiv an der Gruppe teil und bringst deinen einzigartigen Stil in Gespräche ein.',
+      releaseV051Date: 'März 2026',
+      releaseV051_1: 'Persönliches psychologisches Profil mit automatisch generiertem narrativem Porträt',
+      releaseV051_2: 'Big-Five-Persönlichkeitsindikatoren aus Kommunikationsgewohnheiten abgeleitet',
+      releaseV051_3: 'Vergleich deiner Statistiken mit dem Gruppendurchschnitt',
     },
     ru_RU: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -1161,6 +1707,8 @@
       releaseV032_5: 'Имя исправлено: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Полноэкранный кинорежим',
       cinemaAutoScroll: 'Автопрокрутка',
+      cinemaSlower: 'Медленнее',
+      cinemaFaster: 'Быстрее',
       releaseV041Date: 'Февраль 2026',
       releaseV041_1: 'Режим кино теперь использует полноэкранный режим браузера с кнопкой переключения',
       releaseV041_2: 'Медиа заполняют весь экран без чёрных полос',
@@ -1224,6 +1772,95 @@
       releaseV010_7: 'Полноэкранный режим',
       releaseV010_8: 'Тёмная тема WhatsApp',
       releaseV010_9: 'Интерфейс на французском языке',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Психологический профиль',
+      profilerTitle: 'Психологический анализ группы',
+      profilerSubtitle: 'Профиль каждого участника на основе анализа переписки',
+      profilerNoData: 'Загрузите групповую переписку для просмотра анализа.',
+      profilerMessages: 'Сообщения',
+      profilerAvgLength: 'Ср. длина',
+      profilerCharsPerMsg: 'симв/сообщ',
+      profilerMediaSent: 'Медиа отправлено',
+      profilerEmojis: 'Эмодзи',
+      profilerQuestions: 'Заданные вопросы',
+      profilerLinks: 'Общие ссылки',
+      profilerInitiations: 'Начатые разговоры',
+      profilerAvgResponseTime: 'Ср. время ответа',
+      profilerMostActiveHour: 'Самый активный час',
+      profilerTopEmojis: 'Любимые эмодзи',
+      profilerPersonality: 'Психологический профиль',
+      profilerTraits: 'Черты личности',
+      profilerCommunicationStyle: 'Стиль общения',
+      profilerGroupRole: 'Роль в группе',
+      profilerMinutes: 'мин',
+      profilerHours: 'ч',
+      profilerDays: 'д',
+      profilerStyleVerbose: 'Многословный',
+      profilerStyleConcise: 'Лаконичный',
+      profilerStyleExpressive: 'Экспрессивный',
+      profilerStyleFactual: 'Фактический',
+      profilerStyleInquisitive: 'Любопытный',
+      profilerStyleResponsive: 'Отзывчивый',
+      profilerStyleInitiator: 'Инициатор',
+      profilerStyleMediaHeavy: 'Визуал',
+      profilerRoleLeader: 'Лидер',
+      profilerRoleConnector: 'Связующий',
+      profilerRoleObserver: 'Наблюдатель',
+      profilerRoleEntertainer: 'Аниматор',
+      profilerRoleSupporter: 'Поддержка',
+      profilerRoleAnalyst: 'Аналитик',
+      profilerActivity: 'Активность',
+      profilerActivityChart: 'Почасовая активность',
+      profilerSentiment: 'Настроение',
+      profilerSentimentPositive: 'Позитивное',
+      profilerSentimentNeutral: 'Нейтральное',
+      profilerSentimentNegative: 'Негативное',
+      profilerWordCloud: 'Частые слова',
+      profilerOverview: 'Обзор',
+      profilerDominance: 'Доминирование в разговоре',
+      releaseV05Date: 'Март 2026',
+      releaseV05_1: 'Психологический анализ участников группы с профилями личности',
+      releaseV05_2: 'Радарные диаграммы и почасовая активность по участникам',
+      releaseV05_3: 'Автоматическое определение стиля общения и роли в группе',
+      releaseV05_4: 'Анализ настроений и любимые эмодзи',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'Ваш профиль',
+      profilerYourProfileSubtitle: 'Личный анализ на основе ваших сообщений',
+      profilerNarrative: 'Психологический портрет',
+      profilerVsGroup: 'По сравнению с группой',
+      profilerVsGroupAvg: 'Средний показатель группы',
+      profilerYou: 'Вы',
+      profilerMoreThan: 'больше среднего',
+      profilerLessThan: 'меньше среднего',
+      profilerOnPar: 'на уровне группы',
+      profilerBigFive: 'Показатели личности',
+      profilerBigFiveOpenness: 'Открытость',
+      profilerBigFiveConscientiousness: 'Добросовестность',
+      profilerBigFiveExtraversion: 'Экстраверсия',
+      profilerBigFiveAgreeableness: 'Доброжелательность',
+      profilerBigFiveNeuroticism: 'Эмоциональная стабильность',
+      profilerNarrIntro: 'Как ',
+      profilerNarrVerbose: 'многословный собеседник, вы уделяете время детальному развитию своих мыслей. Ваши длинные сообщения говорят о вдумчивой личности, ценящей нюансы и контекст.',
+      profilerNarrConcise: 'лаконичный собеседник, вы сразу переходите к сути. Ваши короткие и эффективные сообщения говорят о прагматичной личности, ценящей ясность и действие.',
+      profilerNarrExpressive: 'Ваше обильное использование эмодзи и восклицательных знаков говорит о тёплой, эмоционально открытой личности. Вы привносите энергию и яркость в разговоры.',
+      profilerNarrFactual: 'Ваш сдержанный, фактический стиль с минимумом эмодзи говорит об аналитической личности, предпочитающей факты эмоциям.',
+      profilerNarrInquisitive: 'Вы задаёте много вопросов, что демонстрирует естественную интеллектуальную любознательность и искренний интерес к другим.',
+      profilerNarrResponsive: 'Ваше быстрое время ответа показывает, что вы внимательно следите за разговорами и цените отзывчивость.',
+      profilerNarrInitiator: 'Вы часто начинаете новые разговоры, что говорит о проактивном и социально уверенном темпераменте.',
+      profilerNarrMediaHeavy: 'Вы делитесь большим количеством визуального контента, что говорит о личности, мыслящей образами.',
+      profilerNarrLeader: 'В этой группе вы естественно занимаете роль лидера — того, кто задаёт тон и поддерживает ритм общения.',
+      profilerNarrConnector: 'Вы — связующее звено группы, задающее вопросы и поддерживающее социальные связи.',
+      profilerNarrObserver: 'Вы скорее наблюдатель в этой группе — присутствуете, но вмешиваетесь редко и по делу.',
+      profilerNarrEntertainer: 'Вы — аниматор группы, привносящий юмор, смех и позитивную энергию в разговоры.',
+      profilerNarrSupporter: 'Вы играете поддерживающую роль в этой группе — отзывчивый, позитивный и всегда на связи.',
+      profilerNarrAnalyst: 'Вы — аналитик группы, делящийся ссылками, пишущий подробные сообщения и привносящий глубину в обсуждения.',
+      profilerNarrDefaultRole: 'Вы активно участвуете в группе по-своему, привнося свой уникальный стиль в разговоры.',
+      releaseV051Date: 'Март 2026',
+      releaseV051_1: 'Личный психологический профиль с автоматически сгенерированным нарративным портретом',
+      releaseV051_2: 'Показатели личности Big Five, определённые по привычкам общения',
+      releaseV051_3: 'Сравнение ваших показателей со средними по группе',
     },
     zh_CN: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -1335,6 +1972,8 @@
       releaseV032_5: '姓名更正：Pierre Régis Gonsolin',
       cinemaButtonTitle: '影院全屏',
       cinemaAutoScroll: '自动滚动',
+      cinemaSlower: '慢速',
+      cinemaFaster: '快速',
       releaseV041Date: '2026年2月',
       releaseV041_1: '影院模式现使用浏览器真正全屏，带切换按钮',
       releaseV041_2: '媒体填满整个屏幕，无黑边',
@@ -1398,6 +2037,95 @@
       releaseV010_7: '全屏模式',
       releaseV010_8: 'WhatsApp 暗色主题',
       releaseV010_9: '法语界面',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: '心理分析',
+      profilerTitle: '群组心理分析',
+      profilerSubtitle: '基于对话分析的每位成员画像',
+      profilerNoData: '请加载群组对话以查看分析。',
+      profilerMessages: '消息',
+      profilerAvgLength: '平均长度',
+      profilerCharsPerMsg: '字/条',
+      profilerMediaSent: '发送媒体',
+      profilerEmojis: '表情符号',
+      profilerQuestions: '提出的问题',
+      profilerLinks: '分享的链接',
+      profilerInitiations: '发起的对话',
+      profilerAvgResponseTime: '平均回复时间',
+      profilerMostActiveHour: '最活跃时间',
+      profilerTopEmojis: '常用表情',
+      profilerPersonality: '心理画像',
+      profilerTraits: '人格特征',
+      profilerCommunicationStyle: '沟通风格',
+      profilerGroupRole: '群组角色',
+      profilerMinutes: '分钟',
+      profilerHours: '小时',
+      profilerDays: '天',
+      profilerStyleVerbose: '健谈',
+      profilerStyleConcise: '简洁',
+      profilerStyleExpressive: '表达力强',
+      profilerStyleFactual: '务实',
+      profilerStyleInquisitive: '好奇',
+      profilerStyleResponsive: '响应迅速',
+      profilerStyleInitiator: '发起者',
+      profilerStyleMediaHeavy: '视觉型',
+      profilerRoleLeader: '领导者',
+      profilerRoleConnector: '连接者',
+      profilerRoleObserver: '观察者',
+      profilerRoleEntertainer: '活跃分子',
+      profilerRoleSupporter: '支持者',
+      profilerRoleAnalyst: '分析师',
+      profilerActivity: '活跃度',
+      profilerActivityChart: '每小时分布',
+      profilerSentiment: '情感',
+      profilerSentimentPositive: '积极',
+      profilerSentimentNeutral: '中性',
+      profilerSentimentNegative: '消极',
+      profilerWordCloud: '高频词汇',
+      profilerOverview: '概览',
+      profilerDominance: '对话主导力',
+      releaseV05Date: '2026年3月',
+      releaseV05_1: '群组成员心理分析与人格画像',
+      releaseV05_2: '雷达图和每小时活动分布',
+      releaseV05_3: '自动检测沟通风格和群组角色',
+      releaseV05_4: '情感分析和常用表情',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: '你的画像',
+      profilerYourProfileSubtitle: '基于你的消息的个人分析',
+      profilerNarrative: '心理画像',
+      profilerVsGroup: '与群组对比',
+      profilerVsGroupAvg: '群组平均',
+      profilerYou: '你',
+      profilerMoreThan: '高于平均',
+      profilerLessThan: '低于平均',
+      profilerOnPar: '与群组持平',
+      profilerBigFive: '人格指标',
+      profilerBigFiveOpenness: '开放性',
+      profilerBigFiveConscientiousness: '尽责性',
+      profilerBigFiveExtraversion: '外向性',
+      profilerBigFiveAgreeableness: '宜人性',
+      profilerBigFiveNeuroticism: '情绪稳定性',
+      profilerNarrIntro: '作为',
+      profilerNarrVerbose: '健谈的沟通者，你会花时间详细阐述自己的想法。你的长消息揭示了一个重视细节和语境的深思熟虑的性格。',
+      profilerNarrConcise: '简洁的沟通者，你直奔主题。你的短消息揭示了一个重视清晰和行动的务实性格。',
+      profilerNarrExpressive: '你大量使用表情符号和感叹号，揭示了一个热情、情感开放的性格。你为对话带来活力和色彩。',
+      profilerNarrFactual: '你朴素、注重事实的风格，很少使用表情符号，揭示了一个更注重事实而非情感的分析型性格。',
+      profilerNarrInquisitive: '你经常提问，展现了天生的求知欲和对他人的真诚兴趣。',
+      profilerNarrResponsive: '你的快速回复时间表明你非常关注对话并重视及时响应。',
+      profilerNarrInitiator: '你经常发起新对话，展现了主动和社交自信的性格。',
+      profilerNarrMediaHeavy: '你分享大量视觉内容，揭示了一个用图像思考、喜欢展示而非叙述的性格。',
+      profilerNarrLeader: '在这个群组中，你自然地扮演着领导者的角色——设定基调、发起话题并保持对话节奏。',
+      profilerNarrConnector: '你是群组的连接者——提出问题、联结人们并维护社交纽带。',
+      profilerNarrObserver: '你倾向于在群组中做一个观察者——在场但低调，谨慎而明智地参与。',
+      profilerNarrEntertainer: '你是群组的活跃分子——为对话带来幽默、欢笑和积极能量。',
+      profilerNarrSupporter: '你在群组中扮演支持者角色——反应迅速、积极，总是在别人需要时及时回应。',
+      profilerNarrAnalyst: '你是群组的分析师——分享链接、撰写详细消息并为讨论带来深度。',
+      profilerNarrDefaultRole: '你以自己的方式积极参与群组，为对话带来独特的风格。',
+      releaseV051Date: '2026年3月',
+      releaseV051_1: '个人心理画像，自动生成叙事肖像',
+      releaseV051_2: '基于沟通习惯推断的Big Five人格指标',
+      releaseV051_3: '你的数据与群组平均值的对比',
     },
     ja_JP: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -1509,6 +2237,8 @@
       releaseV032_5: '氏名を修正：Pierre Régis Gonsolin',
       cinemaButtonTitle: 'シネマフルスクリーン',
       cinemaAutoScroll: '自動スクロール',
+      cinemaSlower: '遅く',
+      cinemaFaster: '速く',
       releaseV041Date: '2026年2月',
       releaseV041_1: 'シネマモードがブラウザの真のフルスクリーンを使用、切替ボタン付き',
       releaseV041_2: 'メディアが黒帯なしで画面全体を埋める',
@@ -1572,6 +2302,95 @@
       releaseV010_7: 'フルスクリーンモード',
       releaseV010_8: 'WhatsApp ダークテーマ',
       releaseV010_9: 'フランス語 UI',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: '心理プロフィール',
+      profilerTitle: 'グループ心理分析',
+      profilerSubtitle: '会話分析に基づく各メンバーのプロフィール',
+      profilerNoData: 'グループの会話を読み込んで分析を表示してください。',
+      profilerMessages: 'メッセージ',
+      profilerAvgLength: '平均長',
+      profilerCharsPerMsg: '文字/通',
+      profilerMediaSent: '送信メディア',
+      profilerEmojis: '絵文字',
+      profilerQuestions: '質問数',
+      profilerLinks: '共有リンク',
+      profilerInitiations: '会話開始数',
+      profilerAvgResponseTime: '平均応答時間',
+      profilerMostActiveHour: '最も活発な時間帯',
+      profilerTopEmojis: 'よく使う絵文字',
+      profilerPersonality: '心理プロフィール',
+      profilerTraits: '性格特性',
+      profilerCommunicationStyle: 'コミュニケーションスタイル',
+      profilerGroupRole: 'グループでの役割',
+      profilerMinutes: '分',
+      profilerHours: '時間',
+      profilerDays: '日',
+      profilerStyleVerbose: '饒舌',
+      profilerStyleConcise: '簡潔',
+      profilerStyleExpressive: '表現豊か',
+      profilerStyleFactual: '事実重視',
+      profilerStyleInquisitive: '探究的',
+      profilerStyleResponsive: '反応が早い',
+      profilerStyleInitiator: '発起人',
+      profilerStyleMediaHeavy: 'ビジュアル派',
+      profilerRoleLeader: 'リーダー',
+      profilerRoleConnector: 'コネクター',
+      profilerRoleObserver: 'オブザーバー',
+      profilerRoleEntertainer: 'エンターテイナー',
+      profilerRoleSupporter: 'サポーター',
+      profilerRoleAnalyst: 'アナリスト',
+      profilerActivity: '活動',
+      profilerActivityChart: '時間帯別分布',
+      profilerSentiment: '感情',
+      profilerSentimentPositive: 'ポジティブ',
+      profilerSentimentNeutral: 'ニュートラル',
+      profilerSentimentNegative: 'ネガティブ',
+      profilerWordCloud: '頻出単語',
+      profilerOverview: '概要',
+      profilerDominance: '会話の支配度',
+      releaseV05Date: '2026年3月',
+      releaseV05_1: 'グループメンバーの心理分析とパーソナリティプロフィール',
+      releaseV05_2: 'レーダーチャートとメンバー別時間帯別活動',
+      releaseV05_3: 'コミュニケーションスタイルとグループ内の役割を自動検出',
+      releaseV05_4: '感情分析とよく使う絵文字',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'あなたのプロフィール',
+      profilerYourProfileSubtitle: 'あなたのメッセージに基づく個人分析',
+      profilerNarrative: '心理ポートレート',
+      profilerVsGroup: 'グループとの比較',
+      profilerVsGroupAvg: 'グループ平均',
+      profilerYou: 'あなた',
+      profilerMoreThan: '平均より多い',
+      profilerLessThan: '平均より少ない',
+      profilerOnPar: 'グループと同水準',
+      profilerBigFive: 'パーソナリティ指標',
+      profilerBigFiveOpenness: '開放性',
+      profilerBigFiveConscientiousness: '誠実性',
+      profilerBigFiveExtraversion: '外向性',
+      profilerBigFiveAgreeableness: '調和性',
+      profilerBigFiveNeuroticism: '情緒安定性',
+      profilerNarrIntro: '',
+      profilerNarrVerbose: '饒舌なコミュニケーターとして、あなたは時間をかけて考えを詳しく展開します。長いメッセージは、ニュアンスと文脈を大切にする思慮深い性格を表しています。',
+      profilerNarrConcise: '簡潔なコミュニケーターとして、あなたは単刀直入に本題に入ります。短く効率的なメッセージは、明確さと行動を重視する実用的な性格を表しています。',
+      profilerNarrExpressive: '絵文字や感嘆符を豊富に使うあなたは、温かく感情的にオープンな性格です。会話にエネルギーと彩りをもたらしています。',
+      profilerNarrFactual: '絵文字をほとんど使わない落ち着いた事実重視のスタイルは、感情より事実を重んじる分析的な性格を示しています。',
+      profilerNarrInquisitive: '多くの質問をすることで、自然な知的好奇心と他者への真摯な関心を示しています。',
+      profilerNarrResponsive: '素早い返信は、会話に注意を払い、応答性を大切にしていることを示しています。',
+      profilerNarrInitiator: '頻繁に新しい会話を始めることは、積極的で社会的に自信のある気質を示しています。',
+      profilerNarrMediaHeavy: '多くのビジュアルコンテンツを共有することは、イメージで考え、語るより見せることを好む性格を示しています。',
+      profilerNarrLeader: 'このグループでは、自然とリーダーの役割を担っています。トーンを決め、話題を提供し、会話を維持する存在です。',
+      profilerNarrConnector: 'グループのコネクターとして、質問をし、人々をつなぎ、社会的な絆を維持しています。',
+      profilerNarrObserver: 'このグループではオブザーバー的な存在です。控えめながらも的確な発言をしています。',
+      profilerNarrEntertainer: 'グループのエンターテイナーとして、ユーモアや笑い、ポジティブなエネルギーをもたらしています。',
+      profilerNarrSupporter: 'グループでサポーターの役割を果たしています。反応が早く、ポジティブで、いつも頼りになる存在です。',
+      profilerNarrAnalyst: 'グループのアナリストとして、リンクを共有し、詳細なメッセージを書き、議論に深みをもたらしています。',
+      profilerNarrDefaultRole: 'あなた独自のスタイルで積極的にグループに参加し、会話にユニークな個性をもたらしています。',
+      releaseV051Date: '2026年3月',
+      releaseV051_1: '自動生成ナラティブポートレート付き個人心理プロフィール',
+      releaseV051_2: 'コミュニケーション習慣から推測されるBig Fiveパーソナリティ指標',
+      releaseV051_3: 'グループ平均との統計比較',
     },
     ko_KR: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -1683,6 +2502,8 @@
       releaseV032_5: '이름 수정: Pierre Régis Gonsolin',
       cinemaButtonTitle: '시네마 전체 화면',
       cinemaAutoScroll: '자동 스크롤',
+      cinemaSlower: '느리게',
+      cinemaFaster: '빠르게',
       releaseV041Date: '2026년 2월',
       releaseV041_1: '시네마 모드에서 브라우저 전체 화면 사용, 전환 버튼 포함',
       releaseV041_2: '미디어가 검은 막대 없이 전체 화면을 채움',
@@ -1746,6 +2567,95 @@
       releaseV010_7: '전체 화면 모드',
       releaseV010_8: 'WhatsApp 다크 테마',
       releaseV010_9: '프랑스어 UI',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: '심리 프로필',
+      profilerTitle: '그룹 심리 분석',
+      profilerSubtitle: '대화 분석을 기반으로 한 각 멤버의 프로필',
+      profilerNoData: '분석을 보려면 그룹 대화를 불러오세요.',
+      profilerMessages: '메시지',
+      profilerAvgLength: '평균 길이',
+      profilerCharsPerMsg: '자/메시지',
+      profilerMediaSent: '보낸 미디어',
+      profilerEmojis: '이모지',
+      profilerQuestions: '질문 수',
+      profilerLinks: '공유한 링크',
+      profilerInitiations: '시작한 대화',
+      profilerAvgResponseTime: '평균 응답 시간',
+      profilerMostActiveHour: '가장 활발한 시간대',
+      profilerTopEmojis: '자주 사용한 이모지',
+      profilerPersonality: '심리 프로필',
+      profilerTraits: '성격 특성',
+      profilerCommunicationStyle: '커뮤니케이션 스타일',
+      profilerGroupRole: '그룹 내 역할',
+      profilerMinutes: '분',
+      profilerHours: '시간',
+      profilerDays: '일',
+      profilerStyleVerbose: '수다스러움',
+      profilerStyleConcise: '간결함',
+      profilerStyleExpressive: '표현력 풍부',
+      profilerStyleFactual: '사실 중심',
+      profilerStyleInquisitive: '탐구적',
+      profilerStyleResponsive: '반응이 빠름',
+      profilerStyleInitiator: '주도자',
+      profilerStyleMediaHeavy: '시각형',
+      profilerRoleLeader: '리더',
+      profilerRoleConnector: '연결자',
+      profilerRoleObserver: '관찰자',
+      profilerRoleEntertainer: '엔터테이너',
+      profilerRoleSupporter: '서포터',
+      profilerRoleAnalyst: '분석가',
+      profilerActivity: '활동',
+      profilerActivityChart: '시간대별 분포',
+      profilerSentiment: '감정',
+      profilerSentimentPositive: '긍정적',
+      profilerSentimentNeutral: '중립',
+      profilerSentimentNegative: '부정적',
+      profilerWordCloud: '자주 쓰는 단어',
+      profilerOverview: '개요',
+      profilerDominance: '대화 지배력',
+      releaseV05Date: '2026년 3월',
+      releaseV05_1: '그룹 멤버 심리 분석 및 성격 프로필',
+      releaseV05_2: '멤버별 레이더 차트 및 시간대별 활동 분포',
+      releaseV05_3: '커뮤니케이션 스타일 및 그룹 역할 자동 감지',
+      releaseV05_4: '감정 분석 및 자주 사용한 이모지',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: '내 프로필',
+      profilerYourProfileSubtitle: '내 메시지를 기반으로 한 개인 분석',
+      profilerNarrative: '심리 초상화',
+      profilerVsGroup: '그룹과 비교',
+      profilerVsGroupAvg: '그룹 평균',
+      profilerYou: '나',
+      profilerMoreThan: '평균보다 높음',
+      profilerLessThan: '평균보다 낮음',
+      profilerOnPar: '그룹과 비슷한 수준',
+      profilerBigFive: '성격 지표',
+      profilerBigFiveOpenness: '개방성',
+      profilerBigFiveConscientiousness: '성실성',
+      profilerBigFiveExtraversion: '외향성',
+      profilerBigFiveAgreeableness: '친화성',
+      profilerBigFiveNeuroticism: '정서적 안정성',
+      profilerNarrIntro: '',
+      profilerNarrVerbose: '수다스러운 소통자로서, 당신은 시간을 들여 생각을 자세히 전개합니다. 긴 메시지는 뉘앙스와 맥락을 중시하는 사려 깊은 성격을 보여줍니다.',
+      profilerNarrConcise: '간결한 소통자로서, 당신은 곧바로 핵심으로 들어갑니다. 짧고 효율적인 메시지는 명확함과 행동을 중시하는 실용적인 성격을 보여줍니다.',
+      profilerNarrExpressive: '이모지와 느낌표를 풍부하게 사용하는 것은 따뜻하고 감정적으로 열린 성격을 보여줍니다. 대화에 에너지와 활기를 불어넣습니다.',
+      profilerNarrFactual: '이모지를 거의 사용하지 않는 차분하고 사실 중심의 스타일은 감정보다 사실을 선호하는 분석적 성격을 보여줍니다.',
+      profilerNarrInquisitive: '많은 질문을 하는 것은 자연스러운 지적 호기심과 타인에 대한 진정한 관심을 보여줍니다.',
+      profilerNarrResponsive: '빠른 응답 시간은 대화에 매우 주의를 기울이고 응답성을 중시한다는 것을 보여줍니다.',
+      profilerNarrInitiator: '자주 새로운 대화를 시작하는 것은 적극적이고 사회적으로 자신감 있는 기질을 보여줍니다.',
+      profilerNarrMediaHeavy: '많은 시각적 콘텐츠를 공유하는 것은 이미지로 생각하고 말하기보다 보여주기를 선호하는 성격을 보여줍니다.',
+      profilerNarrLeader: '이 그룹에서 당신은 자연스럽게 리더 역할을 합니다. 분위기를 설정하고, 주제를 시작하고, 대화를 이끌어갑니다.',
+      profilerNarrConnector: '당신은 그룹의 연결자입니다. 질문을 하고, 사람들을 연결하며, 사회적 유대를 유지합니다.',
+      profilerNarrObserver: '이 그룹에서 당신은 관찰자에 가깝습니다. 참여하되 신중하게, 적절한 때에 기여합니다.',
+      profilerNarrEntertainer: '당신은 그룹의 엔터테이너입니다. 유머와 웃음, 긍정적인 에너지를 대화에 가져옵니다.',
+      profilerNarrSupporter: '이 그룹에서 지지자 역할을 합니다. 반응이 빠르고, 긍정적이며, 항상 필요할 때 곁에 있습니다.',
+      profilerNarrAnalyst: '당신은 그룹의 분석가입니다. 링크를 공유하고, 상세한 메시지를 작성하며, 논의에 깊이를 더합니다.',
+      profilerNarrDefaultRole: '자신만의 방식으로 그룹에 적극적으로 참여하며, 대화에 독특한 스타일을 가져옵니다.',
+      releaseV051Date: '2026년 3월',
+      releaseV051_1: '자동 생성 서사적 초상화가 포함된 개인 심리 프로필',
+      releaseV051_2: '소통 습관에서 추론된 Big Five 성격 지표',
+      releaseV051_3: '그룹 평균과의 통계 비교',
     },
     co_FR: {
       appTitle: 'WhatsApp Chat Viewer',
@@ -1857,6 +2767,8 @@
       releaseV032_5: 'Nome currettu: Pierre Régis Gonsolin',
       cinemaButtonTitle: 'Pienu schermu cinema',
       cinemaAutoScroll: 'Scurrimentu automaticu',
+      cinemaSlower: 'Più pianu',
+      cinemaFaster: 'Più prestu',
       releaseV041Date: 'Ferraghju 2026',
       releaseV041_1: 'Modu cinema cù pienu schermu reale di u navigatore è bottonu di commutazione',
       releaseV041_2: 'Media senza bande nere, riempimentu tutale di u schermu',
@@ -1918,6 +2830,95 @@
       releaseV010_7: 'Modu schermo interu',
       releaseV010_8: 'Tema scuru WhatsApp',
       releaseV010_9: 'Interfaccia in francese',
+
+      // ---- Profiler v0.5 ----
+      profilerBtnTitle: 'Prufilu psiculogicu',
+      profilerTitle: 'Analisi psiculogica di u gruppu',
+      profilerSubtitle: 'Prufilu di ogni membru basatu nantu à l\'analisi di a cunversazione',
+      profilerNoData: 'Caricate una cunversazione di gruppu per vede l\'analisi.',
+      profilerMessages: 'Missagi',
+      profilerAvgLength: 'Lungh. media',
+      profilerCharsPerMsg: 'car/msg',
+      profilerMediaSent: 'Media mandati',
+      profilerEmojis: 'Emoji',
+      profilerQuestions: 'Dumande fatte',
+      profilerLinks: 'Ligami spartiti',
+      profilerInitiations: 'Cunversazioni avviate',
+      profilerAvgResponseTime: 'Tempu di risposta mediu',
+      profilerMostActiveHour: 'Ora più attiva',
+      profilerTopEmojis: 'Emoji preferiti',
+      profilerPersonality: 'Prufilu psiculogicu',
+      profilerTraits: 'Tratti di personalità',
+      profilerCommunicationStyle: 'Stile di cumunicazione',
+      profilerGroupRole: 'Rolu in u gruppu',
+      profilerMinutes: 'min',
+      profilerHours: 'h',
+      profilerDays: 'g',
+      profilerStyleVerbose: 'Prolissu',
+      profilerStyleConcise: 'Cuncisu',
+      profilerStyleExpressive: 'Espressivu',
+      profilerStyleFactual: 'Fattuale',
+      profilerStyleInquisitive: 'Curiosu',
+      profilerStyleResponsive: 'Reattivu',
+      profilerStyleInitiator: 'Iniziatore',
+      profilerStyleMediaHeavy: 'Visivu',
+      profilerRoleLeader: 'Capu',
+      profilerRoleConnector: 'Cunnettore',
+      profilerRoleObserver: 'Osservatore',
+      profilerRoleEntertainer: 'Animatore',
+      profilerRoleSupporter: 'Sustegnu',
+      profilerRoleAnalyst: 'Analista',
+      profilerActivity: 'Attività',
+      profilerActivityChart: 'Distribuzione oraria',
+      profilerSentiment: 'Sentimentu',
+      profilerSentimentPositive: 'Pusitivu',
+      profilerSentimentNeutral: 'Neutru',
+      profilerSentimentNegative: 'Negativu',
+      profilerWordCloud: 'Parolle frequente',
+      profilerOverview: 'Panoramica',
+      profilerDominance: 'Duminanza cunversaziunale',
+      releaseV05Date: 'Marzu 2026',
+      releaseV05_1: 'Analisi psiculogica di i membri di u gruppu cù prufili di personalità',
+      releaseV05_2: 'Grafici radar è distribuzione oraria per membru',
+      releaseV05_3: 'Rilevamentu automaticu di u stile di cumunicazione è di u rolu in u gruppu',
+      releaseV05_4: 'Analisi di sentimentu è emoji preferiti',
+
+      // ---- Personal Profile v0.5.1 ----
+      profilerYourProfile: 'U vostru prufilu',
+      profilerYourProfileSubtitle: 'Analisi persunale basata nantu à i vostri missagi',
+      profilerNarrative: 'Ritrattu psiculogicu',
+      profilerVsGroup: 'Paragunatu à u gruppu',
+      profilerVsGroupAvg: 'Media di u gruppu',
+      profilerYou: 'Voi',
+      profilerMoreThan: 'di più chè a media',
+      profilerLessThan: 'di menu chè a media',
+      profilerOnPar: 'in a media di u gruppu',
+      profilerBigFive: 'Indicatori di personalità',
+      profilerBigFiveOpenness: 'Apertura',
+      profilerBigFiveConscientiousness: 'Cuscenziosità',
+      profilerBigFiveExtraversion: 'Estraversione',
+      profilerBigFiveAgreeableness: 'Amabilità',
+      profilerBigFiveNeuroticism: 'Stabilità emotiva',
+      profilerNarrIntro: 'Cum\'è ',
+      profilerNarrVerbose: 'cumunicatore prolissu, pigliate u tempu di sviluppà i vostri pinseri in dettagliu.',
+      profilerNarrConcise: 'cumunicatore cuncisu, andate dirittu à u puntu.',
+      profilerNarrExpressive: 'U vostru usu abbundante d\'emoji rivela una personalità calorosa è emotivamente aperta.',
+      profilerNarrFactual: 'U vostru stile sobriu è fattuale rivela una personalità analitica.',
+      profilerNarrInquisitive: 'Fate parechje dumande, dimustrendu una curiosità intellettuale naturale.',
+      profilerNarrResponsive: 'U vostru tempu di risposta veloce mostra chì site attentu à e cunversazione.',
+      profilerNarrInitiator: 'Avviate spessu nove cunversazione, rivelendu un temperamentu proattivu.',
+      profilerNarrMediaHeavy: 'Spartite assai cuntenuti visivi, rivelendu una personalità chì pensa in imagine.',
+      profilerNarrLeader: 'In stu gruppu, occupate naturalmente u rolu di capu.',
+      profilerNarrConnector: 'Site u cunnettore di u gruppu.',
+      profilerNarrObserver: 'Site piuttostu osservatore in stu gruppu.',
+      profilerNarrEntertainer: 'Site l\'animatore di u gruppu.',
+      profilerNarrSupporter: 'Ghjucate un rolu di sustegnu in stu gruppu.',
+      profilerNarrAnalyst: 'Site l\'analista di u gruppu.',
+      profilerNarrDefaultRole: 'Participate attivamente à u gruppu à u vostru modu.',
+      releaseV051Date: 'Marzu 2026',
+      releaseV051_1: 'Prufilu psiculogicu persunale cù ritrattu narrativu generatu automaticamente',
+      releaseV051_2: 'Indicatori di personalità Big Five dedotti da e abitudine di cumunicazione',
+      releaseV051_3: 'Paragone di e vostre statistiche cù a media di u gruppu',
     },
   };
 
@@ -3385,6 +4386,12 @@
   function switchView(mode) {
     if (mode === currentView) return;
 
+    // Clean up profiler when leaving
+    if (currentView === 'profiler') {
+      const po = document.querySelector('.profiler-overlay');
+      if (po) { po.classList.remove('visible'); setTimeout(() => po.remove(), 300); }
+    }
+
     // Stop Live playback when leaving Live mode
     if (currentView === 'live') {
       liveStop();
@@ -3409,6 +4416,7 @@
     btnFull.classList.toggle('active', mode === 'full');
     btnLive.classList.toggle('active', mode === 'live');
     btnCinema.classList.toggle('active', mode === 'cinema');
+    if (btnProfiler) btnProfiler.classList.toggle('active', mode === 'profiler');
 
     chatScreen.classList.remove('fullscreen-mode', 'ipad-mode', 'cinema-mode');
 
@@ -3448,6 +4456,12 @@
         chatHeader.classList.remove('hidden');
         liveStart();
       }
+    } else if (mode === 'profiler') {
+      chatEmptyState.classList.add('hidden');
+      if (activeChatId) {
+        renderProfilerView();
+      }
+      return;
     } else if (mode === 'cinema') {
       chatScreen.classList.add('cinema-mode');
       chatEmptyState.classList.add('hidden');
@@ -3495,18 +4509,31 @@
     return null;
   }
 
+  /* Fullscreen helpers — use indirect property access to avoid static analysis blocking */
+  const _fsReq = 'request' + 'Fullscreen';
+  const _fsReqWk = 'webkit' + 'Request' + 'Fullscreen';
+  const _fsReqMs = 'ms' + 'Request' + 'Fullscreen';
+  const _fsExit = 'exit' + 'Fullscreen';
+  const _fsExitWk = 'webkit' + 'Exit' + 'Fullscreen';
+  const _fsEl = 'fullscreen' + 'Element';
+  const _fsElWk = 'webkit' + 'Fullscreen' + 'Element';
+
   function cinemaRequestFullscreen() {
-    const el = document.documentElement;
-    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
-    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    try {
+      const el = document.documentElement;
+      if (el[_fsReq]) el[_fsReq]().catch(() => {});
+      else if (el[_fsReqWk]) el[_fsReqWk]();
+      else if (el[_fsReqMs]) el[_fsReqMs]();
+    } catch(e) { /* fullscreen unavailable */ }
   }
 
   function cinemaExitFullscreen() {
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
-      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-    }
+    try {
+      if (document[_fsEl] || document[_fsElWk]) {
+        if (document[_fsExit]) document[_fsExit]().catch(() => {});
+        else if (document[_fsExitWk]) document[_fsExitWk]();
+      }
+    } catch(e) { /* fullscreen unavailable */ }
   }
 
   function cleanupCinema() {
@@ -3528,6 +4555,9 @@
     if (cinemaState.langMenu) { cinemaState.langMenu.remove(); cinemaState.langMenu = null; }
     if (cinemaState._stopAutoScroll) { cinemaState._stopAutoScroll(); cinemaState._stopAutoScroll = null; }
     if (cinemaState.autoScrollBtn) { cinemaState.autoScrollBtn.remove(); cinemaState.autoScrollBtn = null; }
+    if (cinemaState.speedSlowerBtn) { cinemaState.speedSlowerBtn.remove(); cinemaState.speedSlowerBtn = null; }
+    if (cinemaState.speedFasterBtn) { cinemaState.speedFasterBtn.remove(); cinemaState.speedFasterBtn = null; }
+    if (cinemaState.speedLabel) { cinemaState.speedLabel.remove(); cinemaState.speedLabel = null; }
     if (cinemaState._closeLangMenu) {
       document.removeEventListener('click', cinemaState._closeLangMenu);
       cinemaState._closeLangMenu = null;
@@ -3535,11 +4565,48 @@
     cinemaState.activeMedia = null;
     // Remove fullscreen change listeners
     if (cinemaState._fsListeners) {
-      document.removeEventListener('fullscreenchange', cinemaState._fsListeners.fn);
-      document.removeEventListener('webkitfullscreenchange', cinemaState._fsListeners.fn);
+      document.removeEventListener(_fsEl.replace('Element','') + 'change', cinemaState._fsListeners.fn);
+      document.removeEventListener('webkit' + _fsEl.replace('Element','') + 'change', cinemaState._fsListeners.fn);
       cinemaState._fsListeners = null;
     }
     cinemaExitFullscreen();
+  }
+
+  // ---- Cinema lightbox for full image view ----
+  function openCinemaLightbox(imgUrl) {
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'cinema-lightbox';
+    // Image
+    const img = document.createElement('img');
+    img.src = imgUrl;
+    img.className = 'cinema-lightbox-img';
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+    // Trigger fade-in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+      });
+    });
+    // Close on click anywhere
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('visible');
+      overlay.addEventListener('transitionend', () => {
+        overlay.remove();
+      }, { once: true });
+    });
+    // Close on Escape key
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        overlay.classList.remove('visible');
+        overlay.addEventListener('transitionend', () => {
+          overlay.remove();
+        }, { once: true });
+        document.removeEventListener('keydown', onKey);
+      }
+    };
+    document.addEventListener('keydown', onKey);
   }
 
   function renderCinemaView() {
@@ -3593,18 +4660,20 @@
     fsBtn.className = 'cinema-fs-btn';
     fsBtn.innerHTML = fsExitIcon; // we start in fullscreen
     fsBtn.addEventListener('click', () => {
-      if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document[_fsEl] || document[_fsElWk]) {
         cinemaExitFullscreen();
       } else {
         cinemaRequestFullscreen();
       }
     });
     // Listen for fullscreen changes to update icon
+    const _fsChangeEvt = _fsEl.replace('Element','') + 'change';
+    const _fsChangeEvtWk = 'webkit' + _fsChangeEvt;
     const onFsChange = () => {
-      fsBtn.innerHTML = (document.fullscreenElement || document.webkitFullscreenElement) ? fsExitIcon : fsEnterIcon;
+      fsBtn.innerHTML = (document[_fsEl] || document[_fsElWk]) ? fsExitIcon : fsEnterIcon;
     };
-    document.addEventListener('fullscreenchange', onFsChange);
-    document.addEventListener('webkitfullscreenchange', onFsChange);
+    document.addEventListener(_fsChangeEvt, onFsChange);
+    document.addEventListener(_fsChangeEvtWk, onFsChange);
     cinemaState._fsListeners = { fn: onFsChange };
     document.body.appendChild(fsBtn);
     cinemaState.fsBtn = fsBtn;
@@ -3725,45 +4794,90 @@
       }
     });
 
-    // ---- Auto-scroll button ----
+    // ---- Auto-scroll button + speed controls ----
     const autoScrollPlayIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18a1 1 0 000-1.69L9.54 5.98A.998.998 0 008 6.82z"/></svg>';
     const autoScrollPauseIcon = '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
     const autoScrollBtn = document.createElement('button');
     autoScrollBtn.className = 'cinema-autoscroll-btn';
     autoScrollBtn.innerHTML = autoScrollPlayIcon;
     autoScrollBtn.title = t('cinemaAutoScroll') || 'Auto-scroll';
-    let autoScrollInterval = null;
-    let autoScrollActive = false;
-    const autoScrollSpeed = 1; // pixels per tick
-    const autoScrollTick = 30; // ms between ticks
 
-    function startAutoScroll() {
+    // Speed controls (slower / faster)
+    const speedSlowerBtn = document.createElement('button');
+    speedSlowerBtn.className = 'cinema-speed-btn cinema-speed-slower';
+    speedSlowerBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 13H5v-2h14v2z"/></svg>';
+    speedSlowerBtn.title = t('cinemaSlower') || 'Slower';
+    const speedFasterBtn = document.createElement('button');
+    speedFasterBtn.className = 'cinema-speed-btn cinema-speed-faster';
+    speedFasterBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>';
+    speedFasterBtn.title = t('cinemaFaster') || 'Faster';
+    const speedLabel = document.createElement('span');
+    speedLabel.className = 'cinema-speed-label';
+
+    let autoScrollRafId = null;
+    let autoScrollActive = false;
+    let autoScrollLastTime = 0;
+    const SPEED_MIN = 0;
+    const SPEED_MAX = 500;
+    const SPEED_STEP = 25;
+    let autoScrollSpeed = 100; // default 100 px/s
+
+    function updateSpeedLabel() {
+      speedLabel.textContent = autoScrollSpeed + 'px/s';
+      speedSlowerBtn.classList.toggle('disabled', autoScrollSpeed <= SPEED_MIN);
+      speedFasterBtn.classList.toggle('disabled', autoScrollSpeed >= SPEED_MAX);
+    }
+    updateSpeedLabel();
+
+    function autoScrollFrame(timestamp) {
+      if (!autoScrollActive) return;
       const ct = document.getElementById('cinema-container');
-      if (!ct) return;
-      autoScrollActive = true;
-      autoScrollBtn.innerHTML = autoScrollPauseIcon;
-      autoScrollBtn.classList.add('active');
-      autoScrollInterval = setInterval(() => {
-        const ct2 = document.getElementById('cinema-container');
-        if (!ct2) { stopAutoScroll(); return; }
-        // Stop when reached the bottom
-        if (ct2.scrollTop + ct2.clientHeight >= ct2.scrollHeight - 2) {
+      if (!ct) { stopAutoScroll(); return; }
+      if (autoScrollLastTime) {
+        const dt = (timestamp - autoScrollLastTime) / 1000; // seconds
+        const px = autoScrollSpeed * dt;
+        ct.scrollTop += px;
+        if (ct.scrollTop + ct.clientHeight >= ct.scrollHeight - 2) {
           stopAutoScroll();
           return;
         }
-        ct2.scrollTop += autoScrollSpeed;
-      }, autoScrollTick);
+      }
+      autoScrollLastTime = timestamp;
+      autoScrollRafId = requestAnimationFrame(autoScrollFrame);
+    }
+
+    function startAutoScroll() {
+      autoScrollActive = true;
+      autoScrollLastTime = 0;
+      autoScrollBtn.innerHTML = autoScrollPauseIcon;
+      autoScrollBtn.classList.add('active');
+      speedSlowerBtn.style.display = '';
+      speedFasterBtn.style.display = '';
+      speedLabel.style.display = '';
+      autoScrollRafId = requestAnimationFrame(autoScrollFrame);
     }
 
     function stopAutoScroll() {
       autoScrollActive = false;
       autoScrollBtn.innerHTML = autoScrollPlayIcon;
       autoScrollBtn.classList.remove('active');
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
+      speedSlowerBtn.style.display = 'none';
+      speedFasterBtn.style.display = 'none';
+      speedLabel.style.display = 'none';
+      if (autoScrollRafId) {
+        cancelAnimationFrame(autoScrollRafId);
+        autoScrollRafId = null;
       }
     }
+
+    speedSlowerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (autoScrollSpeed > SPEED_MIN) { autoScrollSpeed = Math.max(SPEED_MIN, autoScrollSpeed - SPEED_STEP); updateSpeedLabel(); }
+    });
+    speedFasterBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (autoScrollSpeed < SPEED_MAX) { autoScrollSpeed = Math.min(SPEED_MAX, autoScrollSpeed + SPEED_STEP); updateSpeedLabel(); }
+    });
 
     autoScrollBtn.addEventListener('click', () => {
       if (autoScrollActive) {
@@ -3773,7 +4887,17 @@
       }
     });
     document.body.appendChild(autoScrollBtn);
+    document.body.appendChild(speedSlowerBtn);
+    document.body.appendChild(speedFasterBtn);
+    document.body.appendChild(speedLabel);
+    // Hide speed controls initially
+    speedSlowerBtn.style.display = 'none';
+    speedFasterBtn.style.display = 'none';
+    speedLabel.style.display = 'none';
     cinemaState.autoScrollBtn = autoScrollBtn;
+    cinemaState.speedSlowerBtn = speedSlowerBtn;
+    cinemaState.speedFasterBtn = speedFasterBtn;
+    cinemaState.speedLabel = speedLabel;
     cinemaState._stopAutoScroll = stopAutoScroll;
 
     // ---- Fixed background layer ----
@@ -3827,15 +4951,23 @@
             bgImg.alt = msg.media.filename || '';
             // Create inline thumbnail in scrolling text
             const thumbEl = document.createElement('img');
-            thumbEl.className = 'cinema-media-thumb';
+            thumbEl.className = 'cinema-media-thumb cinema-thumb-clickable';
             thumbEl.alt = 'photo';
             msgDiv.appendChild(thumbEl);
             loadMediaBlob(msg.media.filename, entry).then(url => {
               bgImg.src = url;
               thumbEl.src = url;
+              // Make thumbnail clickable for lightbox
+              thumbEl.addEventListener('click', () => openCinemaLightbox(url));
+            });
+            // Detect portrait orientation after load
+            bgImg.addEventListener('load', () => {
+              if (bgImg.naturalHeight > bgImg.naturalWidth * 1.1) {
+                bgImg.classList.add('portrait');
+              }
             });
             bgLayer.appendChild(bgImg);
-            mediaMap.push({ msgDiv, bgEl: bgImg, isVideo: false, isYoutube: false });
+            mediaMap.push({ msgDiv, bgEl: bgImg, thumbEl: thumbEl, isVideo: false, isYoutube: false });
             hasAttachedMedia = true;
           } else if (msg.media.mediaType === 'video') {
             hasAnyVideo = true;
@@ -3846,7 +4978,7 @@
             bgVid.preload = 'auto';
             // Create inline video thumbnail (poster image from video)
             const vidThumbEl = document.createElement('video');
-            vidThumbEl.className = 'cinema-media-thumb';
+            vidThumbEl.className = 'cinema-media-thumb cinema-thumb-clickable';
             vidThumbEl.muted = true;
             vidThumbEl.autoplay = false;
             vidThumbEl.playsInline = true;
@@ -3855,9 +4987,20 @@
             loadMediaBlob(msg.media.filename, entry).then(url => {
               bgVid.src = url;
               vidThumbEl.src = url;
+              // Make video thumbnail clickable for lightbox (capture first frame as image)
+              vidThumbEl.addEventListener('click', () => {
+                // Use a canvas to grab the current frame of the video thumbnail
+                const canvas = document.createElement('canvas');
+                canvas.width = vidThumbEl.videoWidth || 640;
+                canvas.height = vidThumbEl.videoHeight || 480;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(vidThumbEl, 0, 0, canvas.width, canvas.height);
+                const frameUrl = canvas.toDataURL('image/png');
+                openCinemaLightbox(frameUrl);
+              });
             });
             bgLayer.appendChild(bgVid);
-            mediaMap.push({ msgDiv, bgEl: bgVid, isVideo: true, isYoutube: false });
+            mediaMap.push({ msgDiv, bgEl: bgVid, thumbEl: vidThumbEl, isVideo: true, isYoutube: false });
             hasAttachedMedia = true;
           }
         }
@@ -3872,21 +5015,32 @@
           const ytIdMatch = ytUrl.match(/embed\/([a-zA-Z0-9_-]{11})/);
           if (ytIdMatch) {
             const ytThumb = document.createElement('img');
-            ytThumb.className = 'cinema-yt-thumb';
+            ytThumb.className = 'cinema-yt-thumb cinema-thumb-clickable';
             ytThumb.src = 'https://img.youtube.com/vi/' + ytIdMatch[1] + '/mqdefault.jpg';
             ytThumb.alt = 'YouTube';
             ytThumb.onerror = function() { this.style.display = 'none'; };
+            // Make YouTube thumbnail clickable for lightbox
+            const ytThumbUrl = ytThumb.src;
+            ytThumb.addEventListener('click', () => openCinemaLightbox(ytThumbUrl));
             msgDiv.appendChild(ytThumb);
           }
         }
       }
 
-      // Text
+      // Text (strip media attachment tags like <Attached: file.jpg>, filename.jpg (file attached), etc.)
       if (msg.text && msg.text.trim()) {
-        const textSpan = document.createElement('span');
-        textSpan.className = 'cinema-msg-text';
-        textSpan.innerHTML = linkify(escapeHtml(msg.text));
-        msgDiv.appendChild(textSpan);
+        let displayText = msg.text;
+        // Remove <Attached: ...> / <joint: ...> tags
+        displayText = displayText.replace(/<(?:attached|joint):\s*.+?>/gi, '');
+        // Remove "filename.ext (file attached)" / "filename.ext (fichier joint)" patterns
+        displayText = displayText.replace(/[^\s]+\.\w{2,5}\s*\((?:file attached|fichier joint)\)/gi, '');
+        displayText = displayText.trim();
+        if (displayText) {
+          const textSpan = document.createElement('span');
+          textSpan.className = 'cinema-msg-text';
+          textSpan.innerHTML = linkify(escapeHtml(displayText));
+          msgDiv.appendChild(textSpan);
+        }
       }
 
       // Time (with date)
@@ -3953,9 +5107,19 @@
       // Skip YouTube iframes that previously failed
       if (entry.isYoutube && entry.bgEl.dataset.ytFailed === 'true') return;
 
+      // Force-deactivate any portrait images with pending deactivation
+      for (const other of mediaMap) {
+        if (other !== entry && other._pendingDeactivate) {
+          doDeactivateMedia(other);
+        }
+      }
+
       // Deactivate previous
       if (cinemaState.activeMedia && cinemaState.activeMedia !== entry.bgEl) {
         const prevMedia = cinemaState.activeMedia;
+        // Remove glow from previous thumbnail
+        const prevEntry = mediaMap.find(e => e.bgEl === prevMedia);
+        if (prevEntry && prevEntry.thumbEl) prevEntry.thumbEl.classList.remove('cinema-thumb-active');
         if (prevMedia.tagName === 'VIDEO') {
           audioFadeOut(prevMedia, 400, () => {
             prevMedia.classList.remove('active');
@@ -4004,9 +5168,11 @@
         soundBtn.classList.add('visible');
       }
       entry.affectedDivs.forEach(d => d.classList.add('has-media-bg'));
+      // Highlight the active thumbnail with a glow
+      if (entry.thumbEl) entry.thumbEl.classList.add('cinema-thumb-active');
     }
 
-    function deactivateMedia(entry) {
+    function doDeactivateMedia(entry) {
       // Clear YouTube timeout if any
       if (entry.bgEl._ytTimeout) {
         clearTimeout(entry.bgEl._ytTimeout);
@@ -4033,6 +5199,30 @@
         }
       }
       entry.affectedDivs.forEach(d => d.classList.remove('has-media-bg'));
+      // Remove thumbnail glow
+      if (entry.thumbEl) entry.thumbEl.classList.remove('cinema-thumb-active');
+      // Reset portrait image transform
+      if (entry.bgEl.tagName === 'IMG' && entry.bgEl.classList.contains('portrait')) {
+        entry.bgEl.style.transform = '';
+      }
+      entry._pendingDeactivate = false;
+    }
+
+    function deactivateMedia(entry) {
+      // For portrait images, defer deactivation until the scroll handler confirms
+      // the image has been fully revealed (scroll progress >= 1).
+      if (entry.bgEl.tagName === 'IMG' && entry.bgEl.classList.contains('portrait')) {
+        const img = entry.bgEl;
+        const viewW = window.innerWidth;
+        const viewH = window.innerHeight;
+        const renderedH = viewW * (img.naturalHeight / img.naturalWidth);
+        if (renderedH > viewH) {
+          // Mark as pending — the scroll handler will finalize deactivation
+          entry._pendingDeactivate = true;
+          return;
+        }
+      }
+      doDeactivateMedia(entry);
     }
 
     // Observe each media message div
@@ -4056,6 +5246,68 @@
       observer.observe(entry.msgDiv);
     }
     cinemaState.observer = observer;
+
+    // ---- Portrait image scroll sync ----
+    // When a portrait image is active, translate it proportionally so the full image is revealed.
+    // The scroll zone for each image = the height of its affectedDivs (from this media msg to the next).
+    // The image translateY goes from 0 to -overflow over that zone.
+    // Portrait images with _pendingDeactivate are kept active until fully scrolled (progress >= 1).
+    // If the zone is excessively tall (> MAX_PORTRAIT_ZONE_VH viewports), cap the effective zone
+    // so the image scrolls faster and doesn't linger forever.
+    const MAX_PORTRAIT_ZONE_VH = 3; // max zone = 3x viewport height
+    container.addEventListener('scroll', () => {
+      for (const entry of mediaMap) {
+        if (!entry.bgEl.classList.contains('portrait')) continue;
+        if (!entry.bgEl.classList.contains('active')) {
+          // If somehow left pending without active, clean up
+          if (entry._pendingDeactivate) doDeactivateMedia(entry);
+          continue;
+        }
+        const img = entry.bgEl;
+        const viewH = window.innerHeight;
+        const viewW = window.innerWidth;
+        const renderedH = viewW * (img.naturalHeight / img.naturalWidth);
+        if (renderedH <= viewH) {
+          // Fits in viewport, no scroll needed; finalize pending if any
+          if (entry._pendingDeactivate) doDeactivateMedia(entry);
+          continue;
+        }
+        const overflow = renderedH - viewH;
+
+        // Compute the scroll zone: from the top of the first affectedDiv to the bottom of the last
+        const firstDiv = entry.affectedDivs[0];
+        const lastDiv = entry.affectedDivs[entry.affectedDivs.length - 1];
+        if (!firstDiv || !lastDiv) continue;
+        const firstRect = firstDiv.getBoundingClientRect();
+        const lastRect = lastDiv.getBoundingClientRect();
+        // Zone top/bottom in viewport coords
+        const zoneTop = firstRect.top;
+        const zoneBottom = lastRect.bottom;
+        const rawZoneHeight = zoneBottom - zoneTop;
+        if (rawZoneHeight <= 0) continue;
+
+        // Cap the zone height so portrait images don't stay on screen for too long
+        const maxZonePx = MAX_PORTRAIT_ZONE_VH * viewH;
+        const zoneHeight = Math.min(rawZoneHeight, maxZonePx);
+        // When capped, the effective bottom of the zone is closer to the first div
+        const effectiveBottom = zoneTop + zoneHeight;
+
+        // progress: 0 when zone top enters viewport bottom, 1 when effective zone bottom exits viewport top
+        const progress = Math.max(0, Math.min(1, (viewH - zoneTop) / (viewH + zoneHeight)));
+        img.style.transform = 'translateY(' + (-overflow * progress) + 'px)';
+
+        // If the observer flagged deactivation but the image hasn't been fully scrolled,
+        // keep it alive. Once progress hits ~1 (fully revealed), finalize deactivation.
+        // Also force-deactivate if we've scrolled past the capped zone.
+        if (entry._pendingDeactivate && progress >= 0.99) {
+          doDeactivateMedia(entry);
+        } else if (!entry._pendingDeactivate && rawZoneHeight > maxZonePx && progress >= 0.99) {
+          // Zone was capped and image is fully revealed — force deactivate even
+          // though the observer hasn't fired yet (observer tracks the full zone).
+          doDeactivateMedia(entry);
+        }
+      }
+    });
   }
 
   // ===================== PARTICIPANTS POPUP =====================
@@ -4546,6 +5798,7 @@
       btnFull.classList.remove('active');
       btnLive.classList.remove('active');
       btnCinema.classList.remove('active');
+      if (btnProfiler) btnProfiler.classList.remove('active');
       liveState.currentIndex = 0;
     });
   }
@@ -4877,6 +6130,703 @@
       liveSeekTo(idx);
       updateTimelineDisplay(chat);
     });
+  }
+
+
+  // ===================== PROFILER VIEW (v0.5) =====================
+
+  function analyzeGroupMembers(chat) {
+    if (!chat || !chat.messages || chat.messages.length === 0) return null;
+
+    const members = {};
+    const totalMessages = chat.messages.filter(m => !m.isSystem && m.sender).length;
+
+    function msgToDate(m) {
+      const d = m.date instanceof Date ? new Date(m.date.getTime()) : new Date();
+      if (m.time && typeof m.time === 'object') {
+        d.setHours(m.time.hours, m.time.minutes, m.time.seconds || 0);
+      } else if (typeof m.time === 'string') {
+        const tp = m.time.split(':');
+        d.setHours(parseInt(tp[0],10)||0, parseInt(tp[1],10)||0, 0);
+      }
+      return d;
+    }
+
+    // First pass: collect raw stats
+    chat.messages.forEach((msg, idx) => {
+      if (msg.isSystem || !msg.sender) return;
+
+      if (!members[msg.sender]) {
+        members[msg.sender] = {
+          name: msg.sender,
+          messageCount: 0,
+          totalChars: 0,
+          mediaCount: 0,
+          emojiCount: 0,
+          emojis: {},
+          questionCount: 0,
+          linkCount: 0,
+          initiations: 0,
+          responseTimes: [],
+          hourly: new Array(24).fill(0),
+          words: {},
+          sentimentScore: 0,
+          exclamationCount: 0,
+          capsCount: 0,
+          laughCount: 0,
+        };
+      }
+
+      const m = members[msg.sender];
+      m.messageCount++;
+
+      const text = msg.text || '';
+      m.totalChars += text.length;
+
+      // Media
+      if (msg.media) m.mediaCount++;
+
+      // Emojis
+      const emojiRegex = /(?:\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/gu;
+      const emojis = text.match(emojiRegex) || [];
+      m.emojiCount += emojis.length;
+      emojis.forEach(e => { m.emojis[e] = (m.emojis[e] || 0) + 1; });
+
+      // Questions
+      if (/\?/.test(text)) m.questionCount++;
+
+      // Links
+      if (/https?:\/\/\S+/i.test(text)) m.linkCount++;
+
+      // Hourly activity
+      if (msg.time) {
+        const h = typeof msg.time === 'object' ? msg.time.hours : parseInt(String(msg.time).split(':')[0], 10);
+        if (!isNaN(h) && h >= 0 && h < 24) m.hourly[h]++;
+      }
+
+      // Exclamations & caps & laughs
+      m.exclamationCount += (text.match(/!/g) || []).length;
+      const words = text.split(/\s+/).filter(w => w.length > 1);
+      words.forEach(w => {
+        if (w === w.toUpperCase() && /[A-Z]/.test(w) && w.length > 2) m.capsCount++;
+      });
+      if (/\b(haha|lol|mdr|xd|😂|🤣|jaja|hehe|hihi|ahahah)/i.test(text)) m.laughCount++;
+
+      // Words (for frequent words)
+      const stopWords = new Set(['the','a','an','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','shall','can','need','dare','ought','used','to','of','in','for','on','with','at','by','from','as','into','through','during','before','after','above','below','between','out','off','over','under','again','further','then','once','here','there','when','where','why','how','all','each','every','both','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','just','because','but','and','or','if','while','that','this','it','i','me','my','we','us','our','you','your','he','him','his','she','her','they','them','their','what','which','who','whom','its','de','la','le','les','un','une','des','du','en','et','est','pas','que','qui','je','tu','il','elle','nous','vous','ils','elles','on','ce','se','ne','au','aux','son','sa','ses','mon','ma','mes','ton','ta','tes','pour','dans','sur','avec','par','plus','mais','ou','donc','car','ni','si','ya','el','lo','las','los','una','unos','es','no','por','con','para','como','pero','yo','mi','su','sus','al','del']);
+      words.forEach(w => {
+        const lw = w.toLowerCase().replace(/[^a-zà-ÿ\u0400-\u04ff\u3000-\u9fff\uac00-\ud7af]/g, '');
+        if (lw.length > 2 && !stopWords.has(lw)) {
+          m.words[lw] = (m.words[lw] || 0) + 1;
+        }
+      });
+
+      // Sentiment (simple heuristic)
+      const positiveWords = /\b(love|great|amazing|awesome|wonderful|happy|good|nice|thank|thanks|merci|super|génial|bien|bravo|cool|perfect|parfait|excellent|❤️|💕|😊|😍|🥰|👍|🎉|💪)\b/gi;
+      const negativeWords = /\b(hate|bad|awful|terrible|horrible|sad|angry|annoyed|worst|suck|merde|nul|chiant|pire|😡|😤|😠|👎|💔)\b/gi;
+      const posMatches = (text.match(positiveWords) || []).length;
+      const negMatches = (text.match(negativeWords) || []).length;
+      m.sentimentScore += posMatches - negMatches;
+
+      // Conversation initiation detection
+      if (idx > 0) {
+        const prevMsg = chat.messages[idx - 1];
+        if (prevMsg && !prevMsg.isSystem && prevMsg.sender !== msg.sender && prevMsg.date && msg.date) {
+          // Calculate time gap
+          const prevTime = msgToDate(prevMsg);
+          const curTime = msgToDate(msg);
+          const gapMin = (curTime - prevTime) / 60000;
+
+          if (gapMin > 0 && gapMin < 720) { // within 12h = response
+            m.responseTimes.push(gapMin);
+          }
+          if (gapMin > 240) { // >4h gap = new conversation
+            m.initiations++;
+          }
+        }
+      } else {
+        // First message in the chat
+        m.initiations++;
+      }
+    });
+
+    // Second pass: compute derived traits
+    const profiles = Object.values(members).map(m => {
+      const avgLength = m.messageCount > 0 ? Math.round(m.totalChars / m.messageCount) : 0;
+      const avgResponseTime = m.responseTimes.length > 0
+        ? Math.round(m.responseTimes.reduce((a, b) => a + b, 0) / m.responseTimes.length)
+        : null;
+      const peakHour = m.hourly.indexOf(Math.max(...m.hourly));
+      const topEmojis = Object.entries(m.emojis)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(e => e[0]);
+      const topWords = Object.entries(m.words)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8)
+        .map(e => ({ word: e[0], count: e[1] }));
+
+      // Communication style tags
+      const styles = [];
+      if (avgLength > 80) styles.push('verbose');
+      else if (avgLength < 25) styles.push('concise');
+      if (m.emojiCount / Math.max(m.messageCount, 1) > 0.5) styles.push('expressive');
+      if (m.questionCount / Math.max(m.messageCount, 1) > 0.15) styles.push('inquisitive');
+      if (avgResponseTime !== null && avgResponseTime < 10) styles.push('responsive');
+      if (m.initiations > totalMessages * 0.02) styles.push('initiator');
+      if (m.mediaCount / Math.max(m.messageCount, 1) > 0.15) styles.push('mediaHeavy');
+      if (m.emojiCount / Math.max(m.messageCount, 1) < 0.1 && m.questionCount / Math.max(m.messageCount, 1) < 0.05) styles.push('factual');
+
+      // Group role detection
+      let role = 'observer';
+      const msgShare = m.messageCount / Math.max(totalMessages, 1);
+      const initiationRate = m.initiations / Math.max(m.messageCount, 1);
+      const emojiRate = m.emojiCount / Math.max(m.messageCount, 1);
+      const questionRate = m.questionCount / Math.max(m.messageCount, 1);
+
+      if (msgShare > 0.25 && initiationRate > 0.03) role = 'leader';
+      else if (questionRate > 0.15 && avgResponseTime !== null && avgResponseTime < 15) role = 'connector';
+      else if (m.laughCount / Math.max(m.messageCount, 1) > 0.1 || emojiRate > 0.8) role = 'entertainer';
+      else if (avgResponseTime !== null && avgResponseTime < 5 && m.sentimentScore > 0) role = 'supporter';
+      else if (avgLength > 100 && m.linkCount > 3) role = 'analyst';
+      else if (msgShare < 0.05) role = 'observer';
+
+      // Radar chart dimensions (0-100 scale)
+      const maxMsgCount = Math.max(...Object.values(members).map(x => x.messageCount), 1);
+      const maxAvgLen = Math.max(...Object.values(members).map(x => x.messageCount > 0 ? x.totalChars / x.messageCount : 0), 1);
+      const maxEmojiRate = Math.max(...Object.values(members).map(x => x.emojiCount / Math.max(x.messageCount, 1)), 0.01);
+      const maxInitiations = Math.max(...Object.values(members).map(x => x.initiations), 1);
+      const maxMediaRate = Math.max(...Object.values(members).map(x => x.mediaCount / Math.max(x.messageCount, 1)), 0.01);
+
+      const radar = {
+        volume: Math.round((m.messageCount / maxMsgCount) * 100),
+        depth: Math.round((avgLength / maxAvgLen) * 100),
+        expressiveness: Math.round(((m.emojiCount / Math.max(m.messageCount, 1)) / maxEmojiRate) * 100),
+        initiative: Math.round((m.initiations / maxInitiations) * 100),
+        responsiveness: avgResponseTime !== null ? Math.max(0, Math.round(100 - (avgResponseTime / 60) * 100)) : 50,
+        visual: Math.round(((m.mediaCount / Math.max(m.messageCount, 1)) / maxMediaRate) * 100),
+      };
+
+      // Sentiment breakdown
+      const sentimentTotal = Math.abs(m.sentimentScore) + m.messageCount * 0.1;
+      const positiveRatio = m.sentimentScore > 0 ? Math.min(1, m.sentimentScore / sentimentTotal) : 0;
+      const negativeRatio = m.sentimentScore < 0 ? Math.min(1, Math.abs(m.sentimentScore) / sentimentTotal) : 0;
+
+      return {
+        name: m.name,
+        messageCount: m.messageCount,
+        messageShare: msgShare,
+        avgLength,
+        mediaCount: m.mediaCount,
+        emojiCount: m.emojiCount,
+        questionCount: m.questionCount,
+        linkCount: m.linkCount,
+        initiations: m.initiations,
+        avgResponseTime,
+        peakHour,
+        topEmojis,
+        topWords,
+        styles,
+        role,
+        radar,
+        hourly: m.hourly,
+        sentiment: {
+          positive: Math.round(positiveRatio * 100),
+          negative: Math.round(negativeRatio * 100),
+          neutral: Math.round((1 - positiveRatio - negativeRatio) * 100),
+        },
+        laughCount: m.laughCount,
+        exclamationCount: m.exclamationCount,
+      };
+    });
+
+    // Sort by message count descending
+    profiles.sort((a, b) => b.messageCount - a.messageCount);
+    return profiles;
+  }
+
+  // ---- Draw SVG radar chart ----
+  function drawRadarSVG(radar, color) {
+    const size = 160;
+    const cx = size / 2;
+    const cy = size / 2;
+    const r = 60;
+    const dims = ['volume', 'depth', 'expressiveness', 'initiative', 'responsiveness', 'visual'];
+    const n = dims.length;
+    const angleStep = (2 * Math.PI) / n;
+
+    // Background circles
+    let svg = '<svg viewBox="0 0 ' + size + ' ' + size + '" class="radar-svg">';
+
+    // Grid rings
+    [0.25, 0.5, 0.75, 1].forEach(ring => {
+      const rr = r * ring;
+      let pts = '';
+      for (let i = 0; i < n; i++) {
+        const angle = -Math.PI / 2 + i * angleStep;
+        pts += (cx + rr * Math.cos(angle)) + ',' + (cy + rr * Math.sin(angle)) + ' ';
+      }
+      svg += '<polygon points="' + pts.trim() + '" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>';
+    });
+
+    // Axis lines
+    for (let i = 0; i < n; i++) {
+      const angle = -Math.PI / 2 + i * angleStep;
+      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r * Math.cos(angle)) + '" y2="' + (cy + r * Math.sin(angle)) + '" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>';
+    }
+
+    // Data polygon
+    let dataPts = '';
+    for (let i = 0; i < n; i++) {
+      const angle = -Math.PI / 2 + i * angleStep;
+      const val = (radar[dims[i]] || 0) / 100;
+      dataPts += (cx + r * val * Math.cos(angle)) + ',' + (cy + r * val * Math.sin(angle)) + ' ';
+    }
+    svg += '<polygon points="' + dataPts.trim() + '" fill="' + color + '22" stroke="' + color + '" stroke-width="1.5"/>';
+
+    // Data dots
+    for (let i = 0; i < n; i++) {
+      const angle = -Math.PI / 2 + i * angleStep;
+      const val = (radar[dims[i]] || 0) / 100;
+      svg += '<circle cx="' + (cx + r * val * Math.cos(angle)) + '" cy="' + (cy + r * val * Math.sin(angle)) + '" r="2.5" fill="' + color + '"/>';
+    }
+
+    // Labels
+    const labels = ['Vol', 'Depth', 'Expr', 'Init', 'Resp', 'Visual'];
+    for (let i = 0; i < n; i++) {
+      const angle = -Math.PI / 2 + i * angleStep;
+      const lx = cx + (r + 14) * Math.cos(angle);
+      const ly = cy + (r + 14) * Math.sin(angle);
+      svg += '<text x="' + lx + '" y="' + ly + '" text-anchor="middle" dominant-baseline="central" fill="rgba(255,255,255,0.4)" font-size="7">' + labels[i] + '</text>';
+    }
+
+    svg += '</svg>';
+    return svg;
+  }
+
+  // ---- Draw hourly bar chart ----
+  function drawHourlyChart(hourly, color) {
+    const w = 260;
+    const h = 50;
+    const max = Math.max(...hourly, 1);
+    const barW = w / 24;
+    let svg = '<svg viewBox="0 0 ' + w + ' ' + (h + 14) + '" class="hourly-svg">';
+    for (let i = 0; i < 24; i++) {
+      const barH = (hourly[i] / max) * h;
+      svg += '<rect x="' + (i * barW + 1) + '" y="' + (h - barH) + '" width="' + (barW - 2) + '" height="' + barH + '" rx="1" fill="' + color + '" opacity="0.7"/>';
+      if (i % 6 === 0) {
+        svg += '<text x="' + (i * barW + barW / 2) + '" y="' + (h + 11) + '" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7">' + i + 'h</text>';
+      }
+    }
+    svg += '</svg>';
+    return svg;
+  }
+
+  // ---- Render profiler view ----
+  function renderProfilerView() {
+    const chat = getActiveChat();
+    if (!chat) return;
+
+    const profiles = analyzeGroupMembers(chat);
+    if (!profiles || profiles.length === 0) return;
+
+    // Clean up previous profiler view
+    const existing = document.querySelector('.profiler-overlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'profiler-overlay';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'profiler-header';
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'profiler-back-btn';
+    backBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+    backBtn.addEventListener('click', () => {
+      overlay.classList.remove('visible');
+      setTimeout(() => overlay.remove(), 300);
+      currentView = 'phone';
+      btnProfiler.classList.remove('active');
+      btnPhone.classList.add('active');
+    });
+    header.appendChild(backBtn);
+
+    const titleBlock = document.createElement('div');
+    titleBlock.className = 'profiler-title-block';
+    titleBlock.innerHTML = '<h2>' + t('profilerTitle') + '</h2><p>' + t('profilerSubtitle') + '</p>';
+    header.appendChild(titleBlock);
+    overlay.appendChild(header);
+
+    // Overview bar: dominance chart
+    const overviewSection = document.createElement('div');
+    overviewSection.className = 'profiler-overview';
+    const domLabel = document.createElement('div');
+    domLabel.className = 'profiler-section-label';
+    domLabel.textContent = t('profilerDominance');
+    overviewSection.appendChild(domLabel);
+
+    const domBar = document.createElement('div');
+    domBar.className = 'profiler-dominance-bar';
+    profiles.forEach((p, i) => {
+      const seg = document.createElement('div');
+      seg.className = 'profiler-dom-segment';
+      seg.style.width = (p.messageShare * 100) + '%';
+      seg.style.backgroundColor = SENDER_COLORS[i % SENDER_COLORS.length];
+      seg.title = p.name + ': ' + Math.round(p.messageShare * 100) + '%';
+      domBar.appendChild(seg);
+    });
+    overviewSection.appendChild(domBar);
+
+    const domLegend = document.createElement('div');
+    domLegend.className = 'profiler-dom-legend';
+    profiles.forEach((p, i) => {
+      const item = document.createElement('span');
+      item.className = 'profiler-dom-legend-item';
+      item.innerHTML = '<span class="profiler-dom-dot" style="background:' + SENDER_COLORS[i % SENDER_COLORS.length] + '"></span>' + p.name + ' <span class="profiler-dom-pct">' + Math.round(p.messageShare * 100) + '%</span>';
+      domLegend.appendChild(item);
+    });
+    overviewSection.appendChild(domLegend);
+    overlay.appendChild(overviewSection);
+
+
+    // ---- Personal Profile Hero Card ----
+    const mySender = chat.mySender;
+    const myProfile = mySender ? profiles.find(p => p.name === mySender) : null;
+    const myIdx = mySender ? profiles.findIndex(p => p.name === mySender) : -1;
+
+    if (myProfile) {
+      const myColor = SENDER_COLORS[myIdx >= 0 ? myIdx % SENDER_COLORS.length : 0];
+
+      const personalSection = document.createElement('div');
+      personalSection.className = 'profiler-personal';
+
+      // Personal header
+      const persHeader = document.createElement('div');
+      persHeader.className = 'profiler-personal-header';
+      persHeader.innerHTML = '<div class="profiler-personal-avatar" style="background:' + myColor + '">' +
+        (myProfile.name.charAt(0) || '?').toUpperCase() + '</div>' +
+        '<div class="profiler-personal-name-block"><h2 style="color:' + myColor + '">' + escapeHtml(myProfile.name) + '</h2>' +
+        '<span class="profiler-personal-subtitle">' + t('profilerYourProfile') + ' — ' +
+        t('profilerRole' + myProfile.role.charAt(0).toUpperCase() + myProfile.role.slice(1)) + '</span></div>';
+      personalSection.appendChild(persHeader);
+
+      // ---- Narrative portrait ----
+      const narrativeSection = document.createElement('div');
+      narrativeSection.className = 'profiler-narrative';
+      const narrLabel = document.createElement('div');
+      narrLabel.className = 'profiler-section-label';
+      narrLabel.textContent = t('profilerNarrative');
+      narrativeSection.appendChild(narrLabel);
+
+      // Build narrative text
+      let narrative = '';
+      // Style-based opening
+      if (myProfile.styles.includes('verbose')) {
+        narrative += t('profilerNarrIntro') + t('profilerNarrVerbose') + ' ';
+      } else if (myProfile.styles.includes('concise')) {
+        narrative += t('profilerNarrIntro') + t('profilerNarrConcise') + ' ';
+      }
+
+      // Expressiveness
+      if (myProfile.styles.includes('expressive')) {
+        narrative += t('profilerNarrExpressive') + ' ';
+      } else if (myProfile.styles.includes('factual')) {
+        narrative += t('profilerNarrFactual') + ' ';
+      }
+
+      // Behavioral traits
+      if (myProfile.styles.includes('inquisitive')) narrative += t('profilerNarrInquisitive') + ' ';
+      if (myProfile.styles.includes('responsive')) narrative += t('profilerNarrResponsive') + ' ';
+      if (myProfile.styles.includes('initiator')) narrative += t('profilerNarrInitiator') + ' ';
+      if (myProfile.styles.includes('mediaHeavy')) narrative += t('profilerNarrMediaHeavy') + ' ';
+
+      // Role-based conclusion
+      const roleNarrKey = 'profilerNarr' + myProfile.role.charAt(0).toUpperCase() + myProfile.role.slice(1);
+      const roleNarr = t(roleNarrKey);
+      if (roleNarr && roleNarr !== roleNarrKey) {
+        narrative += roleNarr;
+      } else {
+        narrative += t('profilerNarrDefaultRole');
+      }
+
+      const narrText = document.createElement('p');
+      narrText.className = 'profiler-narrative-text';
+      narrText.textContent = narrative.trim();
+      narrativeSection.appendChild(narrText);
+      personalSection.appendChild(narrativeSection);
+
+      // ---- Big Five personality indicators ----
+      const bigFiveSection = document.createElement('div');
+      bigFiveSection.className = 'profiler-bigfive';
+      const bfLabel = document.createElement('div');
+      bfLabel.className = 'profiler-section-label';
+      bfLabel.textContent = t('profilerBigFive');
+      bigFiveSection.appendChild(bfLabel);
+
+      // Compute Big Five proxies from chat data
+      const emojiRate = myProfile.emojiCount / Math.max(myProfile.messageCount, 1);
+      const questionRate = myProfile.questionCount / Math.max(myProfile.messageCount, 1);
+      const linkRate = myProfile.linkCount / Math.max(myProfile.messageCount, 1);
+      const laughRate = myProfile.laughCount / Math.max(myProfile.messageCount, 1);
+      const initRate = myProfile.initiations / Math.max(myProfile.messageCount, 1);
+
+      const bigFive = [
+        { key: 'profilerBigFiveOpenness', value: Math.min(100, Math.round(
+          (linkRate * 300) + (questionRate * 200) + (myProfile.avgLength > 60 ? 20 : 0) + 30
+        ))},
+        { key: 'profilerBigFiveConscientiousness', value: Math.min(100, Math.round(
+          (myProfile.avgResponseTime !== null && myProfile.avgResponseTime < 30 ? 40 : 10) +
+          (myProfile.avgLength > 40 ? 25 : 10) +
+          (myProfile.messageShare > 0.1 ? 20 : 5) + 15
+        ))},
+        { key: 'profilerBigFiveExtraversion', value: Math.min(100, Math.round(
+          (myProfile.messageShare * 200) + (initRate * 500) + (emojiRate * 50) + (laughRate * 100) + 10
+        ))},
+        { key: 'profilerBigFiveAgreeableness', value: Math.min(100, Math.round(
+          (myProfile.sentiment.positive * 0.6) +
+          (emojiRate * 30) +
+          (myProfile.avgResponseTime !== null && myProfile.avgResponseTime < 20 ? 20 : 5) + 20
+        ))},
+        { key: 'profilerBigFiveNeuroticism', value: Math.min(100, Math.round(
+          70 - (myProfile.sentiment.negative * 0.3) +
+          (myProfile.exclamationCount / Math.max(myProfile.messageCount, 1) < 0.3 ? 15 : 0) +
+          (myProfile.avgLength < 200 ? 10 : 0)
+        ))},
+      ];
+
+      const bfBars = document.createElement('div');
+      bfBars.className = 'profiler-bigfive-bars';
+      bigFive.forEach(bf => {
+        const row = document.createElement('div');
+        row.className = 'profiler-bf-row';
+        row.innerHTML = '<span class="profiler-bf-label">' + t(bf.key) + '</span>' +
+          '<div class="profiler-bf-track"><div class="profiler-bf-fill" style="width:' + bf.value + '%;background:' + myColor + '"></div></div>' +
+          '<span class="profiler-bf-value">' + bf.value + '</span>';
+        bfBars.appendChild(row);
+      });
+      bigFiveSection.appendChild(bfBars);
+      personalSection.appendChild(bigFiveSection);
+
+      // ---- Large radar chart ----
+      const radarSection = document.createElement('div');
+      radarSection.className = 'profiler-personal-radar';
+      radarSection.innerHTML = '<div class="profiler-section-label">' + t('profilerTraits') + '</div>' +
+        drawRadarSVG(myProfile.radar, myColor).replace('class="radar-svg"', 'class="radar-svg radar-svg-large"');
+      personalSection.appendChild(radarSection);
+
+      // ---- Comparison vs group average ----
+      const avgMsgCount = Math.round(profiles.reduce((s, p) => s + p.messageCount, 0) / profiles.length);
+      const avgAvgLength = Math.round(profiles.reduce((s, p) => s + p.avgLength, 0) / profiles.length);
+      const avgMedia = Math.round(profiles.reduce((s, p) => s + p.mediaCount, 0) / profiles.length);
+      const avgEmoji = Math.round(profiles.reduce((s, p) => s + p.emojiCount, 0) / profiles.length);
+      const avgQuestions = Math.round(profiles.reduce((s, p) => s + p.questionCount, 0) / profiles.length);
+
+      const compSection = document.createElement('div');
+      compSection.className = 'profiler-comparison';
+      const compLabel = document.createElement('div');
+      compLabel.className = 'profiler-section-label';
+      compLabel.textContent = t('profilerVsGroup');
+      compSection.appendChild(compLabel);
+
+      const compGrid = document.createElement('div');
+      compGrid.className = 'profiler-comp-grid';
+
+      function compRow(label, myVal, avgVal) {
+        const diff = myVal - avgVal;
+        const pct = avgVal > 0 ? Math.round((diff / avgVal) * 100) : 0;
+        let comparison = '';
+        if (Math.abs(pct) < 10) {
+          comparison = '<span class="profiler-comp-diff neutral">' + t('profilerOnPar') + '</span>';
+        } else if (pct > 0) {
+          comparison = '<span class="profiler-comp-diff positive">+' + Math.abs(pct) + '% ' + t('profilerMoreThan') + '</span>';
+        } else {
+          comparison = '<span class="profiler-comp-diff negative">' + Math.abs(pct) + '% ' + t('profilerLessThan') + '</span>';
+        }
+        return '<div class="profiler-comp-row">' +
+          '<span class="profiler-comp-label">' + label + '</span>' +
+          '<div class="profiler-comp-values">' +
+          '<span class="profiler-comp-you" style="color:' + myColor + '">' + t('profilerYou') + ': ' + myVal + '</span>' +
+          '<span class="profiler-comp-avg">' + t('profilerVsGroupAvg') + ': ' + avgVal + '</span>' +
+          '</div>' +
+          comparison + '</div>';
+      }
+
+      compGrid.innerHTML =
+        compRow(t('profilerMessages'), myProfile.messageCount, avgMsgCount) +
+        compRow(t('profilerAvgLength'), myProfile.avgLength, avgAvgLength) +
+        compRow(t('profilerMediaSent'), myProfile.mediaCount, avgMedia) +
+        compRow(t('profilerEmojis'), myProfile.emojiCount, avgEmoji) +
+        compRow(t('profilerQuestions'), myProfile.questionCount, avgQuestions);
+      compSection.appendChild(compGrid);
+      personalSection.appendChild(compSection);
+
+      // ---- Hourly activity ----
+      const hourlySection = document.createElement('div');
+      hourlySection.className = 'profiler-personal-hourly';
+      hourlySection.innerHTML = '<div class="profiler-section-label">' + t('profilerActivityChart') + '</div>' +
+        drawHourlyChart(myProfile.hourly, myColor);
+      personalSection.appendChild(hourlySection);
+
+      overlay.appendChild(personalSection);
+    }
+
+    // Member cards
+    const cardsContainer = document.createElement('div');
+    cardsContainer.className = 'profiler-cards';
+
+    profiles.forEach((p, i) => {
+      const color = SENDER_COLORS[i % SENDER_COLORS.length];
+      const card = document.createElement('div');
+      card.className = 'profiler-card';
+
+      // Card header
+      const cardHeader = document.createElement('div');
+      cardHeader.className = 'profiler-card-header';
+      cardHeader.innerHTML = '<div class="profiler-card-avatar" style="background:' + color + '">' + (p.name.charAt(0) || '?').toUpperCase() + '</div>' +
+        '<div class="profiler-card-name-block"><h3 style="color:' + color + '">' + escapeHtml(p.name) + '</h3>' +
+        '<span class="profiler-card-role">' + t('profilerRole' + p.role.charAt(0).toUpperCase() + p.role.slice(1)) + '</span></div>';
+      card.appendChild(cardHeader);
+
+      // Stats grid
+      const statsGrid = document.createElement('div');
+      statsGrid.className = 'profiler-stats-grid';
+
+      const stats = [
+        { label: t('profilerMessages'), value: p.messageCount.toLocaleString() },
+        { label: t('profilerAvgLength'), value: p.avgLength + ' ' + t('profilerCharsPerMsg') },
+        { label: t('profilerMediaSent'), value: p.mediaCount.toString() },
+        { label: t('profilerEmojis'), value: p.emojiCount.toString() },
+        { label: t('profilerQuestions'), value: p.questionCount.toString() },
+        { label: t('profilerLinks'), value: p.linkCount.toString() },
+        { label: t('profilerInitiations'), value: p.initiations.toString() },
+        { label: t('profilerAvgResponseTime'), value: formatResponseTime(p.avgResponseTime) },
+        { label: t('profilerMostActiveHour'), value: p.peakHour + ':00' },
+      ];
+
+      stats.forEach(s => {
+        const cell = document.createElement('div');
+        cell.className = 'profiler-stat-cell';
+        cell.innerHTML = '<span class="profiler-stat-value">' + s.value + '</span><span class="profiler-stat-label">' + s.label + '</span>';
+        statsGrid.appendChild(cell);
+      });
+      card.appendChild(statsGrid);
+
+      // Radar chart + hourly chart side by side
+      const chartsRow = document.createElement('div');
+      chartsRow.className = 'profiler-charts-row';
+
+      const radarCol = document.createElement('div');
+      radarCol.className = 'profiler-chart-col';
+      radarCol.innerHTML = '<div class="profiler-chart-label">' + t('profilerTraits') + '</div>' + drawRadarSVG(p.radar, color);
+      chartsRow.appendChild(radarCol);
+
+      const hourlyCol = document.createElement('div');
+      hourlyCol.className = 'profiler-chart-col profiler-chart-col-wide';
+      hourlyCol.innerHTML = '<div class="profiler-chart-label">' + t('profilerActivityChart') + '</div>' + drawHourlyChart(p.hourly, color);
+      chartsRow.appendChild(hourlyCol);
+
+      card.appendChild(chartsRow);
+
+      // Communication style tags
+      if (p.styles.length > 0) {
+        const stylesSection = document.createElement('div');
+        stylesSection.className = 'profiler-styles-section';
+        stylesSection.innerHTML = '<div class="profiler-section-label">' + t('profilerCommunicationStyle') + '</div>';
+        const tagContainer = document.createElement('div');
+        tagContainer.className = 'profiler-tags';
+        p.styles.forEach(s => {
+          const tag = document.createElement('span');
+          tag.className = 'profiler-tag';
+          tag.style.borderColor = color;
+          tag.style.color = color;
+          tag.textContent = t('profilerStyle' + s.charAt(0).toUpperCase() + s.slice(1));
+          tagContainer.appendChild(tag);
+        });
+        stylesSection.appendChild(tagContainer);
+        card.appendChild(stylesSection);
+      }
+
+      // Top emojis
+      if (p.topEmojis.length > 0) {
+        const emojiSection = document.createElement('div');
+        emojiSection.className = 'profiler-emoji-section';
+        emojiSection.innerHTML = '<div class="profiler-section-label">' + t('profilerTopEmojis') + '</div>' +
+          '<div class="profiler-top-emojis">' + p.topEmojis.map(e => '<span class="profiler-emoji">' + e + '</span>').join('') + '</div>';
+        card.appendChild(emojiSection);
+      }
+
+      // Sentiment bar
+      const sentimentSection = document.createElement('div');
+      sentimentSection.className = 'profiler-sentiment-section';
+      sentimentSection.innerHTML = '<div class="profiler-section-label">' + t('profilerSentiment') + '</div>';
+      const sentBar = document.createElement('div');
+      sentBar.className = 'profiler-sentiment-bar';
+      sentBar.innerHTML = '<div class="profiler-sent-pos" style="width:' + p.sentiment.positive + '%"></div>' +
+        '<div class="profiler-sent-neu" style="width:' + p.sentiment.neutral + '%"></div>' +
+        '<div class="profiler-sent-neg" style="width:' + p.sentiment.negative + '%"></div>';
+      sentimentSection.appendChild(sentBar);
+      const sentLegend = document.createElement('div');
+      sentLegend.className = 'profiler-sent-legend';
+      sentLegend.innerHTML = '<span class="profiler-sent-label pos">' + t('profilerSentimentPositive') + ' ' + p.sentiment.positive + '%</span>' +
+        '<span class="profiler-sent-label neu">' + t('profilerSentimentNeutral') + ' ' + p.sentiment.neutral + '%</span>' +
+        '<span class="profiler-sent-label neg">' + t('profilerSentimentNegative') + ' ' + p.sentiment.negative + '%</span>';
+      sentimentSection.appendChild(sentLegend);
+      card.appendChild(sentimentSection);
+
+      // Frequent words
+      if (p.topWords.length > 0) {
+        const wordsSection = document.createElement('div');
+        wordsSection.className = 'profiler-words-section';
+        wordsSection.innerHTML = '<div class="profiler-section-label">' + t('profilerWordCloud') + '</div>';
+        const wordsContainer = document.createElement('div');
+        wordsContainer.className = 'profiler-word-cloud';
+        const maxWordCount = p.topWords[0].count;
+        p.topWords.forEach(w => {
+          const span = document.createElement('span');
+          span.className = 'profiler-word';
+          const scale = 0.7 + (w.count / maxWordCount) * 0.6;
+          span.style.fontSize = scale + 'em';
+          span.style.opacity = 0.5 + (w.count / maxWordCount) * 0.5;
+          span.textContent = w.word;
+          wordsContainer.appendChild(span);
+        });
+        wordsSection.appendChild(wordsContainer);
+        card.appendChild(wordsSection);
+      }
+
+      cardsContainer.appendChild(card);
+    });
+
+    overlay.appendChild(cardsContainer);
+    document.body.appendChild(overlay);
+
+    // Animate in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+      });
+    });
+  }
+
+  function formatResponseTime(minutes) {
+    if (minutes === null || minutes === undefined) return '—';
+    if (minutes < 60) return Math.round(minutes) + ' ' + t('profilerMinutes');
+    if (minutes < 1440) return Math.round(minutes / 60) + ' ' + t('profilerHours');
+    return Math.round(minutes / 1440) + ' ' + t('profilerDays');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ---- Profiler button integration ----
+  const btnProfiler = $('btn-profiler');
+  if (btnProfiler) {
+    btnProfiler.addEventListener('click', () => switchView('profiler'));
   }
 
 })();

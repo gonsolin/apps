@@ -51,7 +51,7 @@
           <input type="file" id="file-input" accept=".zip" multiple hidden>
         </label>
         <p class="drop-zone-formats" data-i18n="dropFormats">Formats supportés : iOS &amp; Android</p>
-        <p class="drop-zone-version">v0.4.5</p>
+        <p class="drop-zone-version">v0.5.1</p>
       </div>
       <div class="drop-zone-border"></div>
     </div>
@@ -215,9 +215,32 @@
           <div class="release-notes">
             <div class="release-version">
               <div class="release-version-header">
+                <span class="release-version-tag">v0.5.1</span>
+                <span class="release-version-date" data-i18n="releaseV051Date">Mars 2026</span>
+                <span class="release-version-current" data-i18n="releaseCurrentLabel">Version actuelle</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV051_1">Profil psychologique personnel avec portrait narratif généré automatiquement</li>
+                <li data-i18n="releaseV051_2">Indicateurs de personnalité Big Five déduits des habitudes de communication</li>
+                <li data-i18n="releaseV051_3">Comparaison de vos statistiques avec la moyenne du groupe</li>
+              </ul>
+            </div>
+            <div class="release-version">
+              <div class="release-version-header">
+                <span class="release-version-tag">v0.5</span>
+                <span class="release-version-date" data-i18n="releaseV05Date">Mars 2026</span>
+              </div>
+              <ul>
+                <li data-i18n="releaseV05_1">Analyse psychologique des membres du groupe avec profils de personnalité</li>
+                <li data-i18n="releaseV05_2">Graphiques radar et répartition horaire par membre</li>
+                <li data-i18n="releaseV05_3">Détection automatique du style de communication et du rôle dans le groupe</li>
+                <li data-i18n="releaseV05_4">Analyse de sentiment et emojis favoris</li>
+              </ul>
+            </div>
+            <div class="release-version">
+              <div class="release-version-header">
                 <span class="release-version-tag">v0.4.4</span>
                 <span class="release-version-date" data-i18n="releaseV044Date">Février 2026</span>
-                <span class="release-version-current" data-i18n="releaseCurrentLabel">Version actuelle</span>
               </div>
               <ul>
                 <li data-i18n="releaseV044_1">Mode cinéma : fond noir au démarrage, miniatures de photos et vidéos corrigées et agrandies</li>
@@ -451,6 +474,9 @@
       <button class="view-toggle-btn" id="btn-live" title="Vue Live">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       </button>
+      <button class="view-toggle-btn" id="btn-profiler" title="Profil psychologique" data-i18n-title="profilerBtnTitle">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </button>
       <button class="view-toggle-btn" id="btn-cinema" title="Plein écran cinéma" data-i18n-title="cinemaButtonTitle">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 4v1h-2V4c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H6V4c0-.55-.45-1-1-1s-1 .45-1 1v16c0 .55.45 1 1 1s1-.45 1-1v-1h2v1c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-1h2v1c0 .55.45 1 1 1s1-.45 1-1V4c0-.55-.45-1-1-1s-1 .45-1 1zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/></svg>
       </button>
@@ -474,6 +500,8 @@
 
       <!-- Main chat panel -->
       <div class="phone-frame" id="phone-frame">
+        <!-- Dynamic Island -->
+        <div class="dynamic-island"></div>
         <!-- Status bar -->
         <div class="status-bar">
           <span class="status-time" id="status-time">22:38</span>
