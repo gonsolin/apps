@@ -51,6 +51,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Save the user's current wallpaper so we can restore on quit
         wallpaperManager.saveOriginalWallpapers()
 
+        // Begin tracking location changes — triggers an immediate wallpaper
+        // refresh whenever the user moves to a different neighborhood.
+        locationService.onNeighborhoodChange = { [weak self] in
+            self?.performUpdate()
+        }
+        locationService.startMonitoring()
+
         buildStatusItem()
 
         // If no API key yet, prompt the user on first launch
@@ -220,9 +227,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         conditionItem.title   = "\(weather.condition.displayName)"
         temperatureItem.title = "🌡️ \(String(format: "%.0f", weather.temperature))°F"
 
-        let loc = location.neighborhood.isEmpty
+        let hood = !location.neighborhood.isEmpty ? location.neighborhood
+                 : !location.areaOfInterest.isEmpty ? location.areaOfInterest
+                 : ""
+        let loc = hood.isEmpty
             ? "\(location.city), \(location.region)"
-            : "\(location.neighborhood), \(location.city)"
+            : "\(hood), \(location.city)"
         locationItem.title = "📍 \(loc)"
 
         let fmt = DateFormatter()

@@ -7,30 +7,53 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     private var continuation: CheckedContinuation<CLLocation?, Never>?
     private var resumed = false
 
+    /// Tracks the last known neighborhood so we can detect when the user moves.
+    private var lastNeighborhood: String = ""
+
+    /// Fires when the user has moved to a different neighborhood.
+    /// AppDelegate hooks into this to trigger an immediate wallpaper refresh.
+    var onNeighborhoodChange: (() -> Void)?
+
     override init() {
         super.init()
         manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        // Hundred-meter accuracy gives meaningful neighborhood resolution
+        // while staying efficient on a laptop.
+        manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
     }
 
-    // MARK: - Public
+    // MARK: - Continuous Monitoring
 
-    /// Returns location using CoreLocation if authorized, otherwise falls back to IP geolocation.
+    /// Begin watching for significant location changes (cell-tower level, ~500 m).
+    /// Battery-efficient — perfect for detecting neighborhood transitions.
+    func startMonitoring() {
+        let status = manager.authorizationStatus
+        if status == .notDetermined {
+            manager.requestWhenInUseAuthorization()
+        }
+        if CLLocationManager.significantLocationChangeMonitoringAvailable() {
+            manager.startMonitoringSignificantLocationChanges()
+        }
+    }
+
+    // MARK: - One-Shot Fetch
+
+    /// Returns the best available location (CoreLocation → IP fallback).
     func fetchLocation() async -> LocationData? {
-        // Try CoreLocation first
         if let cl = await coreLocationRequest() {
             let geo = await reverseGeocode(cl)
+            lastNeighborhood = geo.neighborhood
             return LocationData(latitude: cl.coordinate.latitude,
                                 longitude: cl.coordinate.longitude,
                                 city: geo.city,
                                 region: geo.region,
-                                neighborhood: geo.neighborhood)
+                                neighborhood: geo.neighborhood,
+                                areaOfInterest: geo.areaOfInterest)
         }
-        // Fallback: IP geolocation
         return await ipGeolocate()
     }
 
-    // MARK: - CoreLocation
+    // MARK: - CoreLocation Request
 
     private func coreLocationRequest() async -> CLLocation? {
         let status = manager.authorizationStatus
@@ -48,7 +71,6 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             self.continuation = cont
             manager.requestLocation()
 
-            // Timeout after 10 s
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
                 guard let self = self, !self.resumed else { return }
                 self.resumed = true
@@ -58,11 +80,33 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
+    // MARK: - CLLocationManagerDelegate
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard !resumed else { return }
-        resumed = true
-        continuation?.resume(returning: locations.first)
-        continuation = nil
+        guard let location = locations.last else { return }
+
+        // If a one-shot requestLocation() is pending, fulfil it.
+        if !resumed, continuation != nil {
+            resumed = true
+            continuation?.resume(returning: location)
+            continuation = nil
+            return
+        }
+
+        // Otherwise this came from significant-change monitoring.
+        // Reverse-geocode and check whether the neighborhood changed.
+        Task { [weak self] in
+            guard let self = self else { return }
+            let geo = await self.reverseGeocode(location)
+            let newHood = geo.neighborhood
+
+            if !newHood.isEmpty, newHood != self.lastNeighborhood {
+                self.lastNeighborhood = newHood
+                DispatchQueue.main.async {
+                    self.onNeighborhoodChange?()
+                }
+            }
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -72,16 +116,35 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         continuation = nil
     }
 
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        // Begin monitoring as soon as the user grants permission.
+        if status == .authorized || status == .authorizedAlways {
+            if CLLocationManager.significantLocationChangeMonitoringAvailable() {
+                manager.startMonitoringSignificantLocationChanges()
+            }
+        }
+    }
+
     // MARK: - Reverse Geocode
 
-    private func reverseGeocode(_ location: CLLocation) async -> (city: String, region: String, neighborhood: String) {
+    private func reverseGeocode(_ location: CLLocation)
+        async -> (city: String, region: String, neighborhood: String, areaOfInterest: String)
+    {
         let geocoder = CLGeocoder()
         let placemarks = try? await geocoder.reverseGeocodeLocation(location)
-        guard let p = placemarks?.first else { return ("—", "", "") }
+        guard let p = placemarks?.first else { return ("—", "", "", "") }
+
+        // subLocality → "Inner Sunset", "Financial District", "SoMa", etc.
+        let neighborhood = p.subLocality ?? ""
+        // areasOfInterest → landmarks or named areas like "Golden Gate Park"
+        let aoi = p.areasOfInterest?.first ?? ""
+
         return (
-            city: p.locality ?? "—",
-            region: p.administrativeArea ?? "",
-            neighborhood: p.subLocality ?? ""
+            city:           p.locality ?? "—",
+            region:         p.administrativeArea ?? "",
+            neighborhood:   neighborhood,
+            areaOfInterest: aoi
         )
     }
 

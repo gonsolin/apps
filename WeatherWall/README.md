@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.4**
+**Current version: 0.5**
 
 ## Features
 
@@ -14,7 +14,8 @@ A lightweight macOS menu-bar app that sets your desktop wallpaper to a real phot
 - **Image caching** — downloaded photos are cached for 2 hours to avoid redundant network calls; cache is pruned daily.
 - **No API key required to run** — the Unsplash key is optional; without it, you still get beautiful procedural wallpapers.
 - **Multi-display support** — wallpaper is applied to all connected screens.
-- **Location detection** — CoreLocation with reverse geocoding (gives neighborhood precision), or IP geolocation as a zero-permission fallback.
+- **Neighborhood tracking** — continuous significant-location-change monitoring detects when you move to a different neighborhood and refreshes the wallpaper immediately.
+- **Location detection** — CoreLocation with reverse geocoding (gives neighborhood + landmark precision), or IP geolocation as a zero-permission fallback.
 - **Menu-bar only** — no Dock icon; shows a weather-condition icon.
 
 ## Requirements
@@ -98,6 +99,14 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.5 — April 8, 2026
+- **Added** continuous neighborhood tracking via `startMonitoringSignificantLocationChanges()` — when the user moves ~500 m (e.g. Inner Sunset → Financial District), the wallpaper refreshes immediately without waiting for the 30-minute timer.
+- **Improved** reverse geocoding now extracts `subLocality` (neighborhood) and `areasOfInterest` (landmarks) from `CLPlacemark` for richer place names.
+- **Improved** location accuracy upgraded from ~1 km to ~100 m for meaningful neighborhood resolution.
+- **Improved** search queries now lead with the neighborhood (e.g. _"Inner Sunset San Francisco sunny afternoon"_) for more locally relevant photos.
+- **Added** automatic monitoring start when the user grants location permission mid-session.
+- Menu bar now displays the detected neighborhood (e.g. "📍 Inner Sunset, San Francisco").
 
 ### 0.4 — April 8, 2026
 - **Improved** time-of-day detection now uses actual sunrise/sunset data from Open-Meteo instead of fixed clock hours — dawn, golden hour, and dusk shift naturally with the season and latitude.

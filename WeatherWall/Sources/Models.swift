@@ -159,13 +159,20 @@ enum TimeOfDay: String {
 func buildSearchQuery(location: LocationData, condition: WeatherCondition, timeOfDay: TimeOfDay) -> String {
     var parts: [String] = []
 
-    // City is the primary geographic anchor
+    // Neighborhood first — it's the most specific geographic signal.
+    // e.g. "Inner Sunset" or "Financial District"
+    if !location.neighborhood.isEmpty {
+        parts.append(location.neighborhood)
+    }
+    // Area of interest adds landmarks ("Golden Gate Park", "Embarcadero")
+    // but only if we don't already have a neighborhood to avoid query bloat.
+    else if !location.areaOfInterest.isEmpty {
+        parts.append(location.areaOfInterest)
+    }
+
+    // City anchors the broader location.
     if !location.city.isEmpty {
         parts.append(location.city)
-    }
-    // Add neighborhood only if short and meaningful
-    if !location.neighborhood.isEmpty && location.neighborhood.count < 30 {
-        parts.append(location.neighborhood)
     }
 
     parts.append(condition.searchTerm)
@@ -193,7 +200,8 @@ struct LocationData {
     let longitude: Double
     let city: String
     let region: String
-    var neighborhood: String = ""
+    var neighborhood: String = ""   // e.g. "Inner Sunset", "Financial District"
+    var areaOfInterest: String = "" // e.g. "Golden Gate Park"
 }
 
 // MARK: - Sky Palette
