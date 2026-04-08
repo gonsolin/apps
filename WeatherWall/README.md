@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.3**
+**Current version: 0.4**
 
 ## Features
 
@@ -98,6 +98,11 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.4 — April 8, 2026
+- **Improved** time-of-day detection now uses actual sunrise/sunset data from Open-Meteo instead of fixed clock hours — dawn, golden hour, and dusk shift naturally with the season and latitude.
+- **Improved** search queries now include a time modifier for all six periods (night, sunrise, morning, afternoon, sunset/golden hour, dusk/twilight) instead of only three.
+- **Improved** Unsplash queries use photographic terms (`golden hour`, `dusk`, `twilight`) that match how photographers tag their images, yielding more accurate results.
 
 ### 0.3 — April 8, 2026
 - **Fixed** Cmd+V / Cmd+C / Cmd+X / Cmd+A now work in the API key dialog (custom `EditableTextField` subclass routes key equivalents inside `NSAlert`).

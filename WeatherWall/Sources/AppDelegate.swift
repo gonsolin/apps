@@ -206,7 +206,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         lastWeather = weather
 
         // 3. Render & apply wallpaper (web image → procedural fallback)
-        let timeOfDay = TimeOfDay.current()
+        let timeOfDay = TimeOfDay.current(sunrise: weather.sunrise, sunset: weather.sunset)
         await wallpaperManager.update(condition: weather.condition, timeOfDay: timeOfDay,
                                       temperature: weather.temperature, location: location)
 

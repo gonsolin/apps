@@ -101,8 +101,31 @@ enum TimeOfDay: String {
     case sunset     // 5pm – 7pm
     case evening    // 7pm – 10pm
 
-    static func current() -> TimeOfDay {
-        let hour = Calendar.current.component(.hour, from: Date())
+    /// Compute the current time-of-day using actual sunrise/sunset when available,
+    /// falling back to fixed clock hours otherwise.
+    static func current(sunrise: Date? = nil, sunset: Date? = nil) -> TimeOfDay {
+        let now = Date()
+
+        if let rise = sunrise, let set = sunset {
+            let dawnStart    = rise.addingTimeInterval(-30 * 60)   // 30 min before sunrise
+            let morningStart = rise.addingTimeInterval(45 * 60)    // 45 min after sunrise
+            let solarNoon    = Date(timeIntervalSince1970:
+                (rise.timeIntervalSince1970 + set.timeIntervalSince1970) / 2)
+            let goldenStart  = set.addingTimeInterval(-75 * 60)    // 75 min before sunset
+            let eveningStart = set.addingTimeInterval(20 * 60)     // 20 min after sunset
+            let nightStart   = set.addingTimeInterval(60 * 60)     // 60 min after sunset
+
+            if now < dawnStart    { return .night }
+            if now < morningStart { return .dawn }
+            if now < solarNoon    { return .morning }
+            if now < goldenStart  { return .afternoon }
+            if now < eveningStart { return .sunset }
+            if now < nightStart   { return .evening }
+            return .night
+        }
+
+        // Fixed-hour fallback
+        let hour = Calendar.current.component(.hour, from: now)
         switch hour {
         case 0..<5:   return .night
         case 5..<7:   return .dawn
@@ -118,13 +141,15 @@ enum TimeOfDay: String {
         self == .night || self == .evening
     }
 
-    /// Optional time modifier to sharpen image search results.
-    var searchModifier: String? {
+    /// Photographic search term matching how images are tagged on Unsplash.
+    var searchModifier: String {
         switch self {
-        case .night:  return "night"
-        case .dawn:   return "sunrise"
-        case .sunset: return "sunset"
-        default:      return nil
+        case .night:     return "night"
+        case .dawn:      return "sunrise"
+        case .morning:   return "morning"
+        case .afternoon: return "afternoon"
+        case .sunset:    return "sunset golden hour"
+        case .evening:   return "dusk twilight"
         }
     }
 }
@@ -144,10 +169,7 @@ func buildSearchQuery(location: LocationData, condition: WeatherCondition, timeO
     }
 
     parts.append(condition.searchTerm)
-
-    if let mod = timeOfDay.searchModifier {
-        parts.append(mod)
-    }
+    parts.append(timeOfDay.searchModifier)
 
     return parts.joined(separator: " ")
 }
@@ -160,6 +182,8 @@ struct WeatherData {
     let weatherCode: Int
     let isDay: Bool
     let condition: WeatherCondition
+    let sunrise: Date?
+    let sunset: Date?
 }
 
 // MARK: - Location Data
