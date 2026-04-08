@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>WeatherWall</string>
+
+    <key>CFBundleDisplayName</key>
+    <string>WeatherWall</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>com.weatherwall.app</string>
+
+    <key>CFBundleVersion</key>
+    <string>3</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>0.3</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <key>CFBundleExecutable</key>
+    <string>WeatherWall</string>
+
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+
+    <!-- Hide from Dock — menu-bar-only app -->
+    <key>LSUIElement</key>
+    <true/>
+
+    <!-- Location permission prompt text -->
+    <key>NSLocationUsageDescription</key>
+    <string>WeatherWall uses your location to show weather-accurate wallpapers.</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>WeatherWall uses your location to show weather-accurate wallpapers.</string>
+</dict>
+</plist>
