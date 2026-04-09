@@ -45,7 +45,7 @@ final class WallpaperManager {
             if let url = ws.desktopImageURL(for: screen) {
                 let opts = ws.desktopImageOptions(for: screen) ?? [:]
                 let scaling = (opts[.imageScaling] as? NSNumber)?.intValue
-                    ?? NSImageScaling.scaleProportionallyUpOrDown.rawValue
+                    ?? Int(NSImageScaling.scaleProportionallyUpOrDown.rawValue)
                 let clipping = (opts[.allowClipping] as? NSNumber)?.boolValue ?? true
                 current.append(SavedWallpaper(screenID: sid, url: url,
                                               scaling: scaling, allowClipping: clipping))
@@ -332,7 +332,7 @@ final class WallpaperManager {
                   let id = UInt32(idStr),
                   let path = dict["path"] as? String else { return nil }
             let scaling = (dict["scaling"] as? Int)
-                ?? NSImageScaling.scaleProportionallyUpOrDown.rawValue
+                ?? Int(NSImageScaling.scaleProportionallyUpOrDown.rawValue)
             let clipping = (dict["allowClipping"] as? Bool) ?? true
             return SavedWallpaper(screenID: CGDirectDisplayID(id),
                                  url: URL(fileURLWithPath: path),
