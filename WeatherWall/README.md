@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.8**
+**Current version: 0.9**
 
 ## Features
 
@@ -86,7 +86,8 @@ WeatherWall/
 │   ├── WeatherService.swift      # Open-Meteo API client
 │   ├── ImageSearchService.swift  # Unsplash search, download, and caching
 │   ├── WallpaperRenderer.swift   # Core Graphics procedural sky renderer (fallback)
-│   └── WallpaperManager.swift    # Orchestrates web/procedural images + save/restore
+│   ├── WallpaperManager.swift    # Orchestrates web/procedural images + save/restore
+│   └── LocationSearchPanel.swift # Predictive location search with MKLocalSearchCompleter
 ├── Resources/
 │   ├── AppIcon.icns             # App icon (SF skyline + Golden Gate)
 │   └── Info.plist
@@ -105,6 +106,12 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.9 — April 8, 2026
+- **Added** location text overlay — the current location name is rendered vertically along the bottom-right edge of the wallpaper, reading from bottom to top. Subtle white text with shadow for readability against any background.
+- **Fixed** multi-display panorama — completely rewritten spanning logic. The image is now scaled to fill the combined canvas (cover mode) using Core Graphics before slicing, guaranteeing no blank stripes. Each screen gets its corresponding slice of the panoramic image. Works with any number of side-by-side screens.
+- **Added** predictive location search — the location override now opens a dedicated search panel powered by `MKLocalSearchCompleter` (Apple’s MapKit). As you type, real-time suggestions appear just like Google Maps — cities, neighborhoods, landmarks, and points of interest. Click a suggestion or double-click to apply immediately.
+- Added MapKit framework dependency.
 
 ### 0.8 — April 8, 2026
 - **Fixed** wallpaper restore on quit — the app now reliably restores the user's own wallpaper, not a system default or a WeatherWall-generated image from a previous session. On launch, if the current wallpaper is one of ours, the app loads the persisted originals from disk instead of re-saving them.

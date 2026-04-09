@@ -1,5 +1,6 @@
 import Cocoa
 import CoreLocation
+import MapKit
 
 // MARK: - Editable Text Field
 // NSTextField inside an NSAlert loses access to the Edit menu, so Cmd+V/C/X/A
@@ -41,6 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var weatherOverrideItem: NSMenuItem!
     private var timeOverrideItem: NSMenuItem!
 
+    // Location search panel (predictive text)
+    private var locationSearchPanel: LocationSearchPanel!
+
     // Current state
     private var lastWeather: WeatherData?
     private var lastLocation: LocationData?
@@ -51,9 +55,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory) // Hide dock icon
 
-        locationService  = LocationService()
-        weatherService   = WeatherService()
-        wallpaperManager = WallpaperManager()
+        locationService     = LocationService()
+        weatherService      = WeatherService()
+        wallpaperManager    = WallpaperManager()
+        locationSearchPanel = LocationSearchPanel()
 
         // Save the user's current wallpaper so we can restore on quit
         wallpaperManager.saveOriginalWallpapers()
@@ -222,30 +227,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func locationCustomTapped() {
-        NSApp.activate(ignoringOtherApps: true)
-
-        let alert = NSAlert()
-        alert.messageText = "Override Location"
-        alert.informativeText = "Enter a city or neighborhood name.\nThis will be used for wallpaper searches instead of your actual location."
-
-        let textField = EditableTextField(frame: NSRect(x: 0, y: 0, width: 340, height: 24))
-        textField.placeholderString = "e.g. Financial District, San Francisco"
-        if let existing = overrides.locationName {
-            textField.stringValue = existing
-        }
-        alert.accessoryView = textField
-
-        alert.addButton(withTitle: "Save")
-        alert.addButton(withTitle: "Cancel")
-
-        if alert.runModal() == .alertFirstButtonReturn {
-            let value = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !value.isEmpty {
-                overrides.locationName = value
-                overrides.save()
-                refreshOverrideMenus()
-                performUpdate()
-            }
+        locationSearchPanel.show(currentValue: overrides.locationName) { [weak self] selected in
+            guard let self = self, let value = selected else { return }
+            self.overrides.locationName = value
+            self.overrides.save()
+            self.refreshOverrideMenus()
+            self.performUpdate()
         }
     }
 

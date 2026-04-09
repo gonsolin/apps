@@ -25,6 +25,7 @@ swiftc \
     -framework Cocoa \
     -framework CoreLocation \
     -framework ImageIO \
+    -framework MapKit \
     -O \
     -o "$APP_DIR/MacOS/WeatherWall" \
     "$SCRIPT_DIR"/Sources/*.swift

@@ -4,9 +4,7 @@ import ImageIO
 /// Orchestrates wallpaper updates: tries web image search first, falls back to the
 /// procedural renderer, and can save/restore the user's original wallpaper on quit.
 ///
-/// Multi-display: when screens are arranged side-by-side and the source image is wide
-/// enough, the image is spanned across all screens (each gets a slice). Otherwise, the
-/// same image is applied to every screen independently.
+/// v0.9: Multi-display panorama (scale-to-fill + slice), location text overlay.
 final class WallpaperManager {
 
     private let renderer = WallpaperRenderer()
@@ -33,10 +31,6 @@ final class WallpaperManager {
 
     // MARK: - Save / Restore Original Wallpaper
 
-    /// Call once at app launch, before the first wallpaper update.
-    /// If the current wallpaper is one of ours (from a previous session), we reload
-    /// the persisted originals instead — this ensures we always restore the user's
-    /// actual wallpaper, not a WeatherWall-generated one.
     func saveOriginalWallpapers() {
         let ws = NSWorkspace.shared
         var current: [SavedWallpaper] = []
@@ -52,188 +46,282 @@ final class WallpaperManager {
             }
         }
 
-        // Check if any current wallpaper points to a WeatherWall file
         let isOurs = current.contains { isWeatherWallFile($0.url) }
 
         if isOurs, let persisted = loadPersistedOriginals(), !persisted.isEmpty {
-            // The screens are showing our wallpaper from a previous session —
-            // use the originals we saved earlier so we can restore the user's real wallpaper.
             savedWallpapers = persisted
         } else {
-            // Fresh start: the screens show the user's actual wallpaper.
             savedWallpapers = current
             persistOriginals()
         }
     }
 
-    /// Restore the wallpapers that were active when the app (or its first session) launched.
     func restoreOriginalWallpapers() {
         let ws = NSWorkspace.shared
         for screen in NSScreen.screens {
             let sid = screenID(screen)
             if let entry = savedWallpapers.first(where: { $0.screenID == sid }) {
-                var opts: [NSWorkspace.DesktopImageOptionKey: Any] = [
+                let opts: [NSWorkspace.DesktopImageOptionKey: Any] = [
                     .imageScaling: NSNumber(value: entry.scaling),
                     .allowClipping: NSNumber(value: entry.allowClipping)
                 ]
-                // Verify the file still exists
                 if FileManager.default.fileExists(atPath: entry.url.path) {
                     try? ws.setDesktopImageURL(entry.url, for: screen, options: opts)
                 }
             }
         }
-        // Clean up the persisted originals since we've restored successfully
         let file = wallpaperDir.appendingPathComponent("original_wallpapers.json")
         try? FileManager.default.removeItem(at: file)
     }
 
     // MARK: - Update Wallpaper
 
-    /// Fetch a web image (or generate a procedural one) and apply it.
-    /// Handles multi-display spanning when possible.
     func update(condition: WeatherCondition, timeOfDay: TimeOfDay,
                 temperature: Double, location: LocationData) async {
 
         let screens = sortedScreens()
-        guard let primary = screens.first else { return }
+        guard !screens.isEmpty else { return }
 
-        let scale = primary.screen.backingScaleFactor
-        let layout = ScreenLayout(screens: screens, scale: scale)
+        // Build location label for the text overlay
+        let locationLabel = buildLocationLabel(location: location)
 
-        // Request the full canvas size from the image service
-        var imageURL: URL?
+        // Single screen path
+        if screens.count == 1 {
+            let screen = screens[0].screen
+            let scale = screen.backingScaleFactor
+            let w = Int(screen.frame.width * scale)
+            let h = Int(screen.frame.height * scale)
 
+            if let image = await fetchOrRender(condition: condition, timeOfDay: timeOfDay,
+                                               width: w, height: h, location: location) {
+                let labeled = overlayLocationText(on: image, label: locationLabel)
+                let url = wallpaperDir.appendingPathComponent("current.png")
+                if savePNG(image: labeled, to: url) {
+                    DispatchQueue.main.async { self.applyToAllScreens(url) }
+                }
+            }
+            return
+        }
+
+        // Multi-display path: panorama
+        await updatePanorama(screens: screens, condition: condition, timeOfDay: timeOfDay,
+                            temperature: temperature, location: location,
+                            locationLabel: locationLabel)
+    }
+
+    // MARK: - Panorama (Multi-Display)
+
+    /// For multiple screens:
+    /// 1. Download the best image (at the primary screen resolution — Unsplash quality)
+    /// 2. Scale the image to FILL the combined canvas (no blank stripes)
+    /// 3. Slice per-screen and apply
+    /// If slicing fails for any reason, fall back to the same image on all screens.
+    private func updatePanorama(screens: [ScreenInfo],
+                                condition: WeatherCondition, timeOfDay: TimeOfDay,
+                                temperature: Double, location: LocationData,
+                                locationLabel: String) async {
+
+        // Compute the combined canvas in pixels
+        let canvas = computeCanvas(screens: screens)
+
+        // Fetch the image at the tallest screen resolution (Unsplash handles scaling)
+        let reqW = canvas.totalWidth
+        let reqH = canvas.maxHeight
+
+        guard let sourceImage = await fetchOrRenderCGImage(
+            condition: condition, timeOfDay: timeOfDay,
+            width: reqW, height: reqH, location: location
+        ) else { return }
+
+        // Scale the source to exactly fill the canvas (cover mode)
+        guard let filled = scaleToFill(image: sourceImage,
+                                        targetWidth: canvas.totalWidth,
+                                        targetHeight: canvas.maxHeight) else {
+            // Fallback: same image on all screens
+            let labeled = overlayLocationText(on: sourceImage, label: locationLabel)
+            let url = wallpaperDir.appendingPathComponent("current.png")
+            if savePNG(image: labeled, to: url) {
+                DispatchQueue.main.async { self.applyToAllScreens(url) }
+            }
+            return
+        }
+
+        // Add location label to the full panorama before slicing
+        let labeled = overlayLocationText(on: filled, label: locationLabel)
+
+        // Slice per screen
+        let ws = NSWorkspace.shared
+        let opts: [NSWorkspace.DesktopImageOptionKey: Any] = [
+            .imageScaling: NSNumber(value: Int(NSImageScaling.scaleProportionallyUpOrDown.rawValue)),
+            .allowClipping: NSNumber(value: true)
+        ]
+
+        DispatchQueue.main.async {
+            var xOffset = 0
+            for info in canvas.screenSlices {
+                let rect = CGRect(x: xOffset, y: 0, width: info.pixelWidth, height: canvas.maxHeight)
+                if let cropped = labeled.cropping(to: rect) {
+                    let file = self.wallpaperDir.appendingPathComponent("screen_\(info.displayID).png")
+                    if self.savePNG(image: cropped, to: file) {
+                        try? ws.setDesktopImageURL(file, for: info.screen, options: opts)
+                    }
+                }
+                xOffset += info.pixelWidth
+            }
+        }
+    }
+
+    private struct Canvas {
+        let totalWidth: Int
+        let maxHeight: Int
+        let screenSlices: [(screen: NSScreen, displayID: CGDirectDisplayID, pixelWidth: Int, pixelHeight: Int)]
+    }
+
+    private func computeCanvas(screens: [ScreenInfo]) -> Canvas {
+        var totalW = 0
+        var maxH = 0
+        var slices: [(screen: NSScreen, displayID: CGDirectDisplayID, pixelWidth: Int, pixelHeight: Int)] = []
+        for info in screens {
+            let scale = info.screen.backingScaleFactor
+            let pw = Int(info.screen.frame.width * scale)
+            let ph = Int(info.screen.frame.height * scale)
+            totalW += pw
+            maxH = max(maxH, ph)
+            slices.append((screen: info.screen, displayID: info.displayID,
+                           pixelWidth: pw, pixelHeight: ph))
+        }
+        return Canvas(totalWidth: totalW, maxHeight: maxH, screenSlices: slices)
+    }
+
+    /// Scale an image to exactly fill `targetWidth × targetHeight` (cover mode).
+    /// The image is scaled proportionally to fill, then center-cropped.
+    private func scaleToFill(image: CGImage, targetWidth: Int, targetHeight: Int) -> CGImage? {
+        let srcW = CGFloat(image.width)
+        let srcH = CGFloat(image.height)
+        let tgtW = CGFloat(targetWidth)
+        let tgtH = CGFloat(targetHeight)
+
+        // Scale to cover: use whichever scale factor is larger
+        let scaleX = tgtW / srcW
+        let scaleY = tgtH / srcH
+        let scale = max(scaleX, scaleY)
+
+        let scaledW = srcW * scale
+        let scaledH = srcH * scale
+
+        // Center-crop offsets
+        let drawX = (tgtW - scaledW) / 2
+        let drawY = (tgtH - scaledH) / 2
+
+        guard let ctx = CGContext(data: nil, width: targetWidth, height: targetHeight,
+                                  bitsPerComponent: 8, bytesPerRow: 0,
+                                  space: CGColorSpaceCreateDeviceRGB(),
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return nil }
+
+        ctx.interpolationQuality = .high
+        ctx.draw(image, in: CGRect(x: drawX, y: drawY, width: scaledW, height: scaledH))
+        return ctx.makeImage()
+    }
+
+    // MARK: - Location Text Overlay
+
+    /// Draw the location name vertically along the bottom-right edge of the image,
+    /// reading from bottom to top, with a subtle semi-transparent appearance.
+    private func overlayLocationText(on image: CGImage, label: String) -> CGImage {
+        let w = image.width
+        let h = image.height
+        guard w > 0, h > 0, !label.isEmpty else { return image }
+
+        guard let ctx = CGContext(data: nil, width: w, height: h,
+                                  bitsPerComponent: 8, bytesPerRow: 0,
+                                  space: CGColorSpaceCreateDeviceRGB(),
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return image }
+
+        // Draw the original image
+        ctx.draw(image, in: CGRect(x: 0, y: 0, width: w, height: h))
+
+        // Text styling — subtle white text with slight shadow
+        let fontSize = CGFloat(max(14, min(h / 60, 32)))
+        let font = CTFontCreateWithName("Helvetica Neue" as CFString, fontSize, nil)
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: CGColor(red: 1, green: 1, blue: 1, alpha: 0.55),
+        ]
+        let attrStr = NSAttributedString(string: label.uppercased(), attributes: attrs)
+        let line = CTLineCreateWithAttributedString(attrStr)
+        let textBounds = CTLineGetBoundsWithOptions(line, .useOpticalBounds)
+
+        // Position: bottom-right corner, rotated 90° CCW (text reads bottom→top)
+        let margin = fontSize * 0.8
+        let xPos = CGFloat(w) - margin             // right edge
+        let yPos = margin                           // start near bottom
+
+        ctx.saveGState()
+
+        // Drop shadow for readability
+        ctx.setShadow(offset: CGSize(width: 1, height: -1), blur: 3,
+                      color: CGColor(red: 0, green: 0, blue: 0, alpha: 0.5))
+
+        // Move to bottom-right, rotate 90° CCW
+        ctx.translateBy(x: xPos, y: yPos)
+        ctx.rotate(by: .pi / 2)  // 90° CCW in CoreGraphics (Y-up)
+
+        // Draw the text
+        CTLineDraw(line, ctx)
+
+        ctx.restoreGState()
+
+        return ctx.makeImage() ?? image
+    }
+
+    private func buildLocationLabel(location: LocationData) -> String {
+        let hood = !location.neighborhood.isEmpty ? location.neighborhood
+                 : !location.areaOfInterest.isEmpty ? location.areaOfInterest
+                 : ""
+        if hood.isEmpty {
+            return location.city.isEmpty ? "" : location.city
+        }
+        return "\(hood), \(location.city)"
+    }
+
+    // MARK: - Fetch / Render Helpers
+
+    /// Fetch a web image or render a procedural one, return the file URL.
+    private func fetchOrRender(condition: WeatherCondition, timeOfDay: TimeOfDay,
+                               width: Int, height: Int, location: LocationData) async -> CGImage? {
+        return await fetchOrRenderCGImage(condition: condition, timeOfDay: timeOfDay,
+                                          width: width, height: height, location: location)
+    }
+
+    private func fetchOrRenderCGImage(condition: WeatherCondition, timeOfDay: TimeOfDay,
+                                       width: Int, height: Int, location: LocationData) async -> CGImage? {
+        // Try web image first
         if imageSearch.hasAPIKey {
             let queries = buildSearchQueries(location: location,
                                              condition: condition,
                                              timeOfDay: timeOfDay)
-            imageURL = await imageSearch.fetchImage(queries: queries,
-                                                   width: layout.canvasWidth,
-                                                   height: layout.canvasHeight)
-        }
-
-        // Fallback: procedural renderer at canvas size
-        if imageURL == nil {
-            let size = CGSize(width: CGFloat(layout.canvasWidth),
-                              height: CGFloat(layout.canvasHeight))
-            if let cgImage = renderer.render(condition: condition, timeOfDay: timeOfDay, size: size) {
-                let fallbackURL = wallpaperDir.appendingPathComponent("current.png")
-                if savePNG(image: cgImage, to: fallbackURL) {
-                    imageURL = fallbackURL
+            if let url = await imageSearch.fetchImage(queries: queries,
+                                                      width: width, height: height) {
+                if let src = CGImageSourceCreateWithURL(url as CFURL, nil),
+                   let img = CGImageSourceCreateImageAtIndex(src, 0, nil) {
+                    return img
                 }
             }
         }
 
-        guard let finalURL = imageURL else { return }
-
-        // Load the image to check its actual dimensions
-        guard let imageSource = CGImageSourceCreateWithURL(finalURL as CFURL, nil),
-              let cgImage = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
-            // Can't read the image — apply as-is to all screens
-            DispatchQueue.main.async { self.applyToAllScreens(finalURL) }
-            return
-        }
-
-        let imgW = cgImage.width
-        let imgH = cgImage.height
-
-        if screens.count > 1 && layout.canSpan(imageWidth: imgW, imageHeight: imgH) {
-            // Span the image across screens — slice and apply each piece
-            let slices = layout.computeSlices(imageWidth: imgW, imageHeight: imgH)
-            DispatchQueue.main.async {
-                self.applySpanned(image: cgImage, slices: slices, screens: screens)
-            }
-        } else {
-            // Single screen or image too small — same image on all
-            DispatchQueue.main.async { self.applyToAllScreens(finalURL) }
-        }
+        // Fallback: procedural renderer
+        let size = CGSize(width: CGFloat(width), height: CGFloat(height))
+        return renderer.render(condition: condition, timeOfDay: timeOfDay, size: size)
     }
 
-    // MARK: - Screen Layout
+    // MARK: - Screen Helpers
 
-    /// Represents a screen with its display ID and sorted position.
     private struct ScreenInfo {
         let screen: NSScreen
         let displayID: CGDirectDisplayID
-        let originX: CGFloat   // in global point coordinates
+        let originX: CGFloat
     }
 
-    /// Layout computation for multi-display spanning.
-    private struct ScreenLayout {
-        let canvasWidth: Int
-        let canvasHeight: Int
-        let totalPointsWidth: CGFloat
-        let screenInfos: [(screen: NSScreen, id: CGDirectDisplayID,
-                           xOffset: CGFloat, pointWidth: CGFloat, pixelWidth: Int, pixelHeight: Int)]
-
-        init(screens: [ScreenInfo], scale: CGFloat) {
-            // Calculate combined canvas at retina resolution
-            let minX = screens.map { $0.originX }.min() ?? 0
-            let maxX = screens.map { $0.originX + $0.screen.frame.width }.max() ?? 0
-            let maxH = screens.map { $0.screen.frame.height }.max() ?? 0
-
-            totalPointsWidth = maxX - minX
-            canvasWidth  = Int(totalPointsWidth * scale)
-            canvasHeight = Int(maxH * scale)
-
-            screenInfos = screens.map { info in
-                let pw = Int(info.screen.frame.width * scale)
-                let ph = Int(info.screen.frame.height * scale)
-                return (screen: info.screen, id: info.displayID,
-                        xOffset: info.originX - minX,
-                        pointWidth: info.screen.frame.width,
-                        pixelWidth: pw, pixelHeight: ph)
-            }
-        }
-
-        /// Can we meaningfully span? The image must be at least as wide as the total canvas
-        /// and each screen slice must be at least 75% of its native width (avoid excessive stretch).
-        func canSpan(imageWidth: Int, imageHeight: Int) -> Bool {
-            // Image must cover at least 70% of the combined width
-            return imageWidth >= Int(Double(canvasWidth) * 0.7)
-        }
-
-        /// Compute the crop rect (in image pixels) for each screen.
-        /// The image is scaled to fill the canvas height, then sliced horizontally.
-        func computeSlices(imageWidth: Int, imageHeight: Int) -> [(screenIndex: Int,
-                                                                    cropRect: CGRect)] {
-            // Scale factor to fit the image height to the canvas height
-            let heightScale = CGFloat(canvasHeight) / CGFloat(imageHeight)
-            let scaledImgWidth = CGFloat(imageWidth) * heightScale
-
-            // Center the scaled image horizontally if it's wider than the canvas
-            let canvasW = CGFloat(canvasWidth)
-            let xShift = max(0, (scaledImgWidth - canvasW) / 2)
-
-            var slices: [(screenIndex: Int, cropRect: CGRect)] = []
-            for (i, info) in screenInfos.enumerated() {
-                // This screen's position in the canvas (in canvas pixels)
-                let screenStartInCanvas = info.xOffset / totalPointsWidth * canvasW
-                let screenEndInCanvas = screenStartInCanvas + CGFloat(info.pixelWidth)
-
-                // Map back to image coordinates
-                let imgX = (screenStartInCanvas + xShift) / heightScale
-                let imgY: CGFloat = 0
-                let imgW = CGFloat(info.pixelWidth) / heightScale
-                let imgH = CGFloat(imageHeight)
-
-                // Clamp to image bounds
-                var rect = CGRect(x: imgX, y: imgY, width: imgW, height: imgH)
-                if rect.maxX > CGFloat(imageWidth) {
-                    rect.origin.x = CGFloat(imageWidth) - rect.width
-                }
-                if rect.origin.x < 0 {
-                    rect.origin.x = 0
-                    rect.size.width = min(rect.width, CGFloat(imageWidth))
-                }
-
-                slices.append((screenIndex: i, cropRect: rect))
-            }
-            return slices
-        }
-    }
-
-    /// Return all screens sorted left-to-right by their global origin.
     private func sortedScreens() -> [ScreenInfo] {
         NSScreen.screens.map { screen in
             ScreenInfo(screen: screen,
@@ -244,37 +332,10 @@ final class WallpaperManager {
 
     // MARK: - Apply Wallpaper
 
-    /// Span a single image across multiple screens by cropping slices.
-    private func applySpanned(image: CGImage, slices: [(screenIndex: Int, cropRect: CGRect)],
-                              screens: [ScreenInfo]) {
-        let ws = NSWorkspace.shared
-        let opts: [NSWorkspace.DesktopImageOptionKey: Any] = [
-            .imageScaling: NSNumber(value: NSImageScaling.scaleProportionallyUpOrDown.rawValue),
-            .allowClipping: NSNumber(value: true)
-        ]
-
-        for slice in slices {
-            let info = screens[slice.screenIndex]
-            // Crop the slice from the full image
-            let intRect = CGRect(x: round(slice.cropRect.origin.x),
-                                 y: round(slice.cropRect.origin.y),
-                                 width: round(slice.cropRect.width),
-                                 height: round(slice.cropRect.height))
-            guard let cropped = image.cropping(to: intRect) else { continue }
-
-            // Save to a screen-specific file
-            let file = wallpaperDir.appendingPathComponent("screen_\(info.displayID).png")
-            if savePNG(image: cropped, to: file) {
-                try? ws.setDesktopImageURL(file, for: info.screen, options: opts)
-            }
-        }
-    }
-
-    /// Apply the same image to all screens (fallback).
     private func applyToAllScreens(_ url: URL) {
         let ws = NSWorkspace.shared
         let opts: [NSWorkspace.DesktopImageOptionKey: Any] = [
-            .imageScaling: NSNumber(value: NSImageScaling.scaleProportionallyUpOrDown.rawValue),
+            .imageScaling: NSNumber(value: Int(NSImageScaling.scaleProportionallyUpOrDown.rawValue)),
             .allowClipping: NSNumber(value: true)
         ]
         for screen in NSScreen.screens {
@@ -295,7 +356,6 @@ final class WallpaperManager {
         (screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID) ?? 0
     }
 
-    /// Check if a URL points to a file inside our app support directory.
     private func isWeatherWallFile(_ url: URL) -> Bool {
         url.path.contains("WeatherWall")
     }
@@ -306,7 +366,6 @@ final class WallpaperManager {
         wallpaperDir.appendingPathComponent("original_wallpapers.json")
     }
 
-    /// Write original wallpaper paths to disk so we can recover across sessions.
     private func persistOriginals() {
         let entries: [[String: Any]] = savedWallpapers.map {
             [
@@ -321,7 +380,6 @@ final class WallpaperManager {
         }
     }
 
-    /// Load persisted originals from disk (survives app restart / crash).
     private func loadPersistedOriginals() -> [SavedWallpaper]? {
         guard let data = try? Data(contentsOf: originalsFile),
               let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
