@@ -61,12 +61,16 @@ final class WallpaperManager {
 
         var imageURL: URL?
 
-        // 1. Try web image search (requires API key)
+        // 1. Try web image search with cascading fallback
+        //    e.g. "Inner Sunset San Francisco rain afternoon"
+        //       → "San Francisco rain afternoon"
+        //       → "San Francisco rain"
+        //       → "San Francisco"
         if imageSearch.hasAPIKey {
-            let query = buildSearchQuery(location: location,
-                                         condition: condition,
-                                         timeOfDay: timeOfDay)
-            imageURL = await imageSearch.fetchImage(query: query, width: pixelW, height: pixelH)
+            let queries = buildSearchQueries(location: location,
+                                             condition: condition,
+                                             timeOfDay: timeOfDay)
+            imageURL = await imageSearch.fetchImage(queries: queries, width: pixelW, height: pixelH)
         }
 
         // 2. Fallback: procedural renderer

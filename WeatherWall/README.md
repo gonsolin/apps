@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.5**
+**Current version: 0.6**
 
 ## Features
 
@@ -99,6 +99,16 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.6 — April 8, 2026
+- **Fixed** wallpaper falling back to the procedural renderer when the neighborhood query was too specific for Unsplash.
+- **Added** cascading search fallback — the app now tries progressively broader queries until it finds a real photo:
+  1. `Inner Sunset San Francisco rain afternoon` (neighborhood + city + weather + time)
+  2. `San Francisco rain afternoon` (city + weather + time)
+  3. `San Francisco rain` (city + weather)
+  4. `San Francisco` (city only)
+- Cache is checked for all query levels before making any API calls, minimizing network usage.
+- The procedural gradient renderer is now truly a last resort, only used when all Unsplash queries fail or no API key is set.
 
 ### 0.5 — April 8, 2026
 - **Added** continuous neighborhood tracking via `startMonitoringSignificantLocationChanges()` — when the user moves ~500 m (e.g. Inner Sunset → Financial District), the wallpaper refreshes immediately without waiting for the 30-minute timer.

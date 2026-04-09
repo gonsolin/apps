@@ -156,29 +156,45 @@ enum TimeOfDay: String {
 
 // MARK: - Search Query Builder
 
-func buildSearchQuery(location: LocationData, condition: WeatherCondition, timeOfDay: TimeOfDay) -> String {
-    var parts: [String] = []
+/// Build a cascade of search queries from most specific to broadest.
+/// The image service tries them in order until one returns results.
+///
+/// Example output for Inner Sunset + sunny + afternoon:
+///   1. "Inner Sunset San Francisco sunny clear sky afternoon"
+///   2. "San Francisco sunny clear sky afternoon"
+///   3. "San Francisco sunny clear sky"
+///   4. "San Francisco"
+func buildSearchQueries(location: LocationData, condition: WeatherCondition, timeOfDay: TimeOfDay) -> [String] {
+    let city    = location.city.isEmpty ? "" : location.city
+    let hood    = !location.neighborhood.isEmpty ? location.neighborhood
+                : !location.areaOfInterest.isEmpty ? location.areaOfInterest
+                : ""
+    let weather = condition.searchTerm
+    let time    = timeOfDay.searchModifier
 
-    // Neighborhood first — it's the most specific geographic signal.
-    // e.g. "Inner Sunset" or "Financial District"
-    if !location.neighborhood.isEmpty {
-        parts.append(location.neighborhood)
+    var queries: [String] = []
+
+    // 1. Neighborhood + city + weather + time  (most specific)
+    if !hood.isEmpty {
+        queries.append([hood, city, weather, time].joined(separator: " "))
     }
-    // Area of interest adds landmarks ("Golden Gate Park", "Embarcadero")
-    // but only if we don't already have a neighborhood to avoid query bloat.
-    else if !location.areaOfInterest.isEmpty {
-        parts.append(location.areaOfInterest)
+
+    // 2. City + weather + time
+    if !city.isEmpty {
+        queries.append([city, weather, time].joined(separator: " "))
     }
 
-    // City anchors the broader location.
-    if !location.city.isEmpty {
-        parts.append(location.city)
+    // 3. City + weather  (drop time-of-day)
+    if !city.isEmpty {
+        queries.append([city, weather].joined(separator: " "))
     }
 
-    parts.append(condition.searchTerm)
-    parts.append(timeOfDay.searchModifier)
+    // 4. City only  (broadest geographic anchor)
+    if !city.isEmpty {
+        queries.append(city)
+    }
 
-    return parts.joined(separator: " ")
+    return queries
 }
 
 // MARK: - Weather Data

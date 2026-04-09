@@ -24,25 +24,38 @@ final class ImageSearchService {
 
     // MARK: - Search + Download
 
-    /// Returns a local file URL to a wallpaper image, or nil on failure.
-    func fetchImage(query: String, width: Int, height: Int) async -> URL? {
-        // 1. Check cache
-        let key = cacheKey(for: query)
-        let cachedFile = cacheDir.appendingPathComponent("\(key).jpg")
-        if isCacheValid(at: cachedFile) {
-            return cachedFile
+    /// Try a cascade of queries from most specific to broadest.
+    /// Checks all caches first (cheap), then hits the API in order (expensive).
+    func fetchImage(queries: [String], width: Int, height: Int) async -> URL? {
+        guard hasAPIKey else { return nil }
+
+        // Phase 1 — cache sweep (most specific wins)
+        for query in queries {
+            let cached = cacheDir.appendingPathComponent("\(cacheKey(for: query)).jpg")
+            if isCacheValid(at: cached) { return cached }
         }
 
-        guard let apiKey = apiKey, !apiKey.isEmpty else { return nil }
+        // Phase 2 — API calls, stop at the first query that returns results
+        for query in queries {
+            if let url = await searchAndDownload(query: query, width: width, height: height) {
+                return url
+            }
+        }
 
-        // 2. Search Unsplash
+        return nil
+    }
+
+    /// Single-query Unsplash search + download.  Returns nil if no results or on error.
+    private func searchAndDownload(query: String, width: Int, height: Int) async -> URL? {
+        guard let key = apiKey, !key.isEmpty else { return nil }
+
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         let endpoint = "https://api.unsplash.com/search/photos"
             + "?query=\(encoded)&orientation=landscape&per_page=10&content_filter=high"
         guard let url = URL(string: endpoint) else { return nil }
 
         var req = URLRequest(url: url)
-        req.setValue("Client-ID \(apiKey)", forHTTPHeaderField: "Authorization")
+        req.setValue("Client-ID \(key)", forHTTPHeaderField: "Authorization")
 
         guard let (data, resp) = try? await URLSession.shared.data(for: req),
               let http = resp as? HTTPURLResponse, http.statusCode == 200 else { return nil }
@@ -57,13 +70,14 @@ final class ImageSearchService {
               let urls   = pick["urls"] as? [String: Any],
               let rawURL = urls["raw"] as? String else { return nil }
 
-        // 3. Download at screen resolution
+        // Download at screen resolution
         let imageURLStr = "\(rawURL)&w=\(width)&h=\(height)&fit=crop&q=85&fm=jpg"
         guard let imageURL = URL(string: imageURLStr) else { return nil }
         guard let (imgData, imgResp) = try? await URLSession.shared.data(from: imageURL),
               let imgHTTP = imgResp as? HTTPURLResponse, imgHTTP.statusCode == 200 else { return nil }
 
-        // 4. Write to cache
+        // Cache the downloaded image keyed to this query
+        let cachedFile = cacheDir.appendingPathComponent("\(cacheKey(for: query)).jpg")
         try? imgData.write(to: cachedFile)
         return cachedFile
     }
