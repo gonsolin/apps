@@ -327,7 +327,7 @@ final class WallpaperManager {
               let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
         else { return nil }
 
-        return array.compactMap { dict in
+        return array.compactMap { dict -> SavedWallpaper? in
             guard let idStr = dict["id"] as? String,
                   let id = UInt32(idStr),
                   let path = dict["path"] as? String else { return nil }
