@@ -141,6 +141,17 @@ enum TimeOfDay: String {
         self == .night || self == .evening
     }
 
+    var displayName: String {
+        switch self {
+        case .night:     return "Night"
+        case .dawn:      return "Dawn"
+        case .morning:   return "Morning"
+        case .afternoon: return "Afternoon"
+        case .sunset:    return "Sunset"
+        case .evening:   return "Evening"
+        }
+    }
+
     /// Photographic search term matching how images are tagged on Unsplash.
     var searchModifier: String {
         switch self {
@@ -218,6 +229,50 @@ struct LocationData {
     let region: String
     var neighborhood: String = ""   // e.g. "Inner Sunset", "Financial District"
     var areaOfInterest: String = "" // e.g. "Golden Gate Park"
+}
+
+// MARK: - User Overrides
+
+/// Persistent overrides the user can set from the menu bar.
+/// When an override is active, the auto-detected value is replaced.
+struct UserOverrides: Codable {
+    var locationName: String?        // e.g. "Financial District, San Francisco"
+    var weatherCondition: String?    // raw value of WeatherCondition
+    var timeOfDay: String?           // raw value of TimeOfDay
+    var isLocked: Bool = false       // freeze the current wallpaper
+
+    var overriddenCondition: WeatherCondition? {
+        guard let raw = weatherCondition else { return nil }
+        return WeatherCondition(rawValue: raw)
+    }
+
+    var overriddenTimeOfDay: TimeOfDay? {
+        guard let raw = timeOfDay else { return nil }
+        return TimeOfDay(rawValue: raw)
+    }
+
+    // MARK: Persistence
+
+    private static var fileURL: URL {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory,
+                                            in: .userDomainMask).first!
+        let dir = base.appendingPathComponent("WeatherWall", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir.appendingPathComponent("overrides.json")
+    }
+
+    static func load() -> UserOverrides {
+        guard let data = try? Data(contentsOf: fileURL),
+              let obj = try? JSONDecoder().decode(UserOverrides.self, from: data)
+        else { return UserOverrides() }
+        return obj
+    }
+
+    func save() {
+        if let data = try? JSONEncoder().encode(self) {
+            try? data.write(to: Self.fileURL, options: .atomic)
+        }
+    }
 }
 
 // MARK: - Sky Palette

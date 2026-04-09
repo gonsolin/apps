@@ -34,10 +34,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var locationItem: NSMenuItem!
     private var lastUpdateItem: NSMenuItem!
     private var apiKeyItem: NSMenuItem!
+    private var lockItem: NSMenuItem!
+
+    // Override submenus
+    private var locationOverrideItem: NSMenuItem!
+    private var weatherOverrideItem: NSMenuItem!
+    private var timeOverrideItem: NSMenuItem!
 
     // Current state
     private var lastWeather: WeatherData?
     private var lastLocation: LocationData?
+    private var overrides = UserOverrides.load()
 
     // MARK: - Lifecycle
 
@@ -104,6 +111,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(lastUpdateItem)
         menu.addItem(NSMenuItem.separator())
 
+        // ── Lock Wallpaper ──
+        lockItem = NSMenuItem(title: lockMenuTitle(), action: #selector(lockTapped), keyEquivalent: "l")
+        lockItem.target = self
+        menu.addItem(lockItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        // ── Override Controls ──
+        let overrideHeader = makeInfoItem("Override")
+        let attr = NSMutableAttributedString(string: "Override",
+                                             attributes: [.font: NSFont.systemFont(ofSize: 11, weight: .semibold),
+                                                          .foregroundColor: NSColor.secondaryLabelColor])
+        overrideHeader.attributedTitle = attr
+        menu.addItem(overrideHeader)
+
+        locationOverrideItem = NSMenuItem(title: locationOverrideTitle(), action: nil, keyEquivalent: "")
+        locationOverrideItem.submenu = buildLocationOverrideMenu()
+        menu.addItem(locationOverrideItem)
+
+        weatherOverrideItem = NSMenuItem(title: weatherOverrideTitle(), action: nil, keyEquivalent: "")
+        weatherOverrideItem.submenu = buildWeatherOverrideMenu()
+        menu.addItem(weatherOverrideItem)
+
+        timeOverrideItem = NSMenuItem(title: timeOverrideTitle(), action: nil, keyEquivalent: "")
+        timeOverrideItem.submenu = buildTimeOverrideMenu()
+        menu.addItem(timeOverrideItem)
+
+        menu.addItem(NSMenuItem.separator())
+
         let updateNow = NSMenuItem(title: "Update Now", action: #selector(refreshTapped), keyEquivalent: "r")
         updateNow.target = self
         menu.addItem(updateNow)
@@ -135,10 +171,199 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             : "Set Unsplash API Key…"
     }
 
+    // MARK: - Lock
+
+    private func lockMenuTitle() -> String {
+        overrides.isLocked ? "🔒 Unlock Wallpaper" : "🔓 Lock Wallpaper"
+    }
+
+    @objc private func lockTapped() {
+        overrides.isLocked.toggle()
+        overrides.save()
+        lockItem.title = lockMenuTitle()
+        if !overrides.isLocked {
+            // Unlocking: refresh immediately to apply any pending changes
+            performUpdate()
+        }
+    }
+
+    // MARK: - Location Override
+
+    private func locationOverrideTitle() -> String {
+        if let loc = overrides.locationName {
+            return "📍 Location: \(loc)"
+        }
+        return "📍 Location: Auto"
+    }
+
+    private func buildLocationOverrideMenu() -> NSMenu {
+        let sub = NSMenu()
+
+        let auto = NSMenuItem(title: "Auto (detect from GPS)", action: #selector(locationAutoTapped), keyEquivalent: "")
+        auto.target = self
+        if overrides.locationName == nil { auto.state = .on }
+        sub.addItem(auto)
+
+        sub.addItem(NSMenuItem.separator())
+
+        let custom = NSMenuItem(title: "Set Custom Location…", action: #selector(locationCustomTapped), keyEquivalent: "")
+        custom.target = self
+        if overrides.locationName != nil { custom.state = .on }
+        sub.addItem(custom)
+
+        return sub
+    }
+
+    @objc private func locationAutoTapped() {
+        overrides.locationName = nil
+        overrides.save()
+        refreshOverrideMenus()
+        performUpdate()
+    }
+
+    @objc private func locationCustomTapped() {
+        NSApp.activate(ignoringOtherApps: true)
+
+        let alert = NSAlert()
+        alert.messageText = "Override Location"
+        alert.informativeText = "Enter a city or neighborhood name.\nThis will be used for wallpaper searches instead of your actual location."
+
+        let textField = EditableTextField(frame: NSRect(x: 0, y: 0, width: 340, height: 24))
+        textField.placeholderString = "e.g. Financial District, San Francisco"
+        if let existing = overrides.locationName {
+            textField.stringValue = existing
+        }
+        alert.accessoryView = textField
+
+        alert.addButton(withTitle: "Save")
+        alert.addButton(withTitle: "Cancel")
+
+        if alert.runModal() == .alertFirstButtonReturn {
+            let value = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !value.isEmpty {
+                overrides.locationName = value
+                overrides.save()
+                refreshOverrideMenus()
+                performUpdate()
+            }
+        }
+    }
+
+    // MARK: - Weather Condition Override
+
+    private func weatherOverrideTitle() -> String {
+        if let cond = overrides.overriddenCondition {
+            return "\(cond.sfSymbol.isEmpty ? "🌤" : "") Weather: \(cond.displayName)"
+        }
+        return "🌤 Weather: Auto"
+    }
+
+    private func buildWeatherOverrideMenu() -> NSMenu {
+        let sub = NSMenu()
+
+        let auto = NSMenuItem(title: "Auto (detect from weather API)", action: #selector(weatherAutoTapped), keyEquivalent: "")
+        auto.target = self
+        if overrides.weatherCondition == nil { auto.state = .on }
+        sub.addItem(auto)
+
+        sub.addItem(NSMenuItem.separator())
+
+        let conditions: [WeatherCondition] = [.clear, .partlyCloudy, .cloudy, .foggy, .drizzle, .rainy, .snowy, .stormy]
+        for cond in conditions {
+            let item = NSMenuItem(title: cond.displayName, action: #selector(weatherConditionSelected(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = cond.rawValue
+            if let img = NSImage(systemSymbolName: cond.sfSymbol, accessibilityDescription: cond.displayName) {
+                item.image = img
+            }
+            if overrides.weatherCondition == cond.rawValue { item.state = .on }
+            sub.addItem(item)
+        }
+
+        return sub
+    }
+
+    @objc private func weatherAutoTapped() {
+        overrides.weatherCondition = nil
+        overrides.save()
+        refreshOverrideMenus()
+        performUpdate()
+    }
+
+    @objc private func weatherConditionSelected(_ sender: NSMenuItem) {
+        guard let raw = sender.representedObject as? String else { return }
+        overrides.weatherCondition = raw
+        overrides.save()
+        refreshOverrideMenus()
+        performUpdate()
+    }
+
+    // MARK: - Time of Day Override
+
+    private func timeOverrideTitle() -> String {
+        if let tod = overrides.overriddenTimeOfDay {
+            return "🕐 Time: \(tod.displayName)"
+        }
+        return "🕐 Time: Auto"
+    }
+
+    private func buildTimeOverrideMenu() -> NSMenu {
+        let sub = NSMenu()
+
+        let auto = NSMenuItem(title: "Auto (detect from clock + sunrise/sunset)", action: #selector(timeAutoTapped), keyEquivalent: "")
+        auto.target = self
+        if overrides.timeOfDay == nil { auto.state = .on }
+        sub.addItem(auto)
+
+        sub.addItem(NSMenuItem.separator())
+
+        let periods: [TimeOfDay] = [.dawn, .morning, .afternoon, .sunset, .evening, .night]
+        for tod in periods {
+            let item = NSMenuItem(title: tod.displayName, action: #selector(timeSelected(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = tod.rawValue
+            if overrides.timeOfDay == tod.rawValue { item.state = .on }
+            sub.addItem(item)
+        }
+
+        return sub
+    }
+
+    @objc private func timeAutoTapped() {
+        overrides.timeOfDay = nil
+        overrides.save()
+        refreshOverrideMenus()
+        performUpdate()
+    }
+
+    @objc private func timeSelected(_ sender: NSMenuItem) {
+        guard let raw = sender.representedObject as? String else { return }
+        overrides.timeOfDay = raw
+        overrides.save()
+        refreshOverrideMenus()
+        performUpdate()
+    }
+
+    // MARK: - Refresh Override Menus
+
+    private func refreshOverrideMenus() {
+        locationOverrideItem.title = locationOverrideTitle()
+        locationOverrideItem.submenu = buildLocationOverrideMenu()
+
+        weatherOverrideItem.title = weatherOverrideTitle()
+        weatherOverrideItem.submenu = buildWeatherOverrideMenu()
+
+        timeOverrideItem.title = timeOverrideTitle()
+        timeOverrideItem.submenu = buildTimeOverrideMenu()
+
+        lockItem.title = lockMenuTitle()
+    }
+
     // MARK: - Actions
 
     @objc private func refreshTapped() {
-        performUpdate()
+        // Manual refresh bypasses the lock
+        performUpdate(bypassLock: true)
     }
 
     @objc private func apiKeyTapped() {
@@ -190,17 +415,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Update Pipeline
 
-    private func performUpdate() {
+    private func performUpdate(bypassLock: Bool = false) {
+        // If the wallpaper is locked and this isn't a manual refresh, skip
+        if overrides.isLocked && !bypassLock { return }
+
         Task {
             await runUpdatePipeline()
         }
     }
 
     private func runUpdatePipeline() async {
-        // 1. Location
-        guard let location = await locationService.fetchLocation() else {
-            DispatchQueue.main.async { self.conditionItem.title = "⚠️ Location unavailable" }
-            return
+        // 1. Location (use override if set)
+        var location: LocationData
+        if let overrideName = overrides.locationName {
+            // Use a synthetic LocationData with the override name as city
+            // We still need coordinates for weather, so fetch real location silently
+            let realLocation = await locationService.fetchLocation()
+            location = LocationData(
+                latitude: realLocation?.latitude ?? 37.7749,
+                longitude: realLocation?.longitude ?? -122.4194,
+                city: overrideName,
+                region: realLocation?.region ?? ""
+            )
+        } else {
+            guard let loc = await locationService.fetchLocation() else {
+                DispatchQueue.main.async { self.conditionItem.title = "⚠️ Location unavailable" }
+                return
+            }
+            location = loc
         }
         lastLocation = location
 
@@ -212,19 +454,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         lastWeather = weather
 
-        // 3. Render & apply wallpaper (web image → procedural fallback)
-        let timeOfDay = TimeOfDay.current(sunrise: weather.sunrise, sunset: weather.sunset)
-        await wallpaperManager.update(condition: weather.condition, timeOfDay: timeOfDay,
+        // 3. Apply overrides for condition and time-of-day
+        let condition = overrides.overriddenCondition ?? weather.condition
+        let timeOfDay = overrides.overriddenTimeOfDay
+            ?? TimeOfDay.current(sunrise: weather.sunrise, sunset: weather.sunset)
+
+        // 4. Render & apply wallpaper (web image → procedural fallback)
+        await wallpaperManager.update(condition: condition, timeOfDay: timeOfDay,
                                       temperature: weather.temperature, location: location)
 
-        // 4. Update menu bar
+        // 5. Update menu bar
         DispatchQueue.main.async {
-            self.refreshMenu(weather: weather, location: location, timeOfDay: timeOfDay)
+            self.refreshMenu(weather: weather, location: location,
+                           condition: condition, timeOfDay: timeOfDay)
         }
     }
 
-    private func refreshMenu(weather: WeatherData, location: LocationData, timeOfDay: TimeOfDay) {
-        conditionItem.title   = "\(weather.condition.displayName)"
+    private func refreshMenu(weather: WeatherData, location: LocationData,
+                            condition: WeatherCondition, timeOfDay: TimeOfDay) {
+        // Show override indicator if any override is active
+        let condPrefix = overrides.overriddenCondition != nil ? "⊘ " : ""
+        conditionItem.title   = "\(condPrefix)\(condition.displayName)"
         temperatureItem.title = "🌡️ \(String(format: "%.0f", weather.temperature))°F"
 
         let hood = !location.neighborhood.isEmpty ? location.neighborhood
@@ -233,16 +483,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let loc = hood.isEmpty
             ? "\(location.city), \(location.region)"
             : "\(hood), \(location.city)"
-        locationItem.title = "📍 \(loc)"
+        let locPrefix = overrides.locationName != nil ? "⊘ " : ""
+        locationItem.title = "📍 \(locPrefix)\(loc)"
 
         let fmt = DateFormatter()
         fmt.timeStyle = .short
-        lastUpdateItem.title = "Updated \(fmt.string(from: Date()))"
+        let lockLabel = overrides.isLocked ? " 🔒" : ""
+        lastUpdateItem.title = "Updated \(fmt.string(from: Date()))\(lockLabel)"
 
         // Status bar icon
-        let symbol = timeOfDay.isNight ? weather.condition.nightSfSymbol : weather.condition.sfSymbol
+        let symbol = timeOfDay.isNight ? condition.nightSfSymbol : condition.sfSymbol
         if let img = NSImage(systemSymbolName: symbol,
-                             accessibilityDescription: weather.condition.displayName) {
+                             accessibilityDescription: condition.displayName) {
             statusItem.button?.image = img
         }
     }

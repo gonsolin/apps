@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.6**
+**Current version: 0.7**
 
 ## Features
 
@@ -56,7 +56,11 @@ The free tier allows 50 requests/hour — more than enough for updates every 30 
 | **Temperature** | Current temperature in °F |
 | **Location** | Detected neighborhood and city |
 | **Updated** | Timestamp of last wallpaper refresh |
-| **Update Now (⌘R)** | Force an immediate refresh |
+| **Lock / Unlock Wallpaper (⌘L)** | Freeze the current wallpaper until unlocked |
+| **Override → Location** | Auto (GPS) or custom city/neighborhood |
+| **Override → Weather** | Auto or pick a specific condition |
+| **Override → Time** | Auto or pick a specific time of day |
+| **Update Now (⌘R)** | Force an immediate refresh (bypasses lock) |
 | **Set / Change Unsplash API Key…** | Enter or update your API key |
 | **Quit (⌘Q)** | Restore original wallpaper and exit |
 
@@ -97,9 +101,19 @@ WeatherWall/
 - **Temperature unit** — change `fahrenheit` to `celsius` in `WeatherService.swift`.
 - **Color palettes** — edit `basePalette(for:)` in `WallpaperRenderer.swift`.
 - **Search queries** — tweak `buildSearchQuery()` in `Models.swift` to adjust what the app searches for.
+- **Overrides** — set location, weather, or time of day from the menu bar; persisted in `~/Library/Application Support/WeatherWall/overrides.json`.
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.7 — April 8, 2026
+- **Added** override controls in the dropdown menu — enforce a specific location, weather condition, or time of day instead of auto-detecting them. Each override persists across app restarts.
+  - **Location** — set any city or neighborhood name (e.g. "Financial District, San Francisco") for wallpaper searches while still using your real coordinates for weather data.
+  - **Weather** — pick any condition (Clear, Rainy, Snowy, etc.) from a submenu with SF Symbols icons.
+  - **Time of Day** — choose Dawn, Morning, Afternoon, Sunset, Evening, or Night.
+  - Each override shows a checkmark on the active selection and an ⊘ indicator in the status display.
+- **Added** wallpaper lock (⌘L) — freezes the current wallpaper, blocking all auto-updates and location-triggered refreshes until you unlock. "Update Now" (⌘R) bypasses the lock for one-off refreshes.
+- Override state and lock are persisted to `overrides.json` and survive app restarts.
 
 ### 0.6 — April 8, 2026
 - **Added** custom app icon — SF skyline with the Golden Gate Bridge and a subtle sunset glow.
