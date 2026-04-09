@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.7**
+**Current version: 0.8**
 
 ## Features
 
@@ -13,7 +13,7 @@ A lightweight macOS menu-bar app that sets your desktop wallpaper to a real phot
 - **Auto-updates every 30 minutes** in the background.
 - **Image caching** — downloaded photos are cached for 2 hours to avoid redundant network calls; cache is pruned daily.
 - **No API key required to run** — the Unsplash key is optional; without it, you still get beautiful procedural wallpapers.
-- **Multi-display support** — wallpaper is applied to all connected screens.
+- **Multi-display spanning** — when screens are arranged side-by-side and the image is wide enough, one panoramic image is sliced across all displays (left third / middle / right third). Falls back to the same image on all screens if the resolution is insufficient.
 - **Neighborhood tracking** — continuous significant-location-change monitoring detects when you move to a different neighborhood and refreshes the wallpaper immediately.
 - **Location detection** — CoreLocation with reverse geocoding (gives neighborhood + landmark precision), or IP geolocation as a zero-permission fallback.
 - **Menu-bar only** — no Dock icon; shows a weather-condition icon.
@@ -105,6 +105,14 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.8 — April 8, 2026
+- **Fixed** wallpaper restore on quit — the app now reliably restores the user's own wallpaper, not a system default or a WeatherWall-generated image from a previous session. On launch, if the current wallpaper is one of ours, the app loads the persisted originals from disk instead of re-saving them.
+- **Improved** original wallpaper persistence — now stores scaling mode and clipping options alongside the file path, so the restored wallpaper matches the user's exact display settings.
+- **Added** multi-display spanning — when multiple screens are arranged side-by-side and the source image is wide enough (≥70% of the combined canvas), the image is cropped into per-screen slices so it flows continuously across all displays. Each screen gets its corresponding portion (left, center, right).
+- Falls back gracefully to the same image on all screens when the source image is too narrow or screens are stacked vertically.
+- Screens are sorted by their global x-coordinate for correct left-to-right ordering.
+- Per-screen slice files are saved as `screen_<displayID>.png` in the app support directory.
 
 ### 0.7 — April 8, 2026
 - **Added** override controls in the dropdown menu — enforce a specific location, weather condition, or time of day instead of auto-detecting them. Each override persists across app restarts.
