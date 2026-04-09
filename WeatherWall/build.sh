@@ -32,6 +32,7 @@ swiftc \
 echo "📦 Packaging app bundle…"
 
 cp "$SCRIPT_DIR/Resources/Info.plist" "$APP_DIR/Info.plist"
+cp "$SCRIPT_DIR/Resources/AppIcon.icns" "$APP_DIR/Resources/AppIcon.icns"
 
 # Ad-hoc code sign with entitlements (required for location access)
 codesign --force --sign - \

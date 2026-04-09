@@ -27,6 +27,9 @@
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
 
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+
     <!-- Hide from Dock — menu-bar-only app -->
     <key>LSUIElement</key>
     <true/>

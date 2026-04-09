@@ -84,6 +84,7 @@ WeatherWall/
 │   ├── WallpaperRenderer.swift   # Core Graphics procedural sky renderer (fallback)
 │   └── WallpaperManager.swift    # Orchestrates web/procedural images + save/restore
 ├── Resources/
+│   ├── AppIcon.icns             # App icon (SF skyline + Golden Gate)
 │   └── Info.plist
 ├── WeatherWall.entitlements
 ├── build.sh                      # Compile → sign → DMG
@@ -101,6 +102,7 @@ WeatherWall/
 ## Version History
 
 ### 0.6 — April 8, 2026
+- **Added** custom app icon — SF skyline with the Golden Gate Bridge and a subtle sunset glow.
 - **Fixed** wallpaper falling back to the procedural renderer when the neighborhood query was too specific for Unsplash.
 - **Added** cascading search fallback — the app now tries progressively broader queries until it finds a real photo:
   1. `Inner Sunset San Francisco rain afternoon` (neighborhood + city + weather + time)
