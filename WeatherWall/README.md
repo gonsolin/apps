@@ -2,7 +2,7 @@
 
 A lightweight macOS menu-bar app that sets your desktop wallpaper to a real photo matching the current weather at your location — inspired by the iPhone's dynamic weather wallpaper.
 
-**Current version: 0.9**
+**Current version: 0.10**
 
 ## Features
 
@@ -106,6 +106,14 @@ WeatherWall/
 - **Cache duration** — change the `7200` (seconds) in `ImageSearchService.swift`.
 
 ## Version History
+
+### 0.10 — April 17, 2026
+- **Fixed** timezone-aware time of day — when using a location override (e.g. "Paris, France" from California at 5 PM PDT), the app now correctly resolves the local time at the target location (2 AM CEST → night) instead of using the Mac's clock.
+- **Improved** sunrise/sunset parsing — switched from local-time strings to Unix timestamps (`&timeformat=unixtime`) from Open-Meteo, eliminating all timezone parsing ambiguity.
+- **Improved** location override geocoding — when you pick a location from the predictive search, its coordinates are now resolved via `MKLocalSearch` and stored alongside the name. The weather API and timezone are queried for the target location, not your Mac's GPS.
+- `WeatherData` now carries `utcOffsetSeconds` from the Open-Meteo response.
+- `TimeOfDay.current()` accepts an optional `utcOffsetSeconds` parameter for the fixed-hour fallback.
+- `UserOverrides` stores `locationLatitude` / `locationLongitude` for geocoded overrides.
 
 ### 0.9 — April 8, 2026
 - **Added** location text overlay — the current location name is rendered vertically along the bottom-right edge of the wallpaper, reading from bottom to top. Subtle white text with shadow for readability against any background.

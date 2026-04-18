@@ -101,19 +101,29 @@ enum TimeOfDay: String {
     case sunset     // 5pm – 7pm
     case evening    // 7pm – 10pm
 
-    /// Compute the current time-of-day using actual sunrise/sunset when available,
-    /// falling back to fixed clock hours otherwise.
-    static func current(sunrise: Date? = nil, sunset: Date? = nil) -> TimeOfDay {
+    /// Compute the time-of-day **at the target location** using sunrise/sunset when
+    /// available, falling back to fixed clock hours in the location's timezone.
+    ///
+    /// - Parameters:
+    ///   - sunrise: Today's sunrise at the target location (UTC Date).
+    ///   - sunset:  Today's sunset  at the target location (UTC Date).
+    ///   - utcOffsetSeconds: The target location's UTC offset so the fixed-hour
+    ///     fallback uses the correct local clock (e.g. 7200 for CEST, -25200 for PDT).
+    ///     Pass `nil` to use the Mac's system timezone.
+    static func current(sunrise: Date? = nil, sunset: Date? = nil,
+                        utcOffsetSeconds: Int? = nil) -> TimeOfDay {
         let now = Date()
 
+        // When sunrise/sunset are available (as UTC absolute dates from Open-Meteo),
+        // the comparison against `now` (also UTC) is timezone-correct.
         if let rise = sunrise, let set = sunset {
-            let dawnStart    = rise.addingTimeInterval(-30 * 60)   // 30 min before sunrise
-            let morningStart = rise.addingTimeInterval(45 * 60)    // 45 min after sunrise
+            let dawnStart    = rise.addingTimeInterval(-30 * 60)
+            let morningStart = rise.addingTimeInterval(45 * 60)
             let solarNoon    = Date(timeIntervalSince1970:
                 (rise.timeIntervalSince1970 + set.timeIntervalSince1970) / 2)
-            let goldenStart  = set.addingTimeInterval(-75 * 60)    // 75 min before sunset
-            let eveningStart = set.addingTimeInterval(20 * 60)     // 20 min after sunset
-            let nightStart   = set.addingTimeInterval(60 * 60)     // 60 min after sunset
+            let goldenStart  = set.addingTimeInterval(-75 * 60)
+            let eveningStart = set.addingTimeInterval(20 * 60)
+            let nightStart   = set.addingTimeInterval(60 * 60)
 
             if now < dawnStart    { return .night }
             if now < morningStart { return .dawn }
@@ -124,9 +134,18 @@ enum TimeOfDay: String {
             return .night
         }
 
-        // Fixed-hour fallback
-        let hour = Calendar.current.component(.hour, from: now)
-        switch hour {
+        // Fixed-hour fallback — compute the hour at the target location's timezone.
+        let localHour: Int
+        if let offset = utcOffsetSeconds {
+            let tz = TimeZone(secondsFromGMT: offset) ?? .current
+            var cal = Calendar(identifier: .gregorian)
+            cal.timeZone = tz
+            localHour = cal.component(.hour, from: now)
+        } else {
+            localHour = Calendar.current.component(.hour, from: now)
+        }
+
+        switch localHour {
         case 0..<5:   return .night
         case 5..<7:   return .dawn
         case 7..<12:  return .morning
@@ -218,6 +237,7 @@ struct WeatherData {
     let condition: WeatherCondition
     let sunrise: Date?
     let sunset: Date?
+    let utcOffsetSeconds: Int   // location's UTC offset (e.g. 7200 for CEST, -25200 for PDT)
 }
 
 // MARK: - Location Data
@@ -237,6 +257,8 @@ struct LocationData {
 /// When an override is active, the auto-detected value is replaced.
 struct UserOverrides: Codable {
     var locationName: String?        // e.g. "Financial District, San Francisco"
+    var locationLatitude: Double?    // geocoded lat for weather/timezone
+    var locationLongitude: Double?   // geocoded lon for weather/timezone
     var weatherCondition: String?    // raw value of WeatherCondition
     var timeOfDay: String?           // raw value of TimeOfDay
     var isLocked: Bool = false       // freeze the current wallpaper

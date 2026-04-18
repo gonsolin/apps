@@ -221,15 +221,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func locationAutoTapped() {
         overrides.locationName = nil
+        overrides.locationLatitude = nil
+        overrides.locationLongitude = nil
         overrides.save()
         refreshOverrideMenus()
         performUpdate()
     }
 
     @objc private func locationCustomTapped() {
-        locationSearchPanel.show(currentValue: overrides.locationName) { [weak self] selected in
-            guard let self = self, let value = selected else { return }
-            self.overrides.locationName = value
+        locationSearchPanel.show(currentValue: overrides.locationName) { [weak self] result in
+            guard let self = self, let result = result else { return }
+            self.overrides.locationName = result.name
+            self.overrides.locationLatitude = result.latitude
+            self.overrides.locationLongitude = result.longitude
             self.overrides.save()
             self.refreshOverrideMenus()
             self.performUpdate()
@@ -415,14 +419,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 1. Location (use override if set)
         var location: LocationData
         if let overrideName = overrides.locationName {
-            // Use a synthetic LocationData with the override name as city
-            // We still need coordinates for weather, so fetch real location silently
-            let realLocation = await locationService.fetchLocation()
+            // Use geocoded coordinates from the override when available,
+            // so weather + timezone come from the target location (not the Mac's GPS).
+            let lat: Double
+            let lon: Double
+            if let oLat = overrides.locationLatitude, let oLon = overrides.locationLongitude {
+                lat = oLat
+                lon = oLon
+            } else {
+                let real = await locationService.fetchLocation()
+                lat = real?.latitude ?? 37.7749
+                lon = real?.longitude ?? -122.4194
+            }
             location = LocationData(
-                latitude: realLocation?.latitude ?? 37.7749,
-                longitude: realLocation?.longitude ?? -122.4194,
+                latitude: lat,
+                longitude: lon,
                 city: overrideName,
-                region: realLocation?.region ?? ""
+                region: ""
             )
         } else {
             guard let loc = await locationService.fetchLocation() else {
@@ -442,9 +455,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         lastWeather = weather
 
         // 3. Apply overrides for condition and time-of-day
+        //    TimeOfDay uses the target location's UTC offset so that e.g.
+        //    "France" at 5 PM PDT correctly resolves to 2 AM CEST → night.
         let condition = overrides.overriddenCondition ?? weather.condition
         let timeOfDay = overrides.overriddenTimeOfDay
-            ?? TimeOfDay.current(sunrise: weather.sunrise, sunset: weather.sunset)
+            ?? TimeOfDay.current(sunrise: weather.sunrise, sunset: weather.sunset,
+                                utcOffsetSeconds: weather.utcOffsetSeconds)
 
         // 4. Render & apply wallpaper (web image → procedural fallback)
         await wallpaperManager.update(condition: condition, timeOfDay: timeOfDay,

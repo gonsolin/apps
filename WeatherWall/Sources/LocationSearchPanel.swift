@@ -1,6 +1,13 @@
 import Cocoa
 import MapKit
 
+/// Result from the location search panel — name + optional coordinates.
+struct LocationSearchResult {
+    let name: String
+    let latitude: Double?
+    let longitude: Double?
+}
+
 /// A panel that provides Google Maps-style predictive location search
 /// using Apple's MKLocalSearchCompleter. Shows a text field with a
 /// dropdown table of suggestions that updates as the user types.
@@ -15,7 +22,7 @@ class LocationSearchPanel: NSObject, MKLocalSearchCompleterDelegate, NSTextField
 
     private let completer = MKLocalSearchCompleter()
     private var results: [MKLocalSearchCompletion] = []
-    private var completion: ((String?) -> Void)?
+    private var completion: ((LocationSearchResult?) -> Void)?
 
     override init() {
         super.init()
@@ -26,8 +33,8 @@ class LocationSearchPanel: NSObject, MKLocalSearchCompleterDelegate, NSTextField
 
     // MARK: - Public
 
-    /// Show the panel and call completion with the selected location name, or nil if cancelled.
-    func show(currentValue: String?, completion: @escaping (String?) -> Void) {
+    /// Show the panel and call completion with the selected location, or nil if cancelled.
+    func show(currentValue: String?, completion: @escaping (LocationSearchResult?) -> Void) {
         self.completion = completion
         textField.stringValue = currentValue ?? ""
         results = []
@@ -104,12 +111,60 @@ class LocationSearchPanel: NSObject, MKLocalSearchCompleterDelegate, NSTextField
             .trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    // MARK: - Resolve coordinates from a search completion
+
+    private func resolveAndReturn(_ searchCompletion: MKLocalSearchCompletion) {
+        let request = MKLocalSearch.Request(completion: searchCompletion)
+        let search = MKLocalSearch(request: request)
+        search.start { [weak self] response, error in
+            guard let self = self else { return }
+            let name = "\(searchCompletion.title)\(searchCompletion.subtitle.isEmpty ? "" : ", \(searchCompletion.subtitle)")"
+            if let item = response?.mapItems.first {
+                let coord = item.placemark.coordinate
+                self.window.orderOut(nil)
+                self.completion?(LocationSearchResult(name: name,
+                                                      latitude: coord.latitude,
+                                                      longitude: coord.longitude))
+            } else {
+                // Couldn't geocode — return name only
+                self.window.orderOut(nil)
+                self.completion?(LocationSearchResult(name: name, latitude: nil, longitude: nil))
+            }
+        }
+    }
+
     // MARK: - Actions
 
     @objc private func saveTapped() {
-        let value = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-        window.orderOut(nil)
-        completion?(value.isEmpty ? nil : value)
+        let row = tableView.selectedRow
+        if row >= 0, row < results.count {
+            // Resolve the selected suggestion to get coordinates
+            resolveAndReturn(results[row])
+        } else {
+            // Free-text entry — try to geocode it
+            let value = textField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !value.isEmpty else {
+                window.orderOut(nil)
+                completion?(nil)
+                return
+            }
+            let request = MKLocalSearch.Request()
+            request.naturalLanguageQuery = value
+            let search = MKLocalSearch(request: request)
+            search.start { [weak self] response, error in
+                guard let self = self else { return }
+                if let item = response?.mapItems.first {
+                    let coord = item.placemark.coordinate
+                    self.window.orderOut(nil)
+                    self.completion?(LocationSearchResult(name: value,
+                                                          latitude: coord.latitude,
+                                                          longitude: coord.longitude))
+                } else {
+                    self.window.orderOut(nil)
+                    self.completion?(LocationSearchResult(name: value, latitude: nil, longitude: nil))
+                }
+            }
+        }
     }
 
     @objc private func cancelTapped() {
@@ -126,8 +181,9 @@ class LocationSearchPanel: NSObject, MKLocalSearchCompleterDelegate, NSTextField
     }
 
     @objc private func rowDoubleClicked() {
-        rowClicked()
-        saveTapped()
+        let row = tableView.selectedRow
+        guard row >= 0, row < results.count else { return }
+        resolveAndReturn(results[row])
     }
 
     // MARK: - NSTextFieldDelegate
@@ -151,7 +207,7 @@ class LocationSearchPanel: NSObject, MKLocalSearchCompleterDelegate, NSTextField
     }
 
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // Silently ignore — results will just be empty
+        // Silently ignore
     }
 
     // MARK: - NSTableViewDataSource
